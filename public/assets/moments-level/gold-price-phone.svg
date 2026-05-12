@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 240" role="img" aria-label="金价手机">
+  <defs>
+    <filter id="shadow" x="-30%" y="-20%" width="160%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#10231d" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)" transform="rotate(7 80 120)">
+    <rect x="25" y="12" width="110" height="216" rx="25" fill="#17261f"/>
+    <rect x="36" y="34" width="88" height="166" rx="13" fill="#f5d66d"/>
+    <rect x="58" y="24" width="44" height="6" rx="3" fill="#2d3c35"/>
+    <text x="50" y="61" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#7d5a16">金价</text>
+    <text x="46" y="91" font-family="Arial, sans-serif" font-size="24" font-weight="900" fill="#c84628">涨麻了</text>
+    <path d="M49 159 C60 126 72 140 82 112 S101 94 113 72" fill="none" stroke="#c84628" stroke-width="8" stroke-linecap="round"/>
+    <path d="M50 172 H110 M50 187 H93" stroke="#7d5a16" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+    <circle cx="80" cy="214" r="6" fill="#2d3c35"/>
+  </g>
+</svg>
