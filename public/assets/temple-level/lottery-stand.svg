@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" role="img" aria-label="彩票摊">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#10231d" flood-opacity=".4"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M39 66 h222 l-18 54 H57z" fill="#c84628"/>
+    <path d="M58 66 l17 54 M99 66 l5 54 M141 66 v54 M183 66 l-6 54 M224 66 l-17 54" stroke="#fff2d6" stroke-width="7"/>
+    <rect x="53" y="118" width="194" height="70" rx="10" fill="#f6f1df"/>
+    <rect x="76" y="139" width="54" height="33" rx="5" fill="#f3c45b"/>
+    <rect x="146" y="137" width="72" height="36" rx="5" fill="#17261f"/>
+    <text x="84" y="161" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#7d5a16">刮一刮</text>
+    <text x="159" y="160" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#fff2d6">改命号</text>
+    <text x="88" y="52" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#17261f">好运彩票站</text>
+    <path d="M62 188 h176" stroke="#7d5a16" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>
