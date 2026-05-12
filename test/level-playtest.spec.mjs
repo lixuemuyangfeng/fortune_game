@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const levels = [
   {
     next: "朋友圈炫富现场",
-    hotspots: ["亏损窗口", "邢总弹窗", "金价手机", "刮刮泪", "AI直播"]
+    hotspots: ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"]
   },
   {
     next: "财神庙",

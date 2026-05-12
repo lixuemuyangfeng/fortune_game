@@ -45,7 +45,7 @@ test("all playable levels meet narrative and interaction content requirements", 
     assert.match(block, /enemyName: "[^"]+"/, `${sceneId} names the pollution source`);
     assert.match(block, /enemyDescription: "[^"]+"/, `${sceneId} describes the threat`);
     assert.match(block, /machineName: "[^"]+"/, `${sceneId} names the processing machine`);
-    assert.match(block, /machineImage: "\/assets\//, `${sceneId} has a machine asset`);
+    assert.match(block, /(machineImage: "\/assets\/|machineEmbedded: true)/, `${sceneId} has a machine asset or embedded machine`);
     assert.match(block, /completeText: "[^"]+"/, `${sceneId} has completion copy`);
     assert.ok(hotspots.length >= 5, `${sceneId} has at least five hotspots`);
 
@@ -53,7 +53,7 @@ test("all playable levels meet narrative and interaction content requirements", 
       const evidenceId = hotspot.match(/evidenceId: "([^"]+)"/)?.[1];
       assert.ok(evidenceId, `${sceneId} hotspot references evidence`);
       assert.ok(knownEvidenceIds.has(evidenceId), `${sceneId} hotspot evidence ${evidenceId} exists`);
-      assert.match(hotspot, /image: "\/assets\//, `${sceneId} hotspot ${evidenceId} has visible art`);
+      assert.match(hotspot, /(image: "\/assets\/|renderMode: "embedded")/, `${sceneId} hotspot ${evidenceId} has visible art or embedded scene art`);
       assert.match(hotspot, /hitX: [0-9.]+/, `${sceneId} hotspot ${evidenceId} has tuned hitX`);
       assert.match(hotspot, /hitY: [0-9.]+/, `${sceneId} hotspot ${evidenceId} has tuned hitY`);
       assert.match(hotspot, /revealText: "[^"]+"/, `${sceneId} hotspot ${evidenceId} has reveal copy`);

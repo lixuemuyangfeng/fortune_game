@@ -54,6 +54,14 @@ export const gameConfig: GameConfig = {
       theme: "ai",
       counterText: "先别替代我，先替我写周报。"
     },
+    debt_note: {
+      id: "debt_note",
+      title: "花呗还款便利贴",
+      detail: "回本后先还钱，说明它知道回本还没发生。",
+      emotion: "breakdown",
+      theme: "lottery",
+      counterText: "先把今天过完，再安排回本以后。"
+    },
     friend_profit: {
       id: "friend_profit",
       title: "朋友圈收益截图",
@@ -117,19 +125,19 @@ export const gameConfig: GameConfig = {
       name: "键盘声变轻了",
       theme: "gold",
       description: "字节跳桶下午三点二十七，工位还在，人已经被行情和弹窗偷走了。",
-      backgroundImage: "/assets/scenes/office-noise-bg.png",
+      backgroundImage: "/assets/office-level/office-raster-v2.png",
       hint: "键盘声变轻了",
       enemyName: "踏空噪声",
       enemyDescription: "它专挑你最累的时候弹出：别人都上车了。",
       machineName: "工位还魂机",
-      machineImage: "/assets/machines/workstation-soul-machine.svg",
+      machineEmbedded: true,
       completeText: "不是你效率低，是工位今天被行情附身了。",
       hotspots: [
-        { id: "h1", evidenceId: "fund_loss", x: 47.6, y: 49.8, hitX: 47.8, hitY: 49.6, radius: 8, label: "亏损窗口", found: false, image: "/assets/office-level/loss-corner.svg", imageWidth: 15, anchorX: 50, anchorY: 50, hitScale: 0.88, revealText: "东方财负：亏损不是翻本命令" },
-        { id: "h2", evidenceId: "boss_mail", x: 66.6, y: 24.8, hitX: 66.3, hitY: 25, radius: 8, label: "邢总弹窗", found: false, image: "/assets/office-level/boss-pua-chat.svg", imageWidth: 16, anchorX: 50, anchorY: 50, hitScale: 0.9, revealText: "主人翁意识已还给主人" },
-        { id: "h3", evidenceId: "phone_gold", x: 31.5, y: 56.8, hitX: 31.8, hitY: 56.6, radius: 8, label: "金价手机", found: false, image: "/assets/office-level/gold-phone.svg", imageWidth: 8, anchorX: 50, anchorY: 50, hitScale: 1.15, revealText: "半截涨幅不等于整辆车" },
-        { id: "h4", evidenceId: "lottery_ticket", x: 39.2, y: 75.8, hitX: 39, hitY: 75.4, radius: 7, label: "刮刮泪", found: false, image: "/assets/office-level/scratch-ticket.svg", imageWidth: 11, anchorX: 50, anchorY: 50, hitScale: 0.95, revealText: "差一点不是差一张" },
-        { id: "h5", evidenceId: "ai_news", x: 81.6, y: 45.2, hitX: 81.4, hitY: 45.2, radius: 8, label: "AI直播", found: false, image: "/assets/office-level/ai-tab.svg", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 0.9, revealText: "先替我写周报再说" }
+        { id: "h1", evidenceId: "fund_loss", x: 37, y: 58, hitX: 37, hitY: 58, hitWidth: 27, hitHeight: 19, radius: 8, label: "亏损曲线", found: false, renderMode: "embedded", revealText: "东方财负：亏损不是翻本命令" },
+        { id: "h2", evidenceId: "boss_mail", x: 80.5, y: 36.2, hitX: 80.5, hitY: 36.2, hitWidth: 24, hitHeight: 25, radius: 8, label: "owner 意识消息", found: false, renderMode: "embedded", revealText: "主人翁意识已还给主人" },
+        { id: "h3", evidenceId: "phone_gold", x: 15.7, y: 47.2, hitX: 15.7, hitY: 47.2, hitWidth: 11.5, hitHeight: 27, radius: 6, label: "金价手机", found: false, renderMode: "embedded", revealText: "半截涨幅不等于整辆车" },
+        { id: "h4", evidenceId: "debt_note", x: 27, y: 71.8, hitX: 27, hitY: 71.8, hitWidth: 11, hitHeight: 12, radius: 5, label: "花呗便利贴", found: false, renderMode: "embedded", revealText: "回本以后，也得先经过今天" },
+        { id: "h5", evidenceId: "lottery_ticket", x: 42.2, y: 88.2, hitX: 42.2, hitY: 88.2, hitWidth: 19, hitHeight: 13, radius: 7, label: "刮刮泪", found: false, renderMode: "embedded", revealText: "差一点不是差一张" }
       ]
     },
     {

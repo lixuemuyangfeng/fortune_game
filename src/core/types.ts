@@ -18,11 +18,14 @@ export interface SceneHotspot {
   y: number;
   hitX?: number;
   hitY?: number;
+  hitWidth?: number;
+  hitHeight?: number;
   radius: number;
   label: string;
   found: boolean;
   image?: string;
   imageWidth?: number;
+  renderMode?: "asset" | "embedded";
   anchorX?: number;
   anchorY?: number;
   hitScale?: number;
@@ -41,6 +44,7 @@ export interface InvestigationScene {
   enemyDescription?: string;
   machineName?: string;
   machineImage?: string;
+  machineEmbedded?: boolean;
   completeText?: string;
   hotspots: SceneHotspot[];
 }

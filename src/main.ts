@@ -1,10 +1,12 @@
 import "./styles.css";
+import { LocalGameBackend } from "./core/backend";
 import { gameConfig } from "./core/config";
 import {
   addSceneHotspot,
   collectOffline,
   createInitialState,
   generatePersonality,
+  recordAdView,
   setSceneChallengeActive,
   sortEvidence,
   unlockCard,
@@ -18,6 +20,8 @@ import { WebAdapter } from "./platform/webAdapter";
 const storageKey = "fortune-game-state-v2";
 const sortCountKey = "fortune-sort-count-v2";
 const platform = new WebAdapter();
+const backend = new LocalGameBackend(gameConfig);
+let currentUserId = "local_player";
 let state = loadState();
 let activeScene: InvestigationScene = cloneScene(gameConfig.scenes[0]);
 let selectedEvidenceId = state.foundEvidenceIds[0] ?? "";
@@ -36,7 +40,11 @@ if (!appContainer) {
 
 const app = appContainer;
 
-void platform.login().then((user) => platform.reportEvent("login_success", { ...user }));
+void platform.login().then((user) => {
+  currentUserId = user.userId;
+  platform.reportEvent("login_success", { ...user });
+  render();
+});
 render();
 
 function loadState(): PlayerState {
@@ -150,6 +158,7 @@ function render() {
   const showResourceBelt = activeSceneComplete;
   const showProcessingSystems = activeSceneComplete;
   const nextScene = gameConfig.scenes[activeSceneIndex + 1];
+  const leaderboard = backend.getFriendLeaderboard(currentUserId, state);
 
   app.innerHTML = `
     <main class="game-shell">
@@ -178,7 +187,8 @@ function render() {
           nextSceneId: nextScene?.id,
           nextSceneName: nextScene?.name,
           challengeLabel: challengeActive ? "继续抓噪声" : "启动处理",
-          hintLabel: "给个提示"
+          hintLabel: "给个提示",
+          selectedEvidenceId
         })}
 
         ${
@@ -228,6 +238,7 @@ function render() {
                   <div><span>进度</span><strong>${completion}/${challengeSteps.length}</strong></div>
                   ${challengeSteps.map((step) => `<p class="${step.done ? "done" : ""}">${step.label}<em>${step.value}</em></p>`).join("")}
                 </div>
+                ${renderFriendLeaderboard(leaderboard)}
               </article>
             </section>
           `
@@ -376,7 +387,7 @@ function handleSort(emotion: EmotionId, multiplier: number) {
 
 function startChallenge() {
   toast = `抓出 ${activeScene.hotspots.length} 个正在污染工位的噪声。`;
-  document.querySelector(".game-stage")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.querySelector(".game-stage")?.scrollIntoView({ behavior: "auto", block: "start" });
   setState(setSceneChallengeActive(state, activeScene.id, true));
 }
 
@@ -386,8 +397,16 @@ async function rewardHint() {
     startChallenge();
     return;
   }
+  const placement = backend.getAdPlacement("hint", state);
+  if (!placement.available) {
+    toast = placement.reason ?? "今天这个提示位先冷却一下。";
+    render();
+    return;
+  }
   const ad = await platform.showRewardedAd("hint");
   if (!ad.completed) return;
+  state = recordAdView(state, "hint");
+  saveState();
   toast = "红圈借你一秒，噪声自己露头。";
   const next = activeScene.hotspots.find((hotspot) => !hotspot.found);
   hintedHotspotId = next?.id ?? "";
@@ -396,9 +415,19 @@ async function rewardHint() {
 
 async function rewardSortDouble() {
   if (!selectedEvidenceId) return;
+  const placement = backend.getAdPlacement("sort_double", state);
+  if (!placement.available) {
+    toast = placement.reason ?? "处理线广告位今天已经满负荷。";
+    render();
+    return;
+  }
   const ad = await platform.showRewardedAd("sort_double");
   toast = "机器加压了，这次噪声翻倍回收。";
-  if (ad.completed) handleSort(gameConfig.evidences[selectedEvidenceId].emotion, 2);
+  if (ad.completed) {
+    state = recordAdView(state, "sort_double");
+    saveState();
+    handleSort(gameConfig.evidences[selectedEvidenceId].emotion, placement.rewardMultiplier);
+  }
 }
 
 async function sharePersonality() {
@@ -422,4 +451,39 @@ function resetDemo() {
   activeScene = cloneScene(gameConfig.scenes[0]);
   toast = "抓住偷走注意力的噪声。";
   render();
+}
+
+function renderFriendLeaderboard(leaderboard: ReturnType<LocalGameBackend["getFriendLeaderboard"]>): string {
+  return `
+    <div class="friend-leaderboard">
+      <div class="friend-leaderboard-head">
+        <span>好友榜</span>
+        <small>本地模拟，后续替换微信关系链</small>
+      </div>
+      ${leaderboard
+        .slice(0, 4)
+        .map(
+          (entry, index) => `
+            <div class="friend-rank ${entry.isCurrentUser ? "current" : ""}">
+              <b>${index + 1}</b>
+              <span>
+                <strong>${escapeHtml(entry.nickname)}</strong>
+                <small>${escapeHtml(entry.badge)} · ${entry.completedLevels}/${gameConfig.scenes.length} 关</small>
+              </span>
+              <em>${entry.score}</em>
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }

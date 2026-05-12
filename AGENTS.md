@@ -1,89 +1,38 @@
-# AGENTS.md
+# Repository Guidelines
 
-## Project Overview
+## Project Structure & Module Organization
 
-This repository is a Vite + TypeScript game project named `fortune-game`.
+This repository is a Vite + TypeScript browser game. Runtime code lives in `src/`: `src/main.ts` wires the app, `src/core/` holds shared config, state, and types, `src/features/` contains view renderers, and `src/platform/` contains web, WeChat, and Douyin adapters. Global styling is in `src/styles.css`.
 
-Primary source files live in `src/`:
+Static visual assets are served from `public/assets/`, grouped by level or machine. Tests live in `test/`. Product notes and implementation context are in `PRODUCT_BLUEPRINT.md`, `IMPLEMENTATION.md`, and `TASK_STATE.md`.
 
-- `src/main.ts` starts the app.
-- `src/core/` contains shared game configuration, state, and types.
-- `src/features/` contains feature views.
-- `src/platform/` contains platform adapters.
-- `src/styles.css` contains global styles.
+## Build, Test, and Development Commands
 
-Product and implementation context may be documented in:
+- `npm install`: install dependencies from `package-lock.json`.
+- `npm run dev`: start the Vite dev server on `0.0.0.0`.
+- `npm run build`: run TypeScript checks and build production assets.
+- `npm test`: run Node-based config validation tests.
+- `npm run test:e2e`: run the Playwright level playtest.
+- `npm run preview`: serve the production build locally.
 
-- `PRODUCT_BLUEPRINT.md`
-- `IMPLEMENTATION.md`
-- `TASK_STATE.md`
+## Coding Style & Naming Conventions
 
-## Commands
+Use TypeScript ES modules with explicit imports and exported types where they clarify module boundaries. Match the existing two-space indentation style and keep object literals readable with trailing commas only where already used by the surrounding code. Use `camelCase` for variables and functions, `PascalCase` for classes such as platform adapters, and descriptive file names like `investigationView.ts` or `wechatAdapter.ts`.
 
-- Install dependencies: `npm install`
-- Start dev server: `npm run dev`
-- Build and type-check: `npm run build`
-- Preview production build: `npm run preview`
+Keep feature UI code in `src/features/`, shared mechanics in `src/core/`, and platform-specific behavior behind `src/platform/adapter.ts`.
 
-## Working Rules
+## Testing Guidelines
 
-- Read the relevant code before editing.
-- Prefer existing project patterns over new abstractions.
-- Keep changes scoped to the requested task.
-- Do not revert user changes or unrelated dirty worktree changes.
-- Use `rg` or `rg --files` for search when available.
-- Use `apply_patch` for manual file edits.
-- Run relevant checks before finishing, usually `npm run build` for this project.
+The config validation suite uses `node:test` and `node:assert` in `test/config-validation.test.mjs`. Add or update these tests when changing level configuration, evidence IDs, hotspot metadata, or asset paths. Playwright coverage lives in `test/level-playtest.spec.mjs`; update it for user-facing flow changes.
 
-## Work Status Protocol
+Run `npm test` for config/content changes and `npm run test:e2e` when navigation, rendering, or gameplay interactions change. Run `npm run build` before handing off substantial TypeScript changes.
 
-For any task that may take more than a few minutes, clearly mark work state in user-facing updates:
+## Commit & Pull Request Guidelines
 
-- `[开始]`: state the goal, immediate action, and next expected update time.
-- `[执行中]`: state the command or concrete action currently running.
-- `[等待中]`: state what result is being waited on, such as build, recording, browser verification, or sub-agent output.
-- `[15min同步]`: send this every 15 minutes during long work, even when there is no major new result. Include current conclusion, completed work, current action, risks/blockers, and next step.
-- `[结束]`: state that active work has stopped, summarize result, verification, and remaining risks.
+Recent history uses short imperative commit messages such as `Upload src/styles.css`. Prefer clearer scoped messages when possible, for example `Add temple level hotspot validation` or `Fix Douyin adapter login event`.
 
-If work is interrupted or context is compacted, resume this protocol after reading `TASK_STATE.md`.
+Pull requests should include a concise summary, the commands run, and any visible UI changes. Include screenshots or recordings for layout, asset, or gameplay changes. Link related issues or design notes when the change implements documented work from `docs/superpowers/`.
 
-## Session Discipline
+## Security & Configuration Tips
 
-Multiple Codex sessions can technically point at the same working directory, but only one session should actively write in this worktree at a time.
-
-- Treat the current user-facing session as the primary writer unless the user explicitly delegates parallel work.
-- If parallel work is needed, prefer separate `git worktree` directories.
-- Before editing, inspect `git status --short` and relevant diffs to avoid overwriting another session's changes.
-- If another session appears to be actively writing in this directory, pause and report the conflict instead of editing the same files blindly.
-
-## Context Compression And Recovery
-
-When continuing after context compression, interruption, or a resumed session:
-
-1. Read `TASK_STATE.md`.
-2. Check `git status --short`.
-3. Inspect relevant diffs with `git diff` before editing files that are already modified.
-4. Reconstruct the active task from the task state, current files, and latest user message.
-5. Continue from the current workspace state rather than restarting from scratch.
-6. Update `TASK_STATE.md` when the task materially changes, a milestone is completed, tests are run, or a blocker appears.
-
-## Task State Expectations
-
-`TASK_STATE.md` should stay concise and current. It should include:
-
-- Current goal
-- Scope and constraints
-- Completed work
-- Next steps
-- Known blockers
-- Latest verification result
-
-For long-running work, update it before any risky change and after each meaningful milestone.
-
-## Final Response Expectations
-
-When finishing a task, report:
-
-- What changed
-- Which checks were run
-- Any remaining risks or follow-up work
+Do not commit local secrets or platform credentials. Keep browser storage keys versioned in code when state shape changes, and keep public asset references under `/assets/...` so Vite serves them from `public/assets/`.

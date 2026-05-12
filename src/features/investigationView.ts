@@ -13,6 +13,7 @@ export interface InvestigationViewParams {
   hintedHotspotId?: string;
   justFoundHotspotId?: string;
   sceneReaction?: "celebrate" | "deflate" | "";
+  selectedEvidenceId?: string;
   foundCount?: number;
   totalCount?: number;
   foundItemTitles?: string[];
@@ -57,6 +58,7 @@ export function renderInvestigationView(params: InvestigationViewParams): string
   const challengeActive = params.challengeActive ?? true;
   const hintedHotspotId = params.hintedHotspotId ?? "";
   const justFoundHotspotId = params.justFoundHotspotId ?? "";
+  const selectedEvidenceId = params.selectedEvidenceId ?? "";
   const sceneReaction = params.sceneReaction ?? "";
   const foundItemTitles = params.foundItemTitles ?? [];
   const sceneComplete = progress.complete;
@@ -92,8 +94,8 @@ export function renderInvestigationView(params: InvestigationViewParams): string
         ${challengeActive && !sceneComplete ? renderNoiseLayer(params.activeScene) : ""}
         ${renderSceneReactionLayer(sceneReaction)}
         ${renderSceneCharacter(params.activeScene, sceneReaction, sceneComplete)}
-        ${challengeActive || sceneComplete ? hotspots.map((hotspot) => renderHotspotObject(hotspot, justFoundHotspotId, challengeActive)).join("") : ""}
-        ${challengeActive && !sceneComplete ? hotspots.map((hotspot) => renderHotspot(hotspot, hintedHotspotId, justFoundHotspotId)).join("") : ""}
+        ${challengeActive || sceneComplete ? hotspots.map((hotspot) => renderHotspotObject(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId, challengeActive)).join("") : ""}
+        ${challengeActive && !sceneComplete ? hotspots.map((hotspot) => renderHotspot(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId)).join("") : ""}
         ${renderSceneMachine(params.activeScene, revealText ?? "")}
         ${!challengeActive && !sceneComplete ? renderSceneIntro(params.activeScene) : ""}
         ${sceneComplete ? `<div class="scene-complete-stamp" aria-hidden="true">找<br />齐了</div>` : ""}
@@ -191,6 +193,17 @@ function renderEnemyBrief(scene: InvestigationScene): string {
 }
 
 function renderSceneMachine(scene: InvestigationScene, revealText: string): string {
+  if (scene.machineEmbedded) {
+    return revealText
+      ? `
+        <div class="embedded-machine-output" aria-live="polite">
+          <span>${escapeHtml(scene.machineName ?? "处理完成")}</span>
+          <strong>${escapeHtml(revealText)}</strong>
+        </div>
+      `
+      : "";
+  }
+
   if (!scene.machineImage) {
     return "";
   }
@@ -224,7 +237,7 @@ function renderSceneIntro(scene: InvestigationScene): string {
 
 function renderNoiseLayer(scene: InvestigationScene): string {
   const linesByScene: Record<string, string[]> = {
-    office: ["别人都上车了", "今晚先给一版", "普通人最后机会", "不会 AI 就晚了"],
+    office: ["别人都上车了", "今晚先给一版", "普通人最后机会", "回本先还花呗"],
     moments: ["他又赚了", "只是运气好", "房贷已扣款", "AI 又裁人"],
     temple: ["再来一张", "大棋来了", "香火很旺", "老板来电"]
   };
@@ -277,13 +290,26 @@ function renderSceneCharacter(scene: InvestigationScene, sceneReaction: "celebra
   `;
 }
 
-function renderHotspotObject(hotspot: SceneHotspot, justFoundHotspotId: string, challengeActive: boolean): string {
-  if (!hotspot.image) {
+function renderHotspotObject(
+  hotspot: SceneHotspot,
+  hintedHotspotId: string,
+  justFoundHotspotId: string,
+  selectedEvidenceId: string,
+  challengeActive: boolean
+): string {
+  if (!hotspot.image || hotspot.renderMode === "embedded") {
     return "";
   }
 
   const width = hotspot.imageWidth ?? Math.max(8, hotspot.radius * 2);
-  const stateClass = hotspot.found ? (hotspot.id === justFoundHotspotId ? "found just-found" : "found") : "";
+  const selected = hotspot.evidenceId === selectedEvidenceId;
+  const stateClass = [
+    hotspot.found ? (hotspot.id === justFoundHotspotId ? "found just-found" : "found") : "",
+    hotspot.id === hintedHotspotId ? "hinted" : "",
+    selected ? "selected" : ""
+  ]
+    .filter(Boolean)
+    .join(" ");
   const offsetX = hotspot.anchorX ?? 50;
   const offsetY = hotspot.anchorY ?? 50;
   const actionAttrs = challengeActive
@@ -294,7 +320,11 @@ function renderHotspotObject(hotspot: SceneHotspot, justFoundHotspotId: string, 
       class="hotspot-object-trigger ${stateClass}"
       style="left:${toPercent(hotspot.x)}%; top:${toPercent(hotspot.y)}%; width:${width}%; --anchor-x:${offsetX}%; --anchor-y:${offsetY}%"
       aria-label="${escapeAttribute(hotspot.label)}"
+      aria-pressed="${selected ? "true" : "false"}"
+      data-status="${hotspot.found ? "found" : "hidden"}"
+      data-evidence-id="${escapeAttribute(hotspot.evidenceId)}"
       ${actionAttrs}
+      ${hotspot.found ? "disabled" : ""}
     >
       <img
         class="hotspot-object ${stateClass}"
@@ -306,26 +336,38 @@ function renderHotspotObject(hotspot: SceneHotspot, justFoundHotspotId: string, 
   `;
 }
 
-function renderHotspot(hotspot: SceneHotspot, hintedHotspotId: string, justFoundHotspotId: string): string {
+function renderHotspot(hotspot: SceneHotspot, hintedHotspotId: string, justFoundHotspotId: string, selectedEvidenceId: string): string {
   const diameter = Math.max(0, hotspot.radius * 2);
   const hitScale = hotspot.hitScale ?? 1;
+  const embedded = hotspot.renderMode === "embedded";
   const hitSize = hotspot.image
     ? `${Math.max(11, (hotspot.imageWidth ?? hotspot.radius * 2) * 1.4 * hitScale)}%`
+    : embedded
+      ? `${Math.max(6, diameter * hitScale)}%`
     : `${Math.max(40, diameter * hitScale)}px`;
+  const hitWidth = hotspot.hitWidth ? `${hotspot.hitWidth}%` : hitSize;
+  const hitHeight = hotspot.hitHeight ? `${hotspot.hitHeight}%` : hitSize;
   const hitX = hotspot.hitX ?? hotspot.x;
   const hitY = hotspot.hitY ?? hotspot.y;
   const revealed = hotspot.found || hotspot.id === hintedHotspotId;
-  const stateClass = hotspot.found ? (hotspot.id === justFoundHotspotId ? "found just-found" : "found") : revealed ? "hinted" : "hidden";
+  const selected = hotspot.evidenceId === selectedEvidenceId;
+  const stateClass = [
+    hotspot.found ? (hotspot.id === justFoundHotspotId ? "found just-found" : "found") : revealed ? "hinted" : "hidden",
+    selected ? "selected" : ""
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return `
     <button
       class="hotspot ${hotspot.image ? "object-target" : ""} ${stateClass}"
-      style="left:${toPercent(hitX)}%; top:${toPercent(hitY)}%; --r:${diameter}px; --hit-size:${hitSize}"
+      style="left:${toPercent(hitX)}%; top:${toPercent(hitY)}%; --r:${diameter}px; --hit-size:${hitSize}; --hit-width:${hitWidth}; --hit-height:${hitHeight}"
       data-action="hotspot"
       data-id="${escapeAttribute(hotspot.id)}"
       data-evidence-id="${escapeAttribute(hotspot.evidenceId)}"
       aria-label="${escapeAttribute(hotspot.label)}"
       aria-pressed="${hotspot.found ? "true" : "false"}"
+      ${hotspot.found ? "disabled" : ""}
     >${hotspot.found ? "✓" : revealed ? "!" : ""}</button>
   `;
 }

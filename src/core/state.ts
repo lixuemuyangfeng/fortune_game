@@ -70,6 +70,17 @@ export function setSceneChallengeActive(state: PlayerState, sceneId: string, cha
   };
 }
 
+export function recordAdView(state: PlayerState, placement: string): PlayerState {
+  return {
+    ...state,
+    adViews: {
+      ...state.adViews,
+      [placement]: (state.adViews[placement] ?? 0) + 1
+    },
+    lastSavedAt: Date.now()
+  };
+}
+
 export function sortEvidence(
   config: GameConfig,
   state: PlayerState,
