@@ -64,47 +64,14 @@ export interface SceneCharacter {
   cropHeight?: number;
 }
 
-export interface Facility {
-  id: string;
-  name: string;
-  description: string;
-  emotion: EmotionId;
-  level: number;
-  baseOutput: number;
-}
-
-export interface Card {
-  id: string;
-  title: string;
-  rarity: "normal" | "rare" | "epic";
-  theme: ThemeId;
-  text: string;
-}
-
-export interface Personality {
-  id: string;
-  name: string;
-  description: string;
-  weights: Partial<Record<EmotionId, number>>;
-}
-
 export interface GameConfig {
-  emotions: Record<EmotionId, string>;
-  themes: Record<ThemeId, string>;
   evidences: Record<string, HotspotEvidence>;
   scenes: InvestigationScene[];
-  facilities: Facility[];
-  cards: Card[];
-  personalities: Personality[];
-  fortunes: string[];
 }
 
 export interface PlayerState {
-  resources: Record<EmotionId, number>;
-  facilities: Record<string, number>;
   foundEvidenceIds: string[];
   sceneProgress: Record<string, SceneInvestigationState>;
-  collectedCardIds: string[];
   adViews: Record<string, number>;
   lastSavedAt: number;
 }
@@ -112,10 +79,4 @@ export interface PlayerState {
 export interface SceneInvestigationState {
   challengeActive: boolean;
   foundHotspotIds: string[];
-}
-
-export interface SortResult {
-  correct: boolean;
-  gained: number;
-  emotion: EmotionId;
 }

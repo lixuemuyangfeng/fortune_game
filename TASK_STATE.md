@@ -21,9 +21,9 @@ Upgrade `fortune-game` from a rough Vite/TypeScript prototype into a playable bl
 - Saved the current approved visual-direction sample at `docs/art-samples/office-clarity-sample.png`.
 - Improved hotspot rendering in `src/features/investigationView.ts` with explicit hidden, hinted, selected, found, and just-found states.
 - Improved `src/styles.css` with clearer hover/focus/hint/selected feedback and K-line heartbeat-style overlay animation for market clues.
-- Added `src/core/backend.ts` as a local backend abstraction for level progress snapshots, friend leaderboard data, and ad placement decisions.
+- Added `src/core/backend.ts` as a local backend abstraction for level progress snapshots and hint-ad placement decisions.
 - Added ad view accounting in `src/core/state.ts`.
-- Wired `src/main.ts` to use the local backend for hint and sort-double ad checks, plus a simulated friend leaderboard.
+- Wired `src/main.ts` to use the local backend for hint ad checks.
 - Implemented the first pass of click-after-hit feedback from `docs/click-animation-plan.md`: per-clue local effects, found check markers, and embedded machine pulse.
 
 ## Current First-Level Status
@@ -52,6 +52,7 @@ The first level now has a playable raster-background iteration, but still needs 
 - Done: recorded the current UI aesthetic, clue clarity, completion-state, mobile, and interaction feedback rules in `docs/art-direction.md`; `AGENTS.md` now points future contributors there before changing UI or assets.
 - Done: removed the post-clear processing line/resource cards/leaderboard from the first-level completion flow; completion now stops at evidence bag + next-level entry.
 - Done: removed the first-level post-clear face expression overlay. Future visible expression changes must use a proper completed raster/person layer/sprite asset instead of CSS-drawn eyes or mouths.
+- Done: on `phaser3-requirements-spec`, removed unused DOM-prototype sorting/resource/facility/personality/leaderboard code so the branch only keeps the active clue-finding flow, level progress state, and hint-ad mock.
 - Not done: final user approval on the new level-1 raster art and hotspot positions.
 
 ## Next Steps
@@ -83,3 +84,4 @@ The first level now has a playable raster-background iteration, but still needs 
 - After the character-progress, intro-card, and ship-script refinements, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-13.
 - After removing the first-level post-clear systems and making the character completion expression visible, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-14.
 - After removing the CSS-drawn face overlay and documenting that real expression changes require proper art assets, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-14.
+- After cleaning unused sorting/resource/facility/personality/leaderboard prototype code on `phaser3-requirements-spec`, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-14.

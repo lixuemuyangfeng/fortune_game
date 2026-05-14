@@ -1,14 +1,7 @@
 import type { InvestigationScene, SceneHotspot } from "../core/types";
 
-export interface InvestigationSceneOption {
-  id: string;
-  name: string;
-}
-
 export interface InvestigationViewParams {
   activeScene: InvestigationScene;
-  sceneOptions?: InvestigationSceneOption[];
-  themeLabel: string;
   challengeActive?: boolean;
   hintedHotspotId?: string;
   justFoundHotspotId?: string;
@@ -68,7 +61,7 @@ export function renderInvestigationView(params: InvestigationViewParams): string
   return `
     <section class="game-stage investigation-view ${phaseClass} ${sceneComplete ? "scene-complete" : ""} ${sceneReaction ? `reaction-${sceneReaction}` : ""}" data-scene-id="${escapeAttribute(params.activeScene.id)}">
       <div class="stage-copy">
-        ${renderCaseHeader(params.activeScene, params.themeLabel, toast, description, foundCount, totalCount, sceneComplete, challengeActive)}
+        ${renderCaseHeader(params.activeScene, toast, description, foundCount, totalCount, sceneComplete, challengeActive)}
         ${renderProgressPanel(params.activeScene, foundCount, totalCount, sceneComplete, challengeActive)}
         ${renderFindLog(foundItemTitles)}
       </div>
@@ -107,7 +100,6 @@ export function renderInvestigationView(params: InvestigationViewParams): string
 
 function renderCaseHeader(
   scene: InvestigationScene,
-  _themeLabel: string,
   toast: string,
   description: string,
   foundCount: number,
@@ -162,35 +154,6 @@ function renderProgressPanel(
       <div class="progress-rail" aria-hidden="true"><i style="width:${progress}%"></i></div>
       <div class="progress-dots" aria-hidden="true">
         ${Array.from({ length: totalCount }, (_, index) => `<span class="${index < foundCount ? "done" : ""}"><i></i></span>`).join("")}
-      </div>
-    </div>
-  `;
-}
-
-function renderSceneSwitcher(sceneOptions: InvestigationSceneOption[], activeSceneId: string): string {
-  if (sceneOptions.length <= 1) {
-    return "";
-  }
-
-  return `
-    <div class="case-switcher" aria-label="关卡档案">
-      <span>关卡档案</span>
-      <div>
-        ${sceneOptions
-          .map(
-            (scene, index) => `
-              <button
-                class="${scene.id === activeSceneId ? "active" : ""}"
-                data-action="scene-tab"
-                data-id="${escapeAttribute(scene.id)}"
-                aria-pressed="${scene.id === activeSceneId ? "true" : "false"}"
-              >
-                <b>${String(index + 1).padStart(2, "0")}</b>
-                <em>${escapeHtml(scene.name)}</em>
-              </button>
-            `
-          )
-          .join("")}
       </div>
     </div>
   `;
@@ -305,60 +268,6 @@ function renderSceneBackdrop(scene: InvestigationScene): string {
   `;
 }
 
-function renderMoodCard(
-  scene: InvestigationScene,
-  sceneReaction: "celebrate" | "deflate" | "",
-  sceneComplete: boolean,
-  challengeActive: boolean
-): string {
-  const mood = sceneComplete ? "complete" : sceneReaction || (challengeActive ? "watch" : "idle");
-  const label =
-    mood === "complete"
-      ? "暂时松口气"
-      : mood === "celebrate"
-        ? "找对了"
-        : mood === "deflate"
-          ? "想偏了"
-          : getSceneHint(scene.id);
-
-  return `
-    <div class="mood-card mood-${escapeAttribute(mood)}" aria-live="polite">
-      <div class="mood-face">
-        <span class="mood-brow mood-brow-left"></span>
-        <span class="mood-brow mood-brow-right"></span>
-        <span class="mood-eye mood-eye-left"></span>
-        <span class="mood-eye mood-eye-right"></span>
-        <span class="mood-mouth"></span>
-        <span class="mood-cheek mood-cheek-left"></span>
-        <span class="mood-cheek mood-cheek-right"></span>
-      </div>
-      <div class="mood-copy">
-        <strong>${label}</strong>
-      </div>
-    </div>
-  `;
-}
-
-function getSceneHint(sceneId: string): string {
-  if (sceneId === "office") return "听见了吗";
-  if (sceneId === "moments") return "别人赚钱";
-  if (sceneId === "temple") return "低成本暴富";
-  return "先看处境";
-}
-
-function renderEnemyBrief(scene: InvestigationScene): string {
-  if (!scene.enemyName && !scene.enemyDescription) {
-    return "";
-  }
-
-  return `
-    <div class="enemy-brief">
-      <span>污染源</span>
-      <strong>${escapeHtml(scene.enemyName ?? "未知噪声")}</strong>
-      ${scene.enemyDescription ? `<p>${escapeHtml(scene.enemyDescription)}</p>` : ""}
-    </div>
-  `;
-}
 
 function renderSceneMachine(scene: InvestigationScene, revealText: string): string {
   if (scene.machineEmbedded) {

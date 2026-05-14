@@ -4,20 +4,16 @@ import { gameConfig } from "./core/config";
 import {
   addSceneHotspot,
   createInitialState,
-  generatePersonality,
   recordAdView,
-  setSceneChallengeActive,
-  sortEvidence,
+  setSceneChallengeActive
 } from "./core/state";
-import type { EmotionId, InvestigationScene, PlayerState, SceneInvestigationState } from "./core/types";
+import type { InvestigationScene, PlayerState, SceneInvestigationState } from "./core/types";
 import { renderInvestigationView } from "./features/investigationView";
 import { WebAdapter } from "./platform/webAdapter";
 
 const storageKey = "fortune-game-state-v2";
-const sortCountKey = "fortune-sort-count-v2";
 const platform = new WebAdapter();
 const backend = new LocalGameBackend(gameConfig);
-let currentUserId = "local_player";
 let state = loadState();
 let activeScene: InvestigationScene = cloneScene(gameConfig.scenes[0]);
 let selectedEvidenceId = state.foundEvidenceIds[0] ?? "";
@@ -25,7 +21,6 @@ let hintedHotspotId = "";
 let justFoundHotspotId = "";
 let sceneReaction: "celebrate" | "deflate" | "" = "";
 let toast = "抓住偷走注意力的噪声。";
-let sortCount = Number(localStorage.getItem(sortCountKey) ?? "0");
 let justFoundHotspotTimer: number | undefined;
 let sceneReactionTimer: number | undefined;
 
@@ -37,7 +32,6 @@ if (!appContainer) {
 const app = appContainer;
 
 void platform.login().then((user) => {
-  currentUserId = user.userId;
   platform.reportEvent("login_success", { ...user });
   render();
 });
@@ -76,8 +70,6 @@ function normalizeState(nextState: PlayerState): PlayerState {
   return {
     ...initialState,
     ...nextState,
-    resources: { ...initialState.resources, ...nextState.resources },
-    facilities: { ...initialState.facilities, ...nextState.facilities },
     sceneProgress
   };
 }
@@ -130,7 +122,6 @@ function triggerSceneReaction(nextReaction: "celebrate" | "deflate", durationMs 
 function render() {
   const activeSceneState = getSceneState(activeScene.id);
   const challengeActive = activeSceneState.challengeActive;
-  const personality = generatePersonality(gameConfig, state);
   const foundInActiveScene = activeScene.hotspots
     .filter((hotspot) => hotspot.found)
     .map((hotspot) => gameConfig.evidences[hotspot.evidenceId]?.title)
@@ -154,8 +145,6 @@ function render() {
 
         ${renderInvestigationView({
           activeScene,
-          sceneOptions: gameConfig.scenes.map((scene) => ({ id: scene.id, name: scene.name })),
-          themeLabel: `第${Math.max(1, activeSceneIndex + 1)}间处理室`,
           challengeActive,
           hintedHotspotId,
           justFoundHotspotId,
@@ -181,7 +170,7 @@ function render() {
                 </span>
                 <div>
                   <span>证据袋已封口</span>
-                  <strong>${foundInActiveScene.length} 份证据已装袋，${personality.name} 已归档</strong>
+                  <strong>${foundInActiveScene.length} 份证据已装袋</strong>
                 </div>
               </section>
             `
@@ -200,29 +189,10 @@ function bindEvents() {
       const action = element.dataset.action;
       if (action === "hotspot") handleHotspot(element.dataset.id ?? "");
       if (action === "hint-ad") await rewardHint();
-      if (action === "sort-ad") await rewardSortDouble();
-      if (action === "share") await sharePersonality();
       if (action === "reset") resetDemo();
       if (action === "start-challenge") startChallenge();
       if (action === "next-scene") selectScene(element.dataset.id ?? "");
-      if (action === "scene-tab") selectScene(element.dataset.id ?? "");
-      if (action === "sort") handleSort(element.dataset.emotion as EmotionId, 1);
-      if (action === "pick-evidence") {
-        selectedEvidenceId = element.dataset.id ?? "";
-        toast = "换个噪声，重新判断该丢哪台机器。";
-        render();
-      }
     });
-  });
-
-  app.querySelector<HTMLSelectElement>('[data-action="scene"]')?.addEventListener("change", (event) => {
-    const sceneId = (event.target as HTMLSelectElement).value;
-    selectScene(sceneId);
-  });
-
-  app.querySelector<HTMLSelectElement>('[data-action="evidence"]')?.addEventListener("change", (event) => {
-    selectedEvidenceId = (event.target as HTMLSelectElement).value;
-    render();
   });
 }
 
@@ -262,19 +232,6 @@ function handleHotspot(hotspotId: string) {
   setState(addSceneHotspot(state, activeScene.id, hotspot.id, hotspot.evidenceId));
 }
 
-function handleSort(emotion: EmotionId, multiplier: number) {
-  if (!selectedEvidenceId) return;
-  const result = sortEvidence(gameConfig, state, selectedEvidenceId, emotion, multiplier);
-  sortCount += 1;
-  localStorage.setItem(sortCountKey, String(sortCount));
-  toast = result.result.correct
-    ? `投得准，回收 ${result.result.gained} 点${gameConfig.emotions[result.result.emotion]}。`
-    : `也行，处理线照单全收 ${result.result.gained} 点。`;
-  triggerSceneReaction(result.result.correct ? "celebrate" : "deflate", result.result.correct ? 800 : 900);
-  platform.reportEvent("sort_challenge_finish", { ...result.result });
-  setState(result.state);
-}
-
 function startChallenge() {
   toast = `抓出 ${activeScene.hotspots.length} 个正在污染工位的噪声。`;
   document.querySelector(".game-stage")?.scrollIntoView({ behavior: "auto", block: "start" });
@@ -303,37 +260,9 @@ async function rewardHint() {
   render();
 }
 
-async function rewardSortDouble() {
-  if (!selectedEvidenceId) return;
-  const placement = backend.getAdPlacement("sort_double", state);
-  if (!placement.available) {
-    toast = placement.reason ?? "处理线广告位今天已经满负荷。";
-    render();
-    return;
-  }
-  const ad = await platform.showRewardedAd("sort_double");
-  toast = "机器加压了，这次噪声翻倍回收。";
-  if (ad.completed) {
-    state = recordAdView(state, "sort_double");
-    saveState();
-    handleSort(gameConfig.evidences[selectedEvidenceId].emotion, placement.rewardMultiplier);
-  }
-}
-
-async function sharePersonality() {
-  const personality = generatePersonality(gameConfig, state);
-  toast = `今日嘴脸：${personality.name}。`;
-  await platform.share({
-    title: `今日财富人格：${personality.name}。${personality.description}`
-  });
-  platform.reportEvent("share_success", { personalityId: personality.id });
-}
-
 function resetDemo() {
   localStorage.removeItem(storageKey);
-  localStorage.removeItem(sortCountKey);
   state = createInitialState(gameConfig);
-  sortCount = 0;
   hintedHotspotId = "";
   clearFoundPulse();
   clearSceneReaction();
@@ -341,39 +270,4 @@ function resetDemo() {
   activeScene = cloneScene(gameConfig.scenes[0]);
   toast = "抓住偷走注意力的噪声。";
   render();
-}
-
-function renderFriendLeaderboard(leaderboard: ReturnType<LocalGameBackend["getFriendLeaderboard"]>): string {
-  return `
-    <div class="friend-leaderboard">
-      <div class="friend-leaderboard-head">
-        <span>好友榜</span>
-        <small>本地模拟，后续替换微信关系链</small>
-      </div>
-      ${leaderboard
-        .slice(0, 4)
-        .map(
-          (entry, index) => `
-            <div class="friend-rank ${entry.isCurrentUser ? "current" : ""}">
-              <b>${index + 1}</b>
-              <span>
-                <strong>${escapeHtml(entry.nickname)}</strong>
-                <small>${escapeHtml(entry.badge)} · ${entry.completedLevels}/${gameConfig.scenes.length} 关</small>
-              </span>
-              <em>${entry.score}</em>
-            </div>
-          `
-        )
-        .join("")}
-    </div>
-  `;
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }

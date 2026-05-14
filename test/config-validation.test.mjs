@@ -12,7 +12,7 @@ function sceneBlock(sceneId) {
 
   const start = configSource.lastIndexOf("{", idIndex);
   const nextScene = configSource.indexOf("\n    {\n      id:", idIndex + 1);
-  const scenesEnd = configSource.indexOf("\n  ],\n  facilities:", idIndex);
+  const scenesEnd = configSource.indexOf("\n  ]\n};", idIndex);
   const end = nextScene === -1 ? scenesEnd : nextScene;
 
   return configSource.slice(start, end);

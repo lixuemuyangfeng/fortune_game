@@ -1,18 +1,6 @@
 import type { GameConfig } from "./types";
 
 export const gameConfig: GameConfig = {
-  emotions: {
-    envy: "朋友圈暴击",
-    stubborn: "嘴硬护盾",
-    breakdown: "老板话术",
-    fantasy: "幻想燃料",
-    pretend: "恐慌噪声"
-  },
-  themes: {
-    gold: "黄金破防日",
-    ai: "AI 踏空日",
-    lottery: "彩票最后希望日"
-  },
   evidences: {
     phone_gold: {
       id: "phone_gold",
@@ -182,45 +170,5 @@ export const gameConfig: GameConfig = {
         { id: "h5", evidenceId: "boss_phone", x: 65.2, y: 72.6, hitX: 65.4, hitY: 72.4, radius: 8, label: "老板来电牌", found: false, image: "/assets/temple-level/boss-phone-sign.svg", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "财神不接 KPI 电话" }
       ]
     }
-  ],
-  facilities: [
-    { id: "gold_incense", name: "黄金香炉", description: "把避险新闻加工成眼红值。", emotion: "envy", level: 1, baseOutput: 8 },
-    { id: "ai_shrine", name: "AI 神坛", description: "把错过红利加工成假装懂。", emotion: "pretend", level: 1, baseOutput: 7 },
-    { id: "lottery_bin", name: "彩票垃圾桶", description: "把两块钱变成一整天的幻想。", emotion: "fantasy", level: 1, baseOutput: 7 },
-    { id: "mortgage_crusher", name: "房贷粉碎机", description: "稳定生产破防值。", emotion: "breakdown", level: 1, baseOutput: 6 },
-    { id: "screenshot_wall", name: "朋友圈截图墙", description: "把别人的收益截图转成嘴硬值。", emotion: "stubborn", level: 1, baseOutput: 6 }
-  ],
-  cards: [
-    { id: "gold_fomo", title: "黄金财神门外汉", rarity: "rare", theme: "gold", text: "你不是没上车，你是在研究车站结构。" },
-    { id: "ai_beach", title: "AI 浪潮岸边观众", rarity: "rare", theme: "ai", text: "你见证了时代，也见证了自己没动。" },
-    { id: "lottery_hope", title: "彩票最后希望", rarity: "normal", theme: "lottery", text: "花小钱办大梦。" },
-    { id: "perfect_miss", title: "精准踏空", rarity: "epic", theme: "gold", text: "每次都差一点，说明你参与感很强。" },
-    { id: "stubborn_wait", title: "嘴硬观望", rarity: "normal", theme: "ai", text: "再等等是你的长期主义。" }
-  ],
-  personalities: [
-    {
-      id: "gold_outsider",
-      name: "黄金财神门外汉",
-      description: "你离暴富很近，近到只隔着昨天的决定。",
-      weights: { envy: 4, stubborn: 2 }
-    },
-    {
-      id: "precise_misser",
-      name: "精准踏空型打工人",
-      description: "你的判断经常正确，除了行动那一步。",
-      weights: { breakdown: 4, stubborn: 3 }
-    },
-    {
-      id: "fantasy_holder",
-      name: "暴富幻想收藏家",
-      description: "现实收益一般，精神仓位很满。",
-      weights: { fantasy: 5, pretend: 1 }
-    }
-  ],
-  fortunes: [
-    "今日宜观望，尤其适合假装早就知道。",
-    "你不是错过了行情，你只是提前布局了情绪稳定。",
-    "朋友圈的收益截图会迟到，但不会缺席。",
-    "愿望可以很大，仓位必须是虚构的。"
   ]
 };
