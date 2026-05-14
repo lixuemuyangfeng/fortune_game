@@ -59,6 +59,15 @@ test("all playable levels meet narrative and interaction content requirements", 
       assert.match(hotspot, /revealText: "[^"]+"/, `${sceneId} hotspot ${evidenceId} has reveal copy`);
     }
 
+    if (sceneId === "office") {
+      const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
+      assert.deepEqual(
+        animationKinds,
+        ["kline", "chat", "goldLine", "paper", "scratch"],
+        "office hotspots have explicit click feedback animations"
+      );
+    }
+
     for (const assetPath of assetPaths(block)) {
       assert.ok(existsSync(join(root, "public", assetPath)), `${sceneId} asset exists: ${assetPath}`);
     }

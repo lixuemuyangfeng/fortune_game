@@ -3,13 +3,17 @@ import { expect, test } from "@playwright/test";
 const levels = [
   {
     next: "朋友圈炫富现场",
-    hotspots: ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"]
+    complete: "工位已回魂",
+    hotspots: ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"],
+    animations: ["kline", "chat", "goldLine", "paper", "scratch"]
   },
   {
     next: "财神庙",
+    complete: "朋友圈已退烧",
     hotspots: ["收益截图", "金价手机", "亏损角落", "房贷账单", "AI裁员热帖"]
   },
   {
+    complete: "幻想已断电",
     hotspots: ["黄金香炉", "许愿墙", "彩票摊", "宏观告示", "老板来电牌"]
   }
 ];
@@ -25,14 +29,21 @@ test.describe("three-level playthrough", () => {
     await page.screenshot({ path: "artifacts/playtest-desktop-intro.png", fullPage: true });
 
     for (const [index, level] of levels.entries()) {
-      await page.getByRole("button", { name: /启动处理|继续抓噪声/ }).click();
+      await page.getByRole("button", { name: /开始还魂|继续还魂/ }).click();
 
-      for (const hotspot of level.hotspots) {
+      await expect(page.locator(".hotspot-effect")).toHaveCount(0);
+
+      for (const [hotspotIndex, hotspot] of level.hotspots.entries()) {
         await page.getByRole("button", { name: hotspot }).first().click();
         await expect(page.getByText("已找到")).toBeVisible();
+
+        const animation = level.animations?.[hotspotIndex];
+        if (animation) {
+          await expect(page.locator(`.hotspot-effect[data-animation-kind="${animation}"]`)).toBeVisible();
+        }
       }
 
-      await expect(page.getByText("找齐了").first()).toBeVisible();
+      await expect(page.getByText(level.complete).first()).toBeVisible();
       await page.screenshot({ path: `artifacts/playtest-desktop-level-${index + 1}.png`, fullPage: true });
 
       if (level.next) {
@@ -49,7 +60,7 @@ test.describe("three-level playthrough", () => {
     await page.reload();
 
     await expect(page.getByRole("heading", { name: "键盘声变轻了" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "启动处理" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始还魂" })).toBeVisible();
     await page.screenshot({ path: "artifacts/playtest-mobile-intro.png", fullPage: true });
   });
 });

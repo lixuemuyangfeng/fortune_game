@@ -8,7 +8,8 @@
     "test": "node --test test/config-validation.test.mjs",
     "test:e2e": "playwright test test/level-playtest.spec.mjs",
     "build": "tsc && vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "ship": "scripts/commit-push.sh"
   },
   "dependencies": {
     "@vitejs/plugin-legacy": "^7.2.1",

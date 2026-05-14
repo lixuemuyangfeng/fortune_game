@@ -32,6 +32,7 @@ let toast = "抓住偷走注意力的噪声。";
 let sortCount = Number(localStorage.getItem(sortCountKey) ?? "0");
 let justFoundHotspotTimer: number | undefined;
 let sceneReactionTimer: number | undefined;
+let systemsOpen = false;
 
 const appContainer = document.querySelector<HTMLDivElement>("#app");
 if (!appContainer) {
@@ -155,8 +156,8 @@ function render() {
   ];
   const completion = challengeSteps.filter((step) => step.done).length;
   const hasProgress = challengeActive || foundInScene > 0;
-  const showResourceBelt = activeSceneComplete;
-  const showProcessingSystems = activeSceneComplete;
+  const showResourceBelt = activeSceneComplete && systemsOpen;
+  const showProcessingSystems = activeSceneComplete && systemsOpen;
   const nextScene = gameConfig.scenes[activeSceneIndex + 1];
   const leaderboard = backend.getFriendLeaderboard(currentUserId, state);
 
@@ -165,7 +166,6 @@ function render() {
       <section class="game-phone ${hasProgress ? "is-started" : "is-idle"}">
         <header class="game-top">
           <div>
-            <p>${gameConfig.themes[activeScene.theme]}</p>
             <h1>暴富幻想所</h1>
           </div>
           <button class="secondary compact" data-action="reset">重置</button>
@@ -186,10 +186,27 @@ function render() {
           description: activeScene.description,
           nextSceneId: nextScene?.id,
           nextSceneName: nextScene?.name,
-          challengeLabel: challengeActive ? "继续抓噪声" : "启动处理",
+          challengeLabel: challengeActive ? "继续还魂" : "开始还魂",
           hintLabel: "给个提示",
           selectedEvidenceId
         })}
+
+        ${
+          activeSceneComplete
+            ? `
+              <section class="completion-dock">
+                <span class="evidence-bag" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </span>
+                <div>
+                  <span>证据袋已封口</span>
+                  <strong>${foundInActiveScene.length} 份证据已装袋</strong>
+                </div>
+                <button class="light" data-action="toggle-systems">${systemsOpen ? "收起回收线" : "封袋回收"}</button>
+              </section>
+            `
+            : ""
+        }
 
         ${
           showResourceBelt
@@ -316,6 +333,11 @@ function bindEvents() {
       if (action === "reset") resetDemo();
       if (action === "start-challenge") startChallenge();
       if (action === "next-scene") selectScene(element.dataset.id ?? "");
+      if (action === "scene-tab") selectScene(element.dataset.id ?? "");
+      if (action === "toggle-systems") {
+        systemsOpen = !systemsOpen;
+        render();
+      }
       if (action === "sort") handleSort(element.dataset.emotion as EmotionId, 1);
       if (action === "pick-evidence") {
         selectedEvidenceId = element.dataset.id ?? "";
@@ -342,6 +364,7 @@ function selectScene(sceneId: string) {
 
   activeScene = cloneScene(scene);
   hintedHotspotId = "";
+  systemsOpen = false;
   clearFoundPulse();
   clearSceneReaction();
   toast = getSceneState(scene.id).challengeActive ? "继续扫，场景里还有噪声。" : "抓住偷走注意力的噪声。";
@@ -448,6 +471,7 @@ function resetDemo() {
   clearFoundPulse();
   clearSceneReaction();
   selectedEvidenceId = "";
+  systemsOpen = false;
   activeScene = cloneScene(gameConfig.scenes[0]);
   toast = "抓住偷走注意力的噪声。";
   render();

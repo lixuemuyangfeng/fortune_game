@@ -6,6 +6,8 @@ This repository is a Vite + TypeScript browser game. Runtime code lives in `src/
 
 Static visual assets are served from `public/assets/`, grouped by level or machine. Tests live in `test/`. Product notes and implementation context are in `PRODUCT_BLUEPRINT.md`, `IMPLEMENTATION.md`, and `TASK_STATE.md`.
 
+Before changing level art, clue layout, or investigation UI, read `docs/art-direction.md`. It records the current visual style, clue clarity rules, mobile layout constraints, completion-state behavior, and interaction feedback requirements.
+
 ## Build, Test, and Development Commands
 
 - `npm install`: install dependencies from `package-lock.json`.
@@ -14,6 +16,7 @@ Static visual assets are served from `public/assets/`, grouped by level or machi
 - `npm test`: run Node-based config validation tests.
 - `npm run test:e2e`: run the Playwright level playtest.
 - `npm run preview`: serve the production build locally.
+- `npm run ship -- "message"`: verify, commit code and assets, rebase/autostash if needed, and push the current branch.
 
 ## Coding Style & Naming Conventions
 

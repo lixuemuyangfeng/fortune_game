@@ -50,7 +50,6 @@ export function renderInvestigationView(params: InvestigationViewParams): string
   const progress = getSceneProgress(hotspots);
   const foundCount = params.foundCount ?? progress.found;
   const totalCount = params.totalCount ?? progress.total;
-  const sceneOptions = params.sceneOptions ?? [{ id: params.activeScene.id, name: params.activeScene.name }];
   const description = params.description ?? params.activeScene.description;
   const toast = params.toast ?? description;
   const challengeLabel = params.challengeLabel ?? "开始翻找";
@@ -69,36 +68,22 @@ export function renderInvestigationView(params: InvestigationViewParams): string
   return `
     <section class="game-stage investigation-view ${phaseClass} ${sceneComplete ? "scene-complete" : ""} ${sceneReaction ? `reaction-${sceneReaction}` : ""}" data-scene-id="${escapeAttribute(params.activeScene.id)}">
       <div class="stage-copy">
-        <span>${escapeHtml(params.themeLabel)}</span>
-        <h2>${escapeHtml(params.activeScene.name)}</h2>
-        <p>${escapeHtml(toast)}</p>
-        <small class="investigation-description">${escapeHtml(description)}</small>
-        ${renderMoodCard(params.activeScene, sceneReaction, sceneComplete, challengeActive)}
-        ${renderEnemyBrief(params.activeScene)}
+        ${renderCaseHeader(params.activeScene, params.themeLabel, toast, description, foundCount, totalCount, sceneComplete, challengeActive)}
+        ${renderProgressPanel(params.activeScene, foundCount, totalCount, sceneComplete, challengeActive)}
         ${renderFindLog(foundItemTitles)}
-        ${sceneComplete ? `<div class="completion-badge">找齐了</div>` : ""}
-      </div>
-      <div class="scene-control">
-        <select data-action="scene" aria-label="切换找茬场景">
-          ${sceneOptions
-            .map(
-              (scene) =>
-                `<option value="${escapeAttribute(scene.id)}" ${scene.id === params.activeScene.id ? "selected" : ""}>${escapeHtml(scene.name)}</option>`
-            )
-            .join("")}
-        </select>
-        <strong>${foundCount}/${totalCount}</strong>
       </div>
       <div class="scene-art ${params.activeScene.backgroundImage ? "image-scene" : ""}" role="group" aria-label="${escapeAttribute(`${params.activeScene.name}找茬区域`)}">
         ${renderSceneBackdrop(params.activeScene)}
         ${challengeActive && !sceneComplete ? renderNoiseLayer(params.activeScene) : ""}
         ${renderSceneReactionLayer(sceneReaction)}
         ${renderSceneCharacter(params.activeScene, sceneReaction, sceneComplete)}
+        ${renderSceneEmotion(params.activeScene, sceneReaction, sceneComplete, challengeActive, foundCount, totalCount)}
         ${challengeActive || sceneComplete ? hotspots.map((hotspot) => renderHotspotObject(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId, challengeActive)).join("") : ""}
         ${challengeActive && !sceneComplete ? hotspots.map((hotspot) => renderHotspot(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId)).join("") : ""}
+        ${activeFoundHotspot ? renderHotspotEffect(activeFoundHotspot) : ""}
+        ${activeFoundHotspot ? renderMachinePulse(params.activeScene) : ""}
         ${renderSceneMachine(params.activeScene, revealText ?? "")}
         ${!challengeActive && !sceneComplete ? renderSceneIntro(params.activeScene) : ""}
-        ${sceneComplete ? `<div class="scene-complete-stamp" aria-hidden="true">找<br />齐了</div>` : ""}
       </div>
       <div class="stage-actions">
         ${
@@ -118,6 +103,192 @@ export function renderInvestigationView(params: InvestigationViewParams): string
       </div>
     </section>
   `;
+}
+
+function renderCaseHeader(
+  scene: InvestigationScene,
+  _themeLabel: string,
+  toast: string,
+  description: string,
+  foundCount: number,
+  totalCount: number,
+  sceneComplete: boolean,
+  challengeActive: boolean
+): string {
+  const meta = getSceneMeta(scene.id);
+  const narrative = sceneComplete
+    ? getSceneCompleteNarrative(scene.id)
+    : challengeActive
+      ? getSceneSearchNarrative(scene.id, foundCount, totalCount)
+      : getSceneIntroNarrative(scene.id) || description || toast;
+
+  return `
+    <div class="case-header">
+      <div class="case-meta">
+        <span>${escapeHtml(meta.place)}</span>
+        <span>${escapeHtml(meta.time)}</span>
+      </div>
+      <h2>${escapeHtml(scene.name)}</h2>
+      ${narrative ? `<p>${escapeHtml(narrative)}</p>` : ""}
+    </div>
+  `;
+}
+
+function renderProgressPanel(
+  scene: InvestigationScene,
+  foundCount: number,
+  totalCount: number,
+  sceneComplete: boolean,
+  challengeActive: boolean
+): string {
+  const progress = totalCount > 0 ? Math.min(100, Math.round((foundCount / totalCount) * 100)) : 0;
+  const task = sceneComplete
+    ? scene.completeText || "现场噪声已处理。"
+    : challengeActive
+      ? getSceneTask(scene.id)
+      : "开始还魂后，从画面里抓出异常诱因。";
+  const title = sceneComplete ? getSceneCompleteTitle(scene.id) : challengeActive ? getSceneActiveTitle(scene.id) : getSceneIdleTitle(scene.id);
+
+  return `
+    <div class="case-progress">
+      <div class="case-progress-head">
+        <div>
+          <span>${sceneComplete ? "已完成" : "本关目标"}</span>
+          <strong>${escapeHtml(title)}</strong>
+        </div>
+        <b>${foundCount}/${totalCount}</b>
+      </div>
+      <p>${escapeHtml(task)}</p>
+      <div class="progress-rail" aria-hidden="true"><i style="width:${progress}%"></i></div>
+      <div class="progress-dots" aria-hidden="true">
+        ${Array.from({ length: totalCount }, (_, index) => `<span class="${index < foundCount ? "done" : ""}"><i></i></span>`).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderSceneSwitcher(sceneOptions: InvestigationSceneOption[], activeSceneId: string): string {
+  if (sceneOptions.length <= 1) {
+    return "";
+  }
+
+  return `
+    <div class="case-switcher" aria-label="关卡档案">
+      <span>关卡档案</span>
+      <div>
+        ${sceneOptions
+          .map(
+            (scene, index) => `
+              <button
+                class="${scene.id === activeSceneId ? "active" : ""}"
+                data-action="scene-tab"
+                data-id="${escapeAttribute(scene.id)}"
+                aria-pressed="${scene.id === activeSceneId ? "true" : "false"}"
+              >
+                <b>${String(index + 1).padStart(2, "0")}</b>
+                <em>${escapeHtml(scene.name)}</em>
+              </button>
+            `
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderSceneEmotion(
+  scene: InvestigationScene,
+  sceneReaction: "celebrate" | "deflate" | "",
+  sceneComplete: boolean,
+  challengeActive: boolean,
+  foundCount: number,
+  totalCount: number
+): string {
+  if (scene.id !== "office") {
+    return "";
+  }
+
+  const mood = sceneComplete ? "complete" : sceneReaction || (challengeActive ? "watch" : "idle");
+  const progressLevel = totalCount > 0 ? Math.min(totalCount, Math.max(0, foundCount)) : 0;
+  const recovery = totalCount > 0 ? Math.min(1, Math.max(0, foundCount / totalCount)) : 0;
+
+  return `
+    <div class="scene-emotion mood-${escapeAttribute(mood)} progress-${progressLevel}" style="--recovery:${recovery.toFixed(2)}" aria-hidden="true">
+      <span class="emotion-brow emotion-brow-left"></span>
+      <span class="emotion-brow emotion-brow-right"></span>
+      <span class="emotion-eye emotion-eye-left"></span>
+      <span class="emotion-eye emotion-eye-right"></span>
+      <span class="emotion-mouth"></span>
+      <span class="emotion-sigh"></span>
+      <span class="emotion-spark"></span>
+    </div>
+  `;
+}
+
+function getSceneMeta(sceneId: string): { place: string; time: string } {
+  if (sceneId === "office") return { place: "字节跳桶开放办公区", time: "周三 15:27" };
+  if (sceneId === "moments") return { place: "周启明家里", time: "凌晨 01:30" };
+  if (sceneId === "temple") return { place: "福踩便利站后巷", time: "晚上 21:00" };
+  return { place: "暴富幻想所", time: "营业中" };
+}
+
+function getSceneTask(sceneId: string): string {
+  if (sceneId === "office") return "找齐 5 个诱因，让工位回魂。";
+  if (sceneId === "moments") return "拆出 5 处裂缝，让朋友圈退烧。";
+  if (sceneId === "temple") return "断开 5 个仪式，让廉价幻想降温。";
+  return "抓出画面里的暴富噪声。";
+}
+
+function getSceneIdleTitle(sceneId: string): string {
+  if (sceneId === "office") return "唤醒工位还魂机";
+  if (sceneId === "moments") return "打开高光拆帧机";
+  if (sceneId === "temple") return "启动幻想断电闸";
+  return "准备处理";
+}
+
+function getSceneActiveTitle(sceneId: string): string {
+  if (sceneId === "office") return "找回工位魂魄";
+  if (sceneId === "moments") return "拆开高光滤镜";
+  if (sceneId === "temple") return "切断翻身仪式";
+  return "处理现场";
+}
+
+function getSceneCompleteTitle(sceneId: string): string {
+  if (sceneId === "office") return "工位已回魂";
+  if (sceneId === "moments") return "朋友圈已退烧";
+  if (sceneId === "temple") return "幻想已断电";
+  return "现场已处理";
+}
+
+function getSceneSearchNarrative(sceneId: string, foundCount: number, totalCount: number): string {
+  if (sceneId === "office") {
+    return foundCount > 0 ? `已回收 ${foundCount}/${totalCount} 个诱因。` : "";
+  }
+  if (sceneId === "moments") {
+    return foundCount > 0
+      ? `高光滤镜开始掉粉，已有 ${foundCount}/${totalCount} 个裂缝露出来。`
+      : "手机屏幕亮着，别人生活里最亮的一帧正砸到脸上。";
+  }
+  if (sceneId === "temple") {
+    return foundCount > 0
+      ? `香火和幻想都在降温，已有 ${foundCount}/${totalCount} 个仪式被拆开。`
+      : "每个人都说只是试试，但手已经伸向下一张。";
+  }
+  return `已找到 ${foundCount}/${totalCount} 个线索。`;
+}
+
+function getSceneIntroNarrative(sceneId: string): string {
+  if (sceneId === "office") return "把行情、弹窗和嘴硬从工位里拽出来。";
+  if (sceneId === "moments") return "把高光截图拆成可承受版本。";
+  if (sceneId === "temple") return "把廉价翻身仪式逐个断电。";
+  return "";
+}
+
+function getSceneCompleteNarrative(sceneId: string): string {
+  if (sceneId === "office") return "工位终于回魂，行情、弹窗和嘴硬都被贴上标签。";
+  if (sceneId === "moments") return "朋友圈退烧，截图还是截图，生活先回到可承受版本。";
+  if (sceneId === "temple") return "廉价翻身仪式已断电，明天再说浓缩液开始回收。";
+  return "现场已处理。";
 }
 
 function renderSceneBackdrop(scene: InvestigationScene): string {
@@ -226,13 +397,44 @@ function renderSceneMachine(scene: InvestigationScene, revealText: string): stri
 }
 
 function renderSceneIntro(scene: InvestigationScene): string {
+  const intro = getSceneIntroCard(scene);
+
   return `
     <div class="scene-intro-card" aria-hidden="true">
-      <span>${escapeHtml(scene.hint ?? "先听现场")}</span>
-      <strong>${escapeHtml(scene.enemyName ?? "噪声还没现形")}</strong>
-      <p>${escapeHtml(scene.enemyDescription ?? "启动处理后，藏在画面里的东西会开始露头。")}</p>
+      <span>${escapeHtml(intro.kicker)}</span>
+      <strong>${escapeHtml(intro.title)}</strong>
+      <p>${escapeHtml(intro.body)}</p>
     </div>
   `;
+}
+
+function getSceneIntroCard(scene: InvestigationScene): { kicker: string; title: string; body: string } {
+  if (scene.id === "office") {
+    return {
+      kicker: "听见了吗",
+      title: "键盘声变轻了",
+      body: "开始还魂后，把行情和弹窗从工位里拽出来。"
+    };
+  }
+  if (scene.id === "moments") {
+    return {
+      kicker: "先别点赞",
+      title: "高光太亮了",
+      body: "开始拆帧后，截图背后的裂缝会露出来。"
+    };
+  }
+  if (scene.id === "temple") {
+    return {
+      kicker: "香火很旺",
+      title: "手别急",
+      body: "开始断电后，每个廉价翻身仪式都会降温。"
+    };
+  }
+  return {
+    kicker: scene.hint ?? "先听现场",
+    title: scene.name,
+    body: "启动处理后，藏在画面里的东西会开始露头。"
+  };
 }
 
 function renderNoiseLayer(scene: InvestigationScene): string {
@@ -365,10 +567,47 @@ function renderHotspot(hotspot: SceneHotspot, hintedHotspotId: string, justFound
       data-action="hotspot"
       data-id="${escapeAttribute(hotspot.id)}"
       data-evidence-id="${escapeAttribute(hotspot.evidenceId)}"
+      ${hotspot.animationKind ? `data-animation-kind="${escapeAttribute(hotspot.animationKind)}"` : ""}
       aria-label="${escapeAttribute(hotspot.label)}"
       aria-pressed="${hotspot.found ? "true" : "false"}"
       ${hotspot.found ? "disabled" : ""}
     >${hotspot.found ? "✓" : revealed ? "!" : ""}</button>
+  `;
+}
+
+function renderHotspotEffect(hotspot: SceneHotspot): string {
+  if (!hotspot.animationKind) {
+    return "";
+  }
+
+  const diameter = Math.max(0, hotspot.radius * 2);
+  const hitSize = `${Math.max(6, diameter * (hotspot.hitScale ?? 1))}%`;
+  const hitWidth = hotspot.hitWidth ? `${hotspot.hitWidth}%` : hitSize;
+  const hitHeight = hotspot.hitHeight ? `${hotspot.hitHeight}%` : hitSize;
+  const hitX = hotspot.hitX ?? hotspot.x;
+  const hitY = hotspot.hitY ?? hotspot.y;
+
+  return `
+    <div
+      class="hotspot-effect effect-${escapeAttribute(hotspot.animationKind)}"
+      style="left:${toPercent(hitX)}%; top:${toPercent(hitY)}%; --effect-width:${hitWidth}; --effect-height:${hitHeight}"
+      data-animation-kind="${escapeAttribute(hotspot.animationKind)}"
+      aria-hidden="true"
+    >
+      <span class="effect-line"></span>
+    </div>
+  `;
+}
+
+function renderMachinePulse(scene: InvestigationScene): string {
+  if (!scene.machineEmbedded) {
+    return "";
+  }
+
+  return `
+    <div class="embedded-machine-pulse" aria-hidden="true">
+      <span></span>
+    </div>
   `;
 }
 
