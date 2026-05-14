@@ -219,6 +219,12 @@ function renderSceneEmotion(
       <span class="emotion-eye emotion-eye-left"></span>
       <span class="emotion-eye emotion-eye-right"></span>
       <span class="emotion-mouth"></span>
+      <span class="emotion-fatigue"></span>
+      <span class="emotion-relief-eye emotion-relief-eye-left"></span>
+      <span class="emotion-relief-eye emotion-relief-eye-right"></span>
+      <span class="emotion-relief-mouth"></span>
+      <span class="emotion-relief-cheek emotion-relief-cheek-left"></span>
+      <span class="emotion-relief-cheek emotion-relief-cheek-right"></span>
       <span class="emotion-sigh"></span>
       <span class="emotion-spark"></span>
     </div>

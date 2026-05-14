@@ -3,18 +3,14 @@ import { LocalGameBackend } from "./core/backend";
 import { gameConfig } from "./core/config";
 import {
   addSceneHotspot,
-  collectOffline,
   createInitialState,
   generatePersonality,
   recordAdView,
   setSceneChallengeActive,
   sortEvidence,
-  unlockCard,
-  upgradeFacility
 } from "./core/state";
 import type { EmotionId, InvestigationScene, PlayerState, SceneInvestigationState } from "./core/types";
 import { renderInvestigationView } from "./features/investigationView";
-import { renderSortingView } from "./features/sortingView";
 import { WebAdapter } from "./platform/webAdapter";
 
 const storageKey = "fortune-game-state-v2";
@@ -32,7 +28,6 @@ let toast = "抓住偷走注意力的噪声。";
 let sortCount = Number(localStorage.getItem(sortCountKey) ?? "0");
 let justFoundHotspotTimer: number | undefined;
 let sceneReactionTimer: number | undefined;
-let systemsOpen = false;
 
 const appContainer = document.querySelector<HTMLDivElement>("#app");
 if (!appContainer) {
@@ -136,30 +131,16 @@ function render() {
   const activeSceneState = getSceneState(activeScene.id);
   const challengeActive = activeSceneState.challengeActive;
   const personality = generatePersonality(gameConfig, state);
-  const foundEvidences = state.foundEvidenceIds.map((id) => gameConfig.evidences[id]).filter(Boolean);
   const foundInActiveScene = activeScene.hotspots
     .filter((hotspot) => hotspot.found)
     .map((hotspot) => gameConfig.evidences[hotspot.evidenceId]?.title)
     .filter(Boolean);
-  const selectedEvidence = gameConfig.evidences[selectedEvidenceId] ?? foundEvidences[0];
   const foundInScene = activeScene.hotspots.filter((hotspot) => hotspot.found).length;
   const totalInScene = activeScene.hotspots.length;
   const activeSceneComplete = totalInScene > 0 && foundInScene >= totalInScene;
-  const sceneFindTarget = totalInScene;
   const activeSceneIndex = gameConfig.scenes.findIndex((scene) => scene.id === activeScene.id);
-  const upgradedFacilities = Object.values(state.facilities).filter((level) => level > 1).length;
-  const challengeSteps = [
-    { label: `抓出 ${sceneFindTarget} 个噪声`, done: activeSceneComplete, value: `${Math.min(sceneFindTarget, foundInScene)}/${sceneFindTarget}` },
-    { label: "投入处理机", done: sortCount >= 2, value: `${Math.min(2, sortCount)}/2` },
-    { label: "升级幻想所", done: upgradedFacilities >= 1, value: `${Math.min(1, upgradedFacilities)}/1` },
-    { label: "生成今日人设", done: foundInScene >= 1, value: foundInScene >= 1 ? "可开" : "憋着" }
-  ];
-  const completion = challengeSteps.filter((step) => step.done).length;
   const hasProgress = challengeActive || foundInScene > 0;
-  const showResourceBelt = activeSceneComplete && systemsOpen;
-  const showProcessingSystems = activeSceneComplete && systemsOpen;
   const nextScene = gameConfig.scenes[activeSceneIndex + 1];
-  const leaderboard = backend.getFriendLeaderboard(currentUserId, state);
 
   app.innerHTML = `
     <main class="game-shell">
@@ -200,119 +181,13 @@ function render() {
                 </span>
                 <div>
                   <span>证据袋已封口</span>
-                  <strong>${foundInActiveScene.length} 份证据已装袋</strong>
+                  <strong>${foundInActiveScene.length} 份证据已装袋，${personality.name} 已归档</strong>
                 </div>
-                <button class="light" data-action="toggle-systems">${systemsOpen ? "收起回收线" : "封袋回收"}</button>
-              </section>
-            `
-            : ""
-        }
-
-        ${
-          showResourceBelt
-            ? `
-              <section class="resource-belt">
-                ${Object.entries(gameConfig.emotions)
-                  .map(([id, label]) => `<div class="resource-chip"><span>${label}</span><b>${state.resources[id as EmotionId]}</b></div>`)
-                  .join("")}
               </section>
             `
             : ""
         }
       </section>
-
-      ${
-        showProcessingSystems
-          ? `
-            <section class="play-board">
-              ${renderSortingView({
-                emotions: gameConfig.emotions,
-                foundEvidences,
-                selectedEvidence,
-                sortCount,
-                progress: { current: Math.min(2, sortCount), target: 2 },
-                title: "幻想处理线",
-                subtitle: "把噪声丢进最像的处理机",
-                adLabel: "广告双倍",
-                emptyMessage: "处理线空转中。先去图里抓一个暴富噪声。"
-              })}
-
-              <article class="result-panel">
-                <div class="panel-head">
-                  <div>
-                    <p class="eyebrow">今日结果</p>
-                    <h2>${personality.name}</h2>
-                  </div>
-                  <button class="ghost" data-action="share">分享人格</button>
-                </div>
-                <p class="personality">${personality.description}</p>
-                <div class="result-card">
-                  <span>踏空指数</span>
-                  <strong>${Math.min(99, 38 + state.resources.breakdown + state.resources.envy)}%</strong>
-                  <small>娱乐指数，不构成任何投资建议</small>
-                </div>
-                <div class="challenge-mini">
-                  <div><span>进度</span><strong>${completion}/${challengeSteps.length}</strong></div>
-                  ${challengeSteps.map((step) => `<p class="${step.done ? "done" : ""}">${step.label}<em>${step.value}</em></p>`).join("")}
-                </div>
-                ${renderFriendLeaderboard(leaderboard)}
-              </article>
-            </section>
-          `
-          : ""
-      }
-
-      ${
-        showProcessingSystems
-          ? `
-            <section class="bottom-board">
-              <article class="facility-board">
-                <div class="board-head">
-                  <div>
-                    <p class="eyebrow">幻想所后台</p>
-                    <h2>收完顺手升级，明天继续发财幻想</h2>
-                  </div>
-                  <button data-action="offline">收菜</button>
-                </div>
-                <div class="facility-list">
-                  ${gameConfig.facilities
-                    .map((facility) => {
-                      const level = state.facilities[facility.id] ?? 1;
-                      const cost = level * 25;
-                      const canUpgrade = state.resources[facility.emotion] >= cost;
-                      return `
-                        <button class="facility ${canUpgrade ? "ready" : ""}" data-action="upgrade" data-id="${facility.id}">
-                          <span>
-                            <strong>${facility.name} Lv.${level}</strong>
-                            <small>${facility.description}</small>
-                          </span>
-                          <em>${canUpgrade ? "可升级" : `${gameConfig.emotions[facility.emotion]} ${cost}`}</em>
-                        </button>
-                      `;
-                    })
-                    .join("")}
-                </div>
-              </article>
-              <article class="collection-board">
-                <div class="board-head">
-                  <div>
-                    <p class="eyebrow">热点卡</p>
-                    <h2>把今天的离谱东西收进图鉴</h2>
-                  </div>
-                  <button data-action="unlock-card">开卡</button>
-                </div>
-                <div class="cards">
-                  ${state.collectedCardIds
-                    .map((id) => gameConfig.cards.find((card) => card.id === id))
-                    .filter(Boolean)
-                    .map((card) => `<div class="card"><strong>${card!.title}</strong><span>${card!.text}</span></div>`)
-                    .join("") || `<p class="empty">还没有热点卡。去解锁第一张。</p>`}
-                </div>
-              </article>
-            </section>
-          `
-          : ""
-      }
     </main>
   `;
 
@@ -324,9 +199,6 @@ function bindEvents() {
     element.addEventListener("click", async () => {
       const action = element.dataset.action;
       if (action === "hotspot") handleHotspot(element.dataset.id ?? "");
-      if (action === "upgrade") setState(upgradeFacility(gameConfig, state, element.dataset.id ?? ""));
-      if (action === "offline") setState(collectOffline(gameConfig, state));
-      if (action === "unlock-card") setState(unlockCard(gameConfig, state));
       if (action === "hint-ad") await rewardHint();
       if (action === "sort-ad") await rewardSortDouble();
       if (action === "share") await sharePersonality();
@@ -334,10 +206,6 @@ function bindEvents() {
       if (action === "start-challenge") startChallenge();
       if (action === "next-scene") selectScene(element.dataset.id ?? "");
       if (action === "scene-tab") selectScene(element.dataset.id ?? "");
-      if (action === "toggle-systems") {
-        systemsOpen = !systemsOpen;
-        render();
-      }
       if (action === "sort") handleSort(element.dataset.emotion as EmotionId, 1);
       if (action === "pick-evidence") {
         selectedEvidenceId = element.dataset.id ?? "";
@@ -364,7 +232,6 @@ function selectScene(sceneId: string) {
 
   activeScene = cloneScene(scene);
   hintedHotspotId = "";
-  systemsOpen = false;
   clearFoundPulse();
   clearSceneReaction();
   toast = getSceneState(scene.id).challengeActive ? "继续扫，场景里还有噪声。" : "抓住偷走注意力的噪声。";
@@ -471,7 +338,6 @@ function resetDemo() {
   clearFoundPulse();
   clearSceneReaction();
   selectedEvidenceId = "";
-  systemsOpen = false;
   activeScene = cloneScene(gameConfig.scenes[0]);
   toast = "抓住偷走注意力的噪声。";
   render();
