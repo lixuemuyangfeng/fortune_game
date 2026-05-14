@@ -208,25 +208,16 @@ function renderSceneEmotion(
     return "";
   }
 
+  if (sceneComplete) {
+    return "";
+  }
+
   const mood = sceneComplete ? "complete" : sceneReaction || (challengeActive ? "watch" : "idle");
   const progressLevel = totalCount > 0 ? Math.min(totalCount, Math.max(0, foundCount)) : 0;
-  const recovery = totalCount > 0 ? Math.min(1, Math.max(0, foundCount / totalCount)) : 0;
 
   return `
-    <div class="scene-emotion mood-${escapeAttribute(mood)} progress-${progressLevel}" style="--recovery:${recovery.toFixed(2)}" aria-hidden="true">
-      <span class="emotion-brow emotion-brow-left"></span>
-      <span class="emotion-brow emotion-brow-right"></span>
-      <span class="emotion-eye emotion-eye-left"></span>
-      <span class="emotion-eye emotion-eye-right"></span>
-      <span class="emotion-mouth"></span>
-      <span class="emotion-fatigue"></span>
-      <span class="emotion-relief-eye emotion-relief-eye-left"></span>
-      <span class="emotion-relief-eye emotion-relief-eye-right"></span>
-      <span class="emotion-relief-mouth"></span>
-      <span class="emotion-relief-cheek emotion-relief-cheek-left"></span>
-      <span class="emotion-relief-cheek emotion-relief-cheek-right"></span>
+    <div class="scene-emotion mood-${escapeAttribute(mood)} progress-${progressLevel}" aria-hidden="true">
       <span class="emotion-sigh"></span>
-      <span class="emotion-spark"></span>
     </div>
   `;
 }

@@ -735,195 +735,33 @@ p {
 .scene-emotion {
   position: absolute;
   z-index: 6;
-  left: 48.7%;
-  top: 31.6%;
-  width: 90px;
-  height: 62px;
+  left: 54%;
+  top: 25%;
+  width: 34px;
+  height: 34px;
   pointer-events: none;
-  opacity: calc(0.56 + (var(--recovery, 0) * 0.4));
-  filter:
-    drop-shadow(0 1px 0 rgba(255, 235, 180, 0.18))
-    drop-shadow(0 2px 3px rgba(0, 0, 0, 0.38));
+  opacity: 0.82;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
   transform: translate(-50%, -50%);
 }
 
 .scene-emotion::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 52%;
-  width: 78px;
-  height: 52px;
-  border: 1px solid rgba(238, 242, 222, 0.06);
-  border-radius: 48% 52% 50% 46%;
-  background:
-    radial-gradient(circle at 46% 42%, rgba(246, 223, 142, calc(var(--recovery, 0) * 0.26)), transparent 42%),
-    radial-gradient(circle at 68% 22%, rgba(111, 181, 103, calc(var(--recovery, 0) * 0.2)), transparent 36%);
-  opacity: calc(0.2 + (var(--recovery, 0) * 0.55));
-  mix-blend-mode: screen;
-  transform: translate(-50%, -50%);
-  transition: opacity 180ms ease, background 180ms ease, box-shadow 180ms ease;
-}
-
-.emotion-sigh,
-.emotion-spark,
-.emotion-fatigue,
-.emotion-relief-eye,
-.emotion-relief-mouth,
-.emotion-relief-cheek {
-  position: absolute;
-  display: block;
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-.emotion-brow,
-.emotion-eye,
-.emotion-mouth {
   display: none;
-}
-
-.scene-emotion.progress-5 .emotion-eye,
-.scene-emotion.mood-complete .emotion-eye {
-  position: absolute;
-  display: block;
-  top: 28px;
-  width: 15px;
-  height: 7px;
-  border-bottom: 3px solid rgba(42, 31, 25, 0.74);
-  border-radius: 0 0 999px 999px;
-  background: transparent;
-  opacity: 0.82;
-  filter: blur(0.15px);
-}
-
-.scene-emotion.progress-5 .emotion-eye-left,
-.scene-emotion.mood-complete .emotion-eye-left {
-  left: 25px;
-  transform: rotate(7deg);
-}
-
-.scene-emotion.progress-5 .emotion-eye-right,
-.scene-emotion.mood-complete .emotion-eye-right {
-  left: 52px;
-  transform: rotate(-6deg);
-}
-
-.scene-emotion.progress-5 .emotion-mouth,
-.scene-emotion.mood-complete .emotion-mouth {
-  position: absolute;
-  display: block;
-  left: 38px;
-  top: 45px;
-  width: 27px;
-  height: 12px;
-  border-bottom: 4px solid rgba(58, 34, 24, 0.9);
-  border-radius: 0 0 999px 999px;
-  opacity: 0.82;
-  transform: rotate(-5deg);
 }
 
 .emotion-sigh {
-  right: -3px;
-  top: 4px;
+  position: absolute;
+  display: block;
+  right: 0;
+  top: 0;
   width: 22px;
   height: 22px;
   border: 2px solid rgba(239, 244, 232, 0.78);
+  border-radius: 999px;
   border-left-color: transparent;
   border-bottom-color: transparent;
   background: transparent;
-  opacity: calc(0.75 - (var(--recovery, 0) * 0.62));
-}
-
-.emotion-fatigue {
-  left: 16px;
-  top: 26px;
-  width: 56px;
-  height: 14px;
-  background: rgba(27, 39, 33, calc(0.22 - (var(--recovery, 0) * 0.18)));
-  filter: blur(2.5px);
-  mix-blend-mode: multiply;
-  transform: rotate(-7deg);
-}
-
-.emotion-relief-eye {
-  display: none;
-}
-
-.emotion-relief-eye-left {
-  left: 27px;
-  transform: rotate(-9deg);
-}
-
-.emotion-relief-eye-right {
-  left: 52px;
-  transform: rotate(8deg);
-}
-
-.emotion-relief-mouth {
-  left: 38px;
-  top: 45px;
-  width: 27px;
-  height: 12px;
-  border-bottom: 0;
-  border-radius: 0 0 999px 999px;
-  filter: blur(0.15px);
   opacity: 0;
-  transform: rotate(-5deg);
-  box-shadow: 0 1px 0 rgba(246, 211, 160, 0.22);
-}
-
-.emotion-relief-cheek {
-  top: 35px;
-  width: 16px;
-  height: 11px;
-  background: rgba(217, 127, 76, 0.22);
-  filter: blur(3px);
-  opacity: 0;
-  mix-blend-mode: soft-light;
-}
-
-.emotion-relief-cheek-left {
-  left: 26px;
-  transform: rotate(-10deg);
-}
-
-.emotion-relief-cheek-right {
-  left: 61px;
-  transform: rotate(8deg);
-}
-
-.emotion-spark {
-  right: 0;
-  top: -6px;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
-  background: #f3c45b;
-  opacity: 0;
-  transform: rotate(45deg) scale(0.7);
-}
-
-.emotion-spark::before,
-.emotion-spark::after {
-  content: "";
-  position: absolute;
-  border-radius: inherit;
-  background: inherit;
-}
-
-.emotion-spark::before {
-  left: -16px;
-  top: 13px;
-  width: 8px;
-  height: 8px;
-}
-
-.emotion-spark::after {
-  right: -12px;
-  top: 20px;
-  width: 7px;
-  height: 7px;
 }
 
 .scene-emotion.mood-watch .emotion-sigh,
@@ -938,36 +776,6 @@ p {
 
 .scene-emotion.mood-celebrate {
   animation: emotion-nod 0.72s ease-out;
-}
-
-.scene-emotion.progress-5 .emotion-spark,
-.scene-emotion.mood-complete .emotion-spark {
-  opacity: 0.95;
-  animation: emotion-spark 1.4s ease-in-out infinite;
-}
-
-.scene-emotion.progress-5::before,
-.scene-emotion.mood-complete::before {
-  border-color: rgba(243, 196, 91, 0.32);
-  box-shadow:
-    0 0 22px rgba(243, 196, 91, 0.24),
-    inset 0 0 18px rgba(111, 181, 103, 0.16);
-  animation: face-recovery-pulse 1.8s ease-in-out infinite;
-}
-
-.scene-emotion.progress-5 .emotion-fatigue,
-.scene-emotion.mood-complete .emotion-fatigue {
-  opacity: 0;
-}
-
-.scene-emotion.progress-5 .emotion-relief-mouth,
-.scene-emotion.mood-complete .emotion-relief-mouth {
-  opacity: 0;
-}
-
-.scene-emotion.progress-5 .emotion-relief-cheek,
-.scene-emotion.mood-complete .emotion-relief-cheek {
-  opacity: 1;
 }
 
 .investigation-view[data-scene-id="moments"] .scene-bg {
@@ -2441,32 +2249,6 @@ p {
   }
 }
 
-@keyframes emotion-spark {
-  0%,
-  100% {
-    opacity: 0.48;
-    transform: rotate(45deg) scale(0.72);
-  }
-
-  45% {
-    opacity: 1;
-    transform: rotate(45deg) scale(1.05);
-  }
-}
-
-@keyframes face-recovery-pulse {
-  0%,
-  100% {
-    opacity: 0.66;
-    transform: translate(-50%, -50%) scale(0.98);
-  }
-
-  50% {
-    opacity: 0.88;
-    transform: translate(-50%, -50%) scale(1.04);
-  }
-}
-
 @keyframes clue-hint {
   0%,
   100% {
@@ -3769,42 +3551,6 @@ h2 {
     top: 24.5%;
     width: 54px;
     height: 36px;
-  }
-
-  .scene-emotion::before {
-    width: 46px;
-    height: 34px;
-  }
-
-  .emotion-brow {
-    top: 5px;
-    width: 15px;
-    height: 4px;
-  }
-
-  .emotion-brow-left {
-    left: 10px;
-  }
-
-  .emotion-brow-right {
-    right: 10px;
-  }
-
-  .emotion-eye {
-    top: 16px;
-    width: 9px;
-  }
-
-  .emotion-eye-left {
-    left: 15px;
-  }
-
-  .emotion-eye-right {
-    right: 15px;
-  }
-
-  .emotion-mouth {
-    bottom: 4px;
   }
 
   .hotspot-object {

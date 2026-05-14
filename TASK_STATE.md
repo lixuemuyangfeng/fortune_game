@@ -47,11 +47,11 @@ The first level now has a playable raster-background iteration, but still needs 
 - Done: installed the requested `canvas-design` skill into `/Users/df_sla/.codex/skills/canvas-design`.
 - Done: applied the frontend-design review pass: replaced the scene dropdown with case-file buttons, made evidence notes visually varied, upgraded the task meter into machine indicator lights, and folded the lower processing systems behind a completion dock.
 - Done: refined the completion page after frontend-design review: removed the numbered evidence slots, kept the post-clear page focused on the scene, evidence board, next-level button, and sealed-evidence dock.
-- Done: connected first-level collection progress back into the office scene itself with non-text character feedback: Zhou Qiming's face area now shifts from sighing/low-energy to a subtle recovery glow and spark when all five clues are found.
+- Done: connected first-level collection progress back into the office scene itself with non-text character feedback, then removed the face-drawing overlay after review because CSS-painted facial features looked like patchwork on the raster image.
 - Done: added `scripts/commit-push.sh` and `npm run ship` for repeatable local verification, commit, rebase/autostash, SSH remote setup, and push.
 - Done: recorded the current UI aesthetic, clue clarity, completion-state, mobile, and interaction feedback rules in `docs/art-direction.md`; `AGENTS.md` now points future contributors there before changing UI or assets.
 - Done: removed the post-clear processing line/resource cards/leaderboard from the first-level completion flow; completion now stops at evidence bag + next-level entry.
-- Done: replaced the face-only glow with a more visible but small completion expression overlay on Zhou Qiming: low-energy shadow fades, small relaxed eyes/mouth and warm cheek tone appear at 5/5.
+- Done: removed the first-level post-clear face expression overlay. Future visible expression changes must use a proper completed raster/person layer/sprite asset instead of CSS-drawn eyes or mouths.
 - Not done: final user approval on the new level-1 raster art and hotspot positions.
 
 ## Next Steps
@@ -82,3 +82,4 @@ The first level now has a playable raster-background iteration, but still needs 
 - After the frontend-design implementation pass, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-13.
 - After the character-progress, intro-card, and ship-script refinements, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-13.
 - After removing the first-level post-clear systems and making the character completion expression visible, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-14.
+- After removing the CSS-drawn face overlay and documenting that real expression changes require proper art assets, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-14.
