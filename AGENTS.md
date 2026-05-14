@@ -6,7 +6,7 @@ This repository is a Vite + TypeScript browser game. Runtime code lives in `src/
 
 Static visual assets are served from `public/assets/`, grouped by level or machine. Tests live in `test/`. Product notes and implementation context are in `PRODUCT_BLUEPRINT.md`, `IMPLEMENTATION.md`, and `TASK_STATE.md`.
 
-Before changing level art, clue layout, or investigation UI, read `docs/art-direction.md`. It records the current visual style, clue clarity rules, mobile layout constraints, completion-state behavior, and interaction feedback requirements.
+Before changing level art, clue layout, or investigation UI, read `docs/art-direction.md`. For the Phaser 3 migration, also read `docs/phaser3-requirements-spec.md`; it is the source of truth for engine choice, UI requirements, asset layering, interaction feedback, platform bridge scope, and delivery checks.
 
 ## Build, Test, and Development Commands
 
