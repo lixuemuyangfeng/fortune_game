@@ -5,6 +5,10 @@ import { test } from "node:test";
 
 const root = new URL("..", import.meta.url).pathname;
 const configSource = readFileSync(join(root, "src/core/config.ts"), "utf8");
+const agentsSource = readFileSync(join(root, "AGENTS.md"), "utf8");
+const phaserSpecSource = readFileSync(join(root, "docs/phaser3-requirements-spec.md"), "utf8");
+const artDirectionSource = readFileSync(join(root, "docs/art-direction.md"), "utf8");
+const taskStateSource = readFileSync(join(root, "TASK_STATE.md"), "utf8");
 
 function sceneBlock(sceneId) {
   const idIndex = configSource.indexOf(`id: "${sceneId}"`);
@@ -36,7 +40,7 @@ function assetPaths(block) {
 test("all playable levels meet narrative and interaction content requirements", () => {
   const knownEvidenceIds = evidenceIds();
 
-  for (const sceneId of ["office", "moments", "temple"]) {
+  for (const sceneId of ["office", "rooftop", "moments", "temple"]) {
     const block = sceneBlock(sceneId);
     const hotspots = hotspotObjects(block);
 
@@ -68,8 +72,50 @@ test("all playable levels meet narrative and interaction content requirements", 
       );
     }
 
+    if (sceneId === "rooftop") {
+      const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
+      assert.deepEqual(
+        animationKinds,
+        ["receipt", "chat", "news", "alert", "sign"],
+        "rooftop hotspots have explicit click feedback animations"
+      );
+    }
+
     for (const assetPath of assetPaths(block)) {
       assert.ok(existsSync(join(root, "public", assetPath)), `${sceneId} asset exists: ${assetPath}`);
     }
   }
+});
+
+test("game scene design iron rules are documented and obvious failed placeholders stay out of runtime", () => {
+  const runtimeSources = [
+    readFileSync(join(root, "src/game/scenes/officeScene.ts"), "utf8"),
+    readFileSync(join(root, "src/game/scenes/rooftopScene.ts"), "utf8"),
+    readFileSync(join(root, "src/styles.css"), "utf8")
+  ].join("\n");
+
+  assert.match(agentsSource, /Product Iron Rules/, "AGENTS.md documents product iron rules");
+  assert.match(agentsSource, /N \+ 1/, "AGENTS.md requires one character state per clue progress");
+  assert.match(agentsSource, /Characters must be independent scene units/, "AGENTS.md forbids background-crop character animation");
+  assert.match(phaserSpecSource, /视觉铁律/, "Phaser spec documents visual iron rules");
+  assert.match(phaserSpecSource, /Phaser 版本描述为“更像游戏”/, "Phaser spec blocks engine-only game-feel claims");
+  assert.match(phaserSpecSource, /progress-0.*progress-N/s, "Phaser spec defines progress-linked character states for all levels");
+  assert.match(phaserSpecSource, /禁止背景块动画/, "Phaser spec forbids animating rectangular background crops");
+  assert.match(artDirectionSource, /角色进度反馈/, "Art direction documents character progress feedback");
+  assert.match(artDirectionSource, /截图验收清单/, "Art direction requires screenshot QA");
+  for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
+    assert.ok(
+      existsSync(join(root, "public/assets/game/office/characters", `zhou-${state}-sheet.png`)),
+      `office character ${state} spritesheet exists`
+    );
+    assert.ok(
+      existsSync(join(root, "public/assets/game/rooftop/characters", `trader-${state}-sheet.png`)),
+      `rooftop character ${state} spritesheet exists`
+    );
+  }
+  assert.match(taskStateSource, /foreground Zhou Qiming character object/, "task state records the foreground character object");
+  assert.doesNotMatch(runtimeSources, /已归还/, "runtime does not use semantically detached chat feedback");
+  assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");
+  assert.doesNotMatch(runtimeSources, /addCharacterState|fillCircle\(x/, "runtime does not draw patchwork character overlays");
+  assert.doesNotMatch(runtimeSources, /scene-character|char-head|char-body/, "runtime does not keep CSS-built character fallbacks");
 });

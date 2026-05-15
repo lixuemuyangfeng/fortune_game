@@ -8,6 +8,23 @@ Static visual assets are served from `public/assets/`, grouped by level or machi
 
 Before changing level art, clue layout, or investigation UI, read `docs/art-direction.md`. For the Phaser 3 migration, also read `docs/phaser3-requirements-spec.md`; it is the source of truth for engine choice, UI requirements, asset layering, interaction feedback, platform bridge scope, and delivery checks.
 
+## Product Iron Rules
+
+These rules are stricter than ordinary implementation preferences. Any gameplay, level-art, clue, animation, or UI change must satisfy them before handoff.
+
+- No fake narrative feedback. Do not write a line such as "drink water", "relax", "machine repaired", or similar unless the scene actually shows that action through proper art, animation, or a clearly visible state change.
+- No placeholder geometry in the game scene. Do not cover raster art with translucent circles, rectangles, white bars, yellow bars, or generic overlays unless they are deliberately styled as in-world objects such as paper, stamps, screens, light cones, or machine UI.
+- No detached labels. Text feedback must point to and make sense for the exact object just clicked. If the clicked clue is a boss chat, the feedback must read as chat/work-pressure feedback, not a generic moral judgment or unrelated stamp.
+- No hover or found-state spoilers. Default and hover states must not expose answers. Found markers must be small, local, and must not cover neighboring clues or the main character.
+- No "design by explanation". If a visual only makes sense after explaining it in text, remove it or replace it with a clearer in-world visual.
+- No patchwork character state. Character recovery must come from real character state assets, sprite sheets, full-body/head-shoulder overlays, lighting, or scene state changes. Do not draw ghost bodies, face parts, water cups, blush, eyes, mouths, or transparent avatars over raster characters.
+- Phaser migration is not game-feel by itself. Do not describe a level as a game-like slice if the main character remains a static background figure. A shippable level needs progress-linked character states with visible expression or body-language changes from real assets.
+- Every clue must move the character state forward. For a level with `N` clues, prepare at least `N + 1` protagonist/proxy-character states, from `progress-0` through `progress-N`. Each newly found clue must visibly change expression, posture, or body language, not only text, lighting, score, or machine state.
+- Characters must be independent scene units. Do not animate a rectangular crop of a background that contains desks, coworkers, windows, or other baked-in scenery. Use a clean background, transparent character sprite/spritesheet, and foreground occluder layer when the character needs to sit behind desks or screens.
+- No effect bigger than the clue unless the clue itself is large. Click feedback must stay inside or immediately around the clicked object and must be visually quieter than the object.
+- No generic web-dashboard UI inside the level. Keep first-level UI as a game scene with a compact mission panel, evidence board, and completion ritual; do not introduce resource cards, step dashboards, rankings, facility upgrades, or SaaS-style metrics.
+- Visual QA is mandatory after frontend or game-scene changes. Run the relevant Playwright flow, inspect screenshots manually, and reject the change if it introduces unexplained overlays, unreadable text, occlusion, or a visual that feels like a placeholder.
+
 ## Build, Test, and Development Commands
 
 - `npm install`: install dependencies from `package-lock.json`.

@@ -105,6 +105,46 @@ export const gameConfig: GameConfig = {
       emotion: "stubborn",
       theme: "ai",
       counterText: "不是所有召唤都值得立刻响应。"
+    },
+    gold_receipt: {
+      id: "gold_receipt",
+      title: "金店小票垫片",
+      detail: "嘴上说长期配置，手边的小票已经被折成烟盒垫片。",
+      emotion: "stubborn",
+      theme: "gold",
+      counterText: "小票不会因为被折起来就变成策略。"
+    },
+    hedge_group: {
+      id: "hedge_group",
+      title: "稳健避险交流群",
+      detail: "每三分钟问一次还拿吗，稳健得像集体失眠。",
+      emotion: "breakdown",
+      theme: "gold",
+      counterText: "越多人嘴硬，越需要先冷却。"
+    },
+    risk_headline: {
+      id: "risk_headline",
+      title: "无来源避险快讯",
+      detail: "标题很急，来源和时间都已经先下班了。",
+      emotion: "pretend",
+      theme: "gold",
+      counterText: "没有来源的快讯，只负责替焦虑加杠杆。"
+    },
+    price_alarm: {
+      id: "price_alarm",
+      title: "跌 0.5% 提醒",
+      detail: "说是长期资产，提醒阈值比闹钟还勤快。",
+      emotion: "envy",
+      theme: "gold",
+      counterText: "长期配置不用每五分钟查一次呼吸。"
+    },
+    rooftop_warning: {
+      id: "rooftop_warning",
+      title: "敏感行情告示",
+      detail: "禁止聚集讨论敏感行情，说明这里已经聚过很多次。",
+      emotion: "stubborn",
+      theme: "gold",
+      counterText: "嘴硬可以，别把嘴硬当风险管理。"
     }
   },
   scenes: [
@@ -126,6 +166,26 @@ export const gameConfig: GameConfig = {
         { id: "h3", evidenceId: "phone_gold", x: 15.7, y: 47.2, hitX: 15.7, hitY: 47.2, hitWidth: 11.5, hitHeight: 27, radius: 6, label: "金价手机", found: false, renderMode: "embedded", revealText: "半截涨幅不等于整辆车", animationKind: "goldLine" },
         { id: "h4", evidenceId: "debt_note", x: 27, y: 71.8, hitX: 27, hitY: 71.8, hitWidth: 11, hitHeight: 12, radius: 5, label: "花呗便利贴", found: false, renderMode: "embedded", revealText: "回本以后，也得先经过今天", animationKind: "paper" },
         { id: "h5", evidenceId: "lottery_ticket", x: 42.2, y: 88.2, hitX: 42.2, hitY: 88.2, hitWidth: 19, hitHeight: 13, radius: 7, label: "刮刮泪", found: false, renderMode: "embedded", revealText: "差一点不是差一张", animationKind: "scratch" }
+      ]
+    },
+    {
+      id: "rooftop",
+      name: "黄金大师天台局",
+      theme: "gold",
+      description: "傍晚天台，刚追完黄金的人都说自己不是短线，只是每三分钟看一次价格。",
+      backgroundImage: "/assets/game/rooftop/rooftop-background.png",
+      hint: "别急着补仓",
+      enemyName: "接盘幻影",
+      enemyDescription: "它把追高包装成理性建议：长期配置，越跌越买，你这是避险。",
+      machineName: "接盘冷却炉",
+      machineImage: "/assets/game/rooftop/machines/cooling-furnace.png",
+      completeText: "家庭资产配置已冷冻。嘴硬可以，别拿嘴硬当策略。",
+      hotspots: [
+        { id: "h1", evidenceId: "gold_receipt", x: 24, y: 70, hitX: 24, hitY: 70, hitWidth: 16, hitHeight: 15, radius: 7, label: "金店小票", found: false, image: "/assets/game/rooftop/clues/folded-receipt.png", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "小票垫不住追高的手", animationKind: "receipt" },
+        { id: "h2", evidenceId: "hedge_group", x: 42, y: 43, hitX: 42, hitY: 43, hitWidth: 17, hitHeight: 19, radius: 8, label: "稳健避险交流群", found: false, image: "/assets/game/rooftop/clues/group-chat.png", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
+        { id: "h3", evidenceId: "risk_headline", x: 69, y: 34, hitX: 69, hitY: 34, hitWidth: 18, hitHeight: 14, radius: 8, label: "避险快讯截图", found: false, image: "/assets/game/rooftop/clues/risk-news.png", imageWidth: 16, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
+        { id: "h4", evidenceId: "price_alarm", x: 58, y: 65, hitX: 58, hitY: 65, hitWidth: 10, hitHeight: 22, radius: 7, label: "跌幅提醒手机", found: false, image: "/assets/game/rooftop/clues/price-alert.png", imageWidth: 8, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
+        { id: "h5", evidenceId: "rooftop_warning", x: 82, y: 58, hitX: 82, hitY: 58, hitWidth: 18, hitHeight: 13, radius: 8, label: "敏感行情告示", found: false, image: "/assets/game/rooftop/clues/warning-sign.png", imageWidth: 17, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "天台门口已经替你写了风险提示", animationKind: "sign" }
       ]
     },
     {

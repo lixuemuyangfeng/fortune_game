@@ -69,7 +69,6 @@ export function renderInvestigationView(params: InvestigationViewParams): string
         ${renderSceneBackdrop(params.activeScene)}
         ${challengeActive && !sceneComplete ? renderNoiseLayer(params.activeScene) : ""}
         ${renderSceneReactionLayer(sceneReaction)}
-        ${renderSceneCharacter(params.activeScene, sceneReaction, sceneComplete)}
         ${renderSceneEmotion(params.activeScene, sceneReaction, sceneComplete, challengeActive, foundCount, totalCount)}
         ${challengeActive || sceneComplete ? hotspots.map((hotspot) => renderHotspotObject(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId, challengeActive)).join("") : ""}
         ${challengeActive && !sceneComplete ? hotspots.map((hotspot) => renderHotspot(hotspot, hintedHotspotId, justFoundHotspotId, selectedEvidenceId)).join("") : ""}
@@ -360,40 +359,6 @@ function renderNoiseLayer(scene: InvestigationScene): string {
             `<span class="noise-chip noise-chip-${index + 1}">${escapeHtml(line)}</span>`
         )
         .join("")}
-    </div>
-  `;
-}
-
-function renderSceneCharacter(scene: InvestigationScene, sceneReaction: "celebrate" | "deflate" | "", sceneComplete: boolean): string {
-  const character = scene.character;
-  if (!character) return "";
-
-  const stateClass = sceneComplete ? "scene-complete" : sceneReaction ? `reaction-${sceneReaction}` : "";
-  const sourceClass = character.source === "cutout" ? "cutout" : "mascot";
-  const flipClass = character.flipX ? "flip-x" : "";
-  const width = character.width ? `--character-width:${character.width}%;` : "";
-  const height = character.height ? `--character-height:${character.height}%;` : "";
-
-  return `
-    <div
-      class="scene-character ${sourceClass} ${flipClass} ${stateClass}"
-      style="left:${toPercent(character.x)}%; top:${toPercent(character.y)}%; --character-scale:${character.scale ?? 1}; ${width}${height}"
-      aria-hidden="true"
-    >
-      <span class="char-shadow"></span>
-      <span class="char-head"></span>
-      <span class="char-body"></span>
-      <span class="char-arm char-arm-left"></span>
-      <span class="char-arm char-arm-right"></span>
-      <span class="char-leg char-leg-left"></span>
-      <span class="char-leg char-leg-right"></span>
-      <span class="char-face"></span>
-      <span class="char-sweat"></span>
-      <span class="char-spark char-spark-left"></span>
-      <span class="char-spark char-spark-right"></span>
-      <span class="char-panic char-panic-left"></span>
-      <span class="char-panic char-panic-right"></span>
-      <span class="char-boost"></span>
     </div>
   `;
 }

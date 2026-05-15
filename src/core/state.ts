@@ -6,9 +6,18 @@ export function createInitialState(config: GameConfig): PlayerState {
   );
 
   return {
+    currentSceneId: config.scenes[0]?.id ?? "office",
     foundEvidenceIds: [],
     sceneProgress,
     adViews: {},
+    lastSavedAt: Date.now()
+  };
+}
+
+export function setCurrentScene(state: PlayerState, sceneId: string): PlayerState {
+  return {
+    ...state,
+    currentSceneId: sceneId,
     lastSavedAt: Date.now()
   };
 }

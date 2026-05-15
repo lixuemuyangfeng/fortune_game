@@ -30,7 +30,7 @@ export interface SceneHotspot {
   anchorY?: number;
   hitScale?: number;
   revealText?: string;
-  animationKind?: "kline" | "goldLine" | "chat" | "paper" | "scratch";
+  animationKind?: "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign";
 }
 
 export interface InvestigationScene {
@@ -70,6 +70,7 @@ export interface GameConfig {
 }
 
 export interface PlayerState {
+  currentSceneId: string;
   foundEvidenceIds: string[];
   sceneProgress: Record<string, SceneInvestigationState>;
   adViews: Record<string, number>;

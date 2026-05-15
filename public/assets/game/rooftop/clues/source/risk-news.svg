@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="260" viewBox="0 0 390 260">
+    <defs>
+      <filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#030b08" flood-opacity=".35"/></filter>
+      <linearGradient id="g" x1="0" x2="1"><stop stop-color="#3d1f19"/><stop offset="1" stop-color="#0e221b"/></linearGradient>
+    </defs>
+    <g filter="url(#s)" transform="rotate(5 195 130)">
+      <rect x="40" y="34" width="310" height="194" rx="18" fill="#f7e5b6"/>
+      <rect x="58" y="53" width="274" height="50" rx="10" fill="url(#g)"/>
+      <text x="77" y="87" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="30" font-weight="700" fill="#fff1c7">避险买盘</text>
+      <path d="M72 132h223M72 162h184M72 192h228" stroke="#775332" stroke-width="12" stroke-linecap="round" opacity=".45"/>
+      <circle cx="314" cy="134" r="11" fill="#c64628"/>
+      <path d="M286 70l25-14 13 24" stroke="#f3c45b" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M84 218h165" stroke="#c64628" stroke-width="5" stroke-dasharray="11 8" opacity=".65"/>
+    </g>
+  </svg>
