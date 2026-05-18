@@ -70,15 +70,20 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: added second-level gameplay config, evidence entries, local state switching, Phaser scene loading, hotspot access buttons, click feedback, audio profiles, and Playwright coverage.
 - Done: replaced the old rooftop background with a clean 16:9 semi-realistic 3D/clay-render bitmap background plate.
 - Done: replaced all second-level foreground clue, machine, and character assets with unified bitmap assets generated from the same art direction.
-- Done: preserved the `progress-0` through `progress-5` trader spritesheet contract with six distinct body-language/expression states.
+- Done: increased the second level to 6 clues, so it now escalates after the 5-clue office level.
+- Done: preserved the `progress-0` through `progress-6` trader spritesheet contract with seven distinct body-language/expression states.
+- Done: replaced the rounded toy-like trader with an adult human-proportioned rooftop character.
+- Done: moved the trader back onto the rooftop floor with a smaller scale and local contact shadow so he no longer reads as floating on the front wall.
 - Done: removed always-on floating clue tweens; clue objects now stay physically placed and only animate through local hit feedback.
-- Done: added local contact shadows for all five rooftop clues and the cooling furnace.
+- Done: added local contact shadows for all rooftop clues and the cooling furnace.
 - Done: removed the old `scripts/generate-rooftop-assets.mjs` SVG generation path and obsolete SVG source directories so final assets are not overwritten by placeholder art.
 - Done: saved the generated source plates under `public/assets/game/rooftop/source/`.
 - Done: retuned second-level hotspot positions and object sizes against the final bitmap assets.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
+- QA finding resolved: second-level clue count now increases from 5 to 6, with a new `杠杆合同边角` clue.
+- QA finding resolved: the trader no longer uses toy/mascot proportions.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -121,3 +126,4 @@ Second-level optimization plan:
 - After adding the playable second-level rooftop loop, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-15; Playwright screenshots were captured at `artifacts/rooftop-progress-0.png` through `artifacts/rooftop-progress-5.png` and `artifacts/rooftop-mobile-complete.png`.
 - After the second-level art-repair pass, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-v4-progress-0.png`, `artifacts/rooftop-v3-progress-3.png`, `artifacts/rooftop-v3-progress-5.png`, and `artifacts/rooftop-v2-mobile-complete.png`.
 - After replacing the second-level placeholder art with final-direction bitmap assets and removing the SVG generation path, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-final-pass2-progress-0.png`, `artifacts/rooftop-final-pass2-progress-3.png`, `artifacts/rooftop-final-pass2-progress-5.png`, and `artifacts/rooftop-final-pass2-mobile-complete.png`.
+- After increasing the rooftop level to 6 clues and replacing the trader with an adult human-proportioned 7-state character, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-incremental-human-grounded-progress-0.png`, `artifacts/rooftop-incremental-human-grounded-progress-6.png`, and `artifacts/rooftop-incremental-human-grounded-mobile-complete.png`.

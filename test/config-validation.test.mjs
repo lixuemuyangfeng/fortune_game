@@ -52,6 +52,9 @@ test("all playable levels meet narrative and interaction content requirements", 
     assert.match(block, /(machineImage: "\/assets\/|machineEmbedded: true)/, `${sceneId} has a machine asset or embedded machine`);
     assert.match(block, /completeText: "[^"]+"/, `${sceneId} has completion copy`);
     assert.ok(hotspots.length >= 5, `${sceneId} has at least five hotspots`);
+    if (sceneId === "rooftop") {
+      assert.ok(hotspots.length > hotspotObjects(sceneBlock("office")).length, "rooftop increases clue count after the office level");
+    }
 
     for (const hotspot of hotspots) {
       const evidenceId = hotspot.match(/evidenceId: "([^"]+)"/)?.[1];
@@ -76,7 +79,7 @@ test("all playable levels meet narrative and interaction content requirements", 
       const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
       assert.deepEqual(
         animationKinds,
-        ["receipt", "chat", "news", "alert", "sign"],
+        ["receipt", "chat", "news", "alert", "sign", "contract"],
         "rooftop hotspots have explicit click feedback animations"
       );
     }
@@ -108,6 +111,8 @@ test("game scene design iron rules are documented and obvious failed placeholder
       existsSync(join(root, "public/assets/game/office/characters", `zhou-${state}-sheet.png`)),
       `office character ${state} spritesheet exists`
     );
+  }
+  for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"]) {
     assert.ok(
       existsSync(join(root, "public/assets/game/rooftop/characters", `trader-${state}-sheet.png`)),
       `rooftop character ${state} spritesheet exists`

@@ -30,7 +30,7 @@ export interface SceneHotspot {
   anchorY?: number;
   hitScale?: number;
   revealText?: string;
-  animationKind?: "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign";
+  animationKind?: "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign" | "contract";
 }
 
 export interface InvestigationScene {

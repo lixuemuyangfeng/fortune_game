@@ -382,14 +382,14 @@ function getSceneMeta(sceneId: string): {
     return {
       place: "字节跳桶公司天台",
       time: "周三 18:46",
-      goal: "找齐 5 个接盘证据",
-      goalDetail: "抓出 5 个把追高伪装成理性的嘴硬证据。",
+      goal: "找齐 6 个接盘证据",
+      goalDetail: "抓出 6 个把追高伪装成理性的嘴硬证据。",
       completeGoal: "接盘已冷却",
       startAction: "开始冷却",
       continueAction: "继续冷却",
-      startToast: "抓出 5 个正在给追高加温的嘴硬证据。",
+      startToast: "抓出 6 个正在给追高加温的嘴硬证据。",
       introNarrative: "把追高、快讯和嘴硬从天台风里拽出来。",
-      completeNarrative: "天台终于降温，快讯、群聊和价格提醒都被贴上标签。"
+      completeNarrative: "天台终于降温，快讯、群聊、价格提醒和杠杆纸角都被贴上标签。"
     };
   }
 

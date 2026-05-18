@@ -14,13 +14,16 @@ export class PreloadScene extends Phaser.Scene {
       ["h2", "/assets/game/rooftop/clues/group-chat.png"],
       ["h3", "/assets/game/rooftop/clues/risk-news.png"],
       ["h4", "/assets/game/rooftop/clues/price-alert.png"],
-      ["h5", "/assets/game/rooftop/clues/warning-sign.png"]
+      ["h5", "/assets/game/rooftop/clues/warning-sign.png"],
+      ["h6", "/assets/game/rooftop/clues/leverage-paper.png"]
     ].forEach(([id, path]) => this.load.image(`rooftop-clue-${id}`, path));
     for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
       this.load.spritesheet(`zhou-${state}`, `/assets/game/office/characters/zhou-${state}-sheet.png`, {
         frameWidth: 720,
         frameHeight: 820
       });
+    }
+    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"]) {
       this.load.spritesheet(`trader-${state}`, `/assets/game/rooftop/characters/trader-${state}-sheet.png`, {
         frameWidth: 720,
         frameHeight: 820

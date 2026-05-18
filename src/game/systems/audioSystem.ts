@@ -1,4 +1,4 @@
-export type HitSoundKind = "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign" | "miss" | "complete";
+export type HitSoundKind = "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign" | "contract" | "miss" | "complete";
 
 let audioContext: AudioContext | undefined;
 
@@ -58,7 +58,7 @@ function getProfile(kind: HitSoundKind) {
   if (kind === "news" || kind === "sign") {
     return { type: "sawtooth" as OscillatorType, startFrequency: 310, endFrequency: 180, filterFrequency: 860, volume: 0.045, duration: 0.13 };
   }
-  if (kind === "paper" || kind === "scratch" || kind === "receipt") {
+  if (kind === "paper" || kind === "scratch" || kind === "receipt" || kind === "contract") {
     return { type: "triangle" as OscillatorType, startFrequency: 280, endFrequency: 150, filterFrequency: 1050, volume: 0.045, duration: 0.14 };
   }
   return { type: "sawtooth" as OscillatorType, startFrequency: 240, endFrequency: 130, filterFrequency: 760, volume: 0.045, duration: 0.13 };

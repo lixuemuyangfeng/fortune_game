@@ -5,7 +5,7 @@ import { getOfficeProgress } from "../systems/progressSystem";
 
 const worldWidth = 1280;
 const worldHeight = 720;
-const characterStates = ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"] as const;
+const characterStates = ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"] as const;
 type CharacterState = (typeof characterStates)[number];
 
 export interface RooftopSceneData {
@@ -212,6 +212,7 @@ export class RooftopScene extends Phaser.Scene {
     if (kind === "news") this.addNewsEffect(hotspot);
     if (kind === "alert") this.addAlertEffect(hotspot);
     if (kind === "sign") this.addSignEffect(hotspot);
+    if (kind === "contract") this.addContractEffect(hotspot);
     this.addMachinePulse();
   }
 
@@ -276,6 +277,18 @@ export class RooftopScene extends Phaser.Scene {
     this.tweens.add({ targets: underline, alpha: 0, duration: 180, delay: 600 });
   }
 
+  private addContractEffect(hotspot: SceneHotspot): void {
+    const rect = this.getHotspotRect(hotspot);
+    const crease = this.add.graphics().setDepth(52);
+    crease.lineStyle(5, 0xb9462c, 0.82);
+    crease.beginPath();
+    crease.moveTo(rect.x - rect.width * 0.22, rect.y - rect.height * 0.18);
+    crease.lineTo(rect.x + rect.width * 0.18, rect.y + rect.height * 0.16);
+    crease.strokePath();
+    this.tweens.add({ targets: crease, alpha: 0.22, duration: 110, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: crease, alpha: 0, duration: 180, delay: 620 });
+  }
+
   private addCoolingFurnace(): void {
     if (!this.textures.exists("rooftop-cooling-furnace")) return;
     const progress = getOfficeProgress(this.rooftopData.scene, this.rooftopData.foundHotspotIds);
@@ -297,15 +310,16 @@ export class RooftopScene extends Phaser.Scene {
   private addPlayableCharacter(): void {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
-    const sprite = this.add.sprite(630, 438, `trader-${state}`, 0).setDepth(24);
+    this.add.ellipse(626, 576, 150, 28, 0x03100c, 0.26).setDepth(23);
+    const sprite = this.add.sprite(626, 532, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    sprite.setScale(0.45 * (1 + progressIndex * 0.01));
-    sprite.setOrigin(0.5, 0.58);
+    sprite.setScale(0.275 * (1 + progressIndex * 0.005));
+    sprite.setOrigin(0.5, 0.82);
     sprite.play(`trader-${state}-anim`);
 
     if (progressIndex === 0) {
       this.tweens.add({ targets: sprite, y: sprite.y + 4, alpha: 0.92, duration: 980, yoyo: true, repeat: -1, ease: "Sine.inOut" });
-    } else if (progressIndex < 5) {
+    } else if (progressIndex < characterStates.length - 1) {
       this.tweens.add({ targets: sprite, y: sprite.y - 3 - progressIndex, duration: 820, yoyo: true, repeat: -1, ease: "Sine.inOut" });
     } else {
       this.tweens.add({ targets: sprite, y: sprite.y - 12, scaleX: sprite.scaleX * 1.018, scaleY: sprite.scaleY * 1.018, duration: 560, yoyo: true, repeat: 1, ease: "Back.out" });
@@ -331,7 +345,7 @@ export class RooftopScene extends Phaser.Scene {
 
   private getCharacterProgressIndex(): number {
     const progress = getOfficeProgress(this.rooftopData.scene, this.rooftopData.foundHotspotIds);
-    return Math.min(progress.foundCount, 5);
+    return Math.min(progress.foundCount, characterStates.length - 1);
   }
 
   private ensureCharacterAnimations(): void {
@@ -342,7 +356,7 @@ export class RooftopScene extends Phaser.Scene {
       this.anims.create({
         key,
         frames: this.anims.generateFrameNumbers(`trader-${state}`, { start: 0, end: 3 }),
-        frameRate: progressIndex === 0 ? 3 : progressIndex === 5 ? 6 : 5,
+        frameRate: progressIndex === 0 ? 3 : progressIndex === characterStates.length - 1 ? 6 : 5,
         repeat: -1,
         yoyo: true
       });
@@ -380,11 +394,12 @@ export class RooftopScene extends Phaser.Scene {
   private getClueDepth(hotspot: SceneHotspot): number {
     if (hotspot.id === "h5") return 18;
     if (hotspot.id === "h1") return 28;
+    if (hotspot.id === "h6") return 25;
     return 26;
   }
 
   private getClueAngle(hotspot: SceneHotspot): number {
-    const angles: Record<string, number> = { h1: -7, h2: 2, h3: 4, h4: -8, h5: 1 };
+    const angles: Record<string, number> = { h1: -7, h2: 2, h3: 4, h4: -8, h5: 1, h6: -4 };
     return angles[hotspot.id] ?? 0;
   }
 
@@ -394,7 +409,8 @@ export class RooftopScene extends Phaser.Scene {
       h2: { width: 150, height: 24, offsetX: 0, offsetY: 54, angle: 3, alpha: 0.22, depth: 24 },
       h3: { width: 150, height: 20, offsetX: 8, offsetY: 45, angle: 4, alpha: 0.18, depth: 24 },
       h4: { width: 84, height: 20, offsetX: 4, offsetY: 72, angle: -8, alpha: 0.26, depth: 24 },
-      h5: { width: 186, height: 18, offsetX: 0, offsetY: 44, angle: 1, alpha: 0.16, depth: 17 }
+      h5: { width: 186, height: 18, offsetX: 0, offsetY: 44, angle: 1, alpha: 0.16, depth: 17 },
+      h6: { width: 92, height: 18, offsetX: -6, offsetY: 38, angle: -4, alpha: 0.2, depth: 24 }
     };
     return shadows[hotspot.id] ?? { width: 120, height: 22, offsetX: 0, offsetY: 42, angle: 0, alpha: 0.22, depth: 24 };
   }
