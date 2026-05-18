@@ -138,6 +138,7 @@ export class RooftopScene extends Phaser.Scene {
 
   private addClueContactShadow(hotspot: SceneHotspot, x: number, y: number): void {
     const shadow = this.getClueShadow(hotspot);
+    if (shadow.alpha <= 0) return;
     const ellipse = this.add.ellipse(
       x + shadow.offsetX,
       y + shadow.offsetY,
@@ -293,6 +294,7 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addCoolingFurnace(): void {
+    if (this.rooftopData.scene.machineEmbedded) return;
     if (!this.textures.exists("rooftop-cooling-furnace")) return;
     const progress = getOfficeProgress(this.rooftopData.scene, this.rooftopData.foundHotspotIds);
     this.add.ellipse(1048, 614, 136, 24, 0x03100c, 0.25).setDepth(25);
@@ -313,10 +315,10 @@ export class RooftopScene extends Phaser.Scene {
   private addPlayableCharacter(): void {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
-    this.add.ellipse(620, 562, 132, 24, 0x03100c, 0.28).setDepth(23);
-    const sprite = this.add.sprite(620, 512, `trader-${state}`, 0).setDepth(24);
+    this.addCharacterContactShadows();
+    const sprite = this.add.sprite(612, 590, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    sprite.setScale(0.252 * (1 + progressIndex * 0.004));
+    sprite.setScale(0.236 * (1 + progressIndex * 0.004));
     sprite.setOrigin(0.5, 0.84);
     sprite.play(`trader-${state}-anim`);
 
@@ -340,6 +342,12 @@ export class RooftopScene extends Phaser.Scene {
         ease: "Quad.out"
       });
     }
+  }
+
+  private addCharacterContactShadows(): void {
+    this.add.ellipse(594, 650, 148, 24, 0x03100c, 0.22).setDepth(23).setAngle(-4);
+    this.add.ellipse(534, 677, 86, 15, 0x03100c, 0.18).setDepth(23).setAngle(-9);
+    this.add.ellipse(670, 647, 88, 16, 0x03100c, 0.14).setDepth(23).setAngle(5);
   }
 
   private getCharacterState(): CharacterState {
@@ -396,7 +404,8 @@ export class RooftopScene extends Phaser.Scene {
 
   private getClueDepth(hotspot: SceneHotspot): number {
     if (hotspot.id === "h5") return 18;
-    if (hotspot.id === "h1") return 26;
+    if (hotspot.id === "h1") return 19;
+    if (hotspot.id === "h3") return 28;
     if (hotspot.id === "h6") return 25;
     return 26;
   }
@@ -406,27 +415,27 @@ export class RooftopScene extends Phaser.Scene {
     const alphas: Record<string, number> = {
       h1: 0.8,
       h2: 0.82,
-      h3: 0.76,
+      h3: 0.7,
       h4: 0.8,
       h5: 0.78,
-      h6: 0.74
+      h6: 0.66
     };
     return alphas[hotspot.id] ?? 0.82;
   }
 
   private getClueAngle(hotspot: SceneHotspot): number {
-    const angles: Record<string, number> = { h1: -11, h2: 2, h3: 7, h4: -8, h5: 1, h6: -9 };
+    const angles: Record<string, number> = { h1: 16, h2: 2, h3: -8, h4: -8, h5: 1, h6: 18 };
     return angles[hotspot.id] ?? 0;
   }
 
   private getClueShadow(hotspot: SceneHotspot): { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number } {
     const shadows: Record<string, { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number }> = {
-      h1: { width: 60, height: 13, offsetX: 3, offsetY: 27, angle: -11, alpha: 0.16, depth: 25 },
-      h2: { width: 46, height: 11, offsetX: 0, offsetY: 30, angle: 3, alpha: 0.15, depth: 24 },
-      h3: { width: 54, height: 12, offsetX: 5, offsetY: 25, angle: 7, alpha: 0.13, depth: 24 },
+      h1: { width: 38, height: 8, offsetX: 2, offsetY: 19, angle: 16, alpha: 0.1, depth: 18 },
+      h2: { width: 0, height: 0, offsetX: 0, offsetY: 0, angle: 0, alpha: 0, depth: 24 },
+      h3: { width: 44, height: 9, offsetX: 2, offsetY: 20, angle: -8, alpha: 0.08, depth: 27 },
       h4: { width: 36, height: 10, offsetX: 3, offsetY: 39, angle: -8, alpha: 0.15, depth: 24 },
       h5: { width: 58, height: 9, offsetX: 0, offsetY: 24, angle: 1, alpha: 0.1, depth: 17 },
-      h6: { width: 46, height: 10, offsetX: -2, offsetY: 24, angle: -9, alpha: 0.14, depth: 24 }
+      h6: { width: 34, height: 8, offsetX: -2, offsetY: 21, angle: 18, alpha: 0.12, depth: 24 }
     };
     return shadows[hotspot.id] ?? { width: 120, height: 22, offsetX: 0, offsetY: 42, angle: 0, alpha: 0.22, depth: 24 };
   }

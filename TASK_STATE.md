@@ -81,6 +81,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: retuned second-level hotspot positions and object sizes against the final bitmap assets.
 - Done: reworked the latest rooftop layout review findings: character scale/grounding was adjusted, the group-chat clue now uses the trader's hand-held phone as an embedded hotspot instead of an extra phone on the floor, found markers were reduced and removed from the completion scene, and the completion machine panel was shrunk so it no longer blocks the furnace.
 - Done: second-level clue placement now escalates beyond the office by using 6 clues across multiple scene layers: wall sign, pipe-side contract, hand-held phone, machine-side news, floor receipt, and price alert.
+- Done: rebuilt the second level against `docs/phaser3-requirements-spec.md` after identifying the structural mismatch with level 1. The rooftop now uses a unified generated background plate, `public/assets/game/rooftop/rooftop-background-v2.png`, with embedded environmental clue objects instead of separate post-composited props scattered on the floor.
+- Done: changed the rooftop machine to an embedded scene object and removed the duplicate overlaid cooling-furnace sprite from runtime.
+- Done: changed all six rooftop clues to embedded-scene hotspots. Phaser still owns hit zones, found markers, localized feedback, progress, and character state switching, but no longer renders mismatched clue sprites over the background.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
@@ -88,6 +91,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the trader no longer uses toy/mascot proportions and no longer reads as a small floating sticker in the completed scene.
 - QA finding resolved: the completion state no longer exposes all answers through large green check markers.
 - QA finding resolved: not all rooftop clues are separate floor props; the group-chat clue is now embedded in the character's phone.
+- QA finding resolved: the previous second-level composition used a clean background plus post-attached props, unlike the first level's integrated clue composition. The new pass matches the level-1 design logic more closely: scene art carries the clue bodies, Phaser carries interaction.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -133,3 +137,4 @@ Second-level optimization plan:
 - After increasing the rooftop level to 6 clues and replacing the trader with an adult human-proportioned 7-state character, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-incremental-human-grounded-progress-0.png`, `artifacts/rooftop-incremental-human-grounded-progress-6.png`, and `artifacts/rooftop-incremental-human-grounded-mobile-complete.png`.
 - After shrinking and embedding the second-level visible clue sprites into the rooftop scene, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-hidden-scale-progress-0.png`, `artifacts/rooftop-hidden-scale-progress-3.png`, `artifacts/rooftop-hidden-scale-progress-6.png`, `artifacts/rooftop-hidden-scale-mobile-progress-0.png`, and `artifacts/rooftop-hidden-scale-mobile-complete.png`.
 - After the latest rooftop QA pass for character scale, clue layering, embedded group-chat hotspot, found-marker spoilers, and completion-panel occlusion, Playwright screenshots were captured at `artifacts/rooftop-layout-review-progress-0.png`, `artifacts/rooftop-layout-review-progress-3.png`, `artifacts/rooftop-layout-review-progress-6.png`, `artifacts/rooftop-layout-review-mobile-progress-0.png`, and `artifacts/rooftop-layout-review-mobile-complete.png`.
+- After redesigning the second level per the Phaser 3 requirements spec, Playwright screenshots were captured at `artifacts/rooftop-redesign-progress-0.png`, `artifacts/rooftop-redesign-progress-3.png`, `artifacts/rooftop-redesign-progress-6.png`, `artifacts/rooftop-redesign-mobile-progress-0.png`, and `artifacts/rooftop-redesign-mobile-complete.png`.
