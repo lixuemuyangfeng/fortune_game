@@ -131,7 +131,7 @@ export class RooftopScene extends Phaser.Scene {
       const image = this.add.image(x, y, key).setDepth(this.getClueDepth(hotspot));
       const width = ((hotspot.imageWidth ?? hotspot.radius * 2) / 100) * worldWidth;
       image.setDisplaySize(width, width * (image.height / image.width));
-      image.setAlpha(this.rooftopData.foundHotspotIds.includes(hotspot.id) ? 0.72 : 1);
+      image.setAlpha(this.rooftopData.foundHotspotIds.includes(hotspot.id) ? 0.62 : 0.86);
       image.setAngle(this.getClueAngle(hotspot));
     }
   }
@@ -176,16 +176,16 @@ export class RooftopScene extends Phaser.Scene {
     for (const hotspot of this.rooftopData.scene.hotspots) {
       if (!this.rooftopData.foundHotspotIds.includes(hotspot.id)) continue;
       const { x, y } = this.getHotspotPoint(hotspot);
-      const marker = this.add.container(x + 22, y - 20).setDepth(45);
+      const marker = this.add.container(x + 10, y - 10).setDepth(45);
       const pin = this.add.graphics();
       pin.fillStyle(0x2f7a49, 0.96);
-      pin.lineStyle(3, 0xffffff, 0.88);
-      pin.fillCircle(0, 0, 12);
-      pin.strokeCircle(0, 0, 12);
+      pin.lineStyle(2, 0xffffff, 0.82);
+      pin.fillCircle(0, 0, 8);
+      pin.strokeCircle(0, 0, 8);
       const check = this.add.text(0, -2, "✓", {
         color: "#ffffff",
         fontFamily: "Arial, sans-serif",
-        fontSize: "16px",
+        fontSize: "11px",
         fontStyle: "bold"
       }).setOrigin(0.5);
       marker.add([pin, check]);
@@ -310,11 +310,11 @@ export class RooftopScene extends Phaser.Scene {
   private addPlayableCharacter(): void {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
-    this.add.ellipse(626, 576, 150, 28, 0x03100c, 0.26).setDepth(23);
-    const sprite = this.add.sprite(626, 532, `trader-${state}`, 0).setDepth(24);
+    this.add.ellipse(628, 538, 118, 22, 0x03100c, 0.28).setDepth(23);
+    const sprite = this.add.sprite(628, 492, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    sprite.setScale(0.275 * (1 + progressIndex * 0.005));
-    sprite.setOrigin(0.5, 0.82);
+    sprite.setScale(0.225 * (1 + progressIndex * 0.004));
+    sprite.setOrigin(0.5, 0.84);
     sprite.play(`trader-${state}-anim`);
 
     if (progressIndex === 0) {
@@ -405,12 +405,12 @@ export class RooftopScene extends Phaser.Scene {
 
   private getClueShadow(hotspot: SceneHotspot): { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number } {
     const shadows: Record<string, { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number }> = {
-      h1: { width: 168, height: 28, offsetX: 4, offsetY: 50, angle: -9, alpha: 0.28, depth: 25 },
-      h2: { width: 150, height: 24, offsetX: 0, offsetY: 54, angle: 3, alpha: 0.22, depth: 24 },
-      h3: { width: 150, height: 20, offsetX: 8, offsetY: 45, angle: 4, alpha: 0.18, depth: 24 },
-      h4: { width: 84, height: 20, offsetX: 4, offsetY: 72, angle: -8, alpha: 0.26, depth: 24 },
-      h5: { width: 186, height: 18, offsetX: 0, offsetY: 44, angle: 1, alpha: 0.16, depth: 17 },
-      h6: { width: 92, height: 18, offsetX: -6, offsetY: 38, angle: -4, alpha: 0.2, depth: 24 }
+      h1: { width: 76, height: 16, offsetX: 3, offsetY: 30, angle: -9, alpha: 0.2, depth: 25 },
+      h2: { width: 62, height: 14, offsetX: 0, offsetY: 34, angle: 3, alpha: 0.18, depth: 24 },
+      h3: { width: 70, height: 14, offsetX: 5, offsetY: 28, angle: 4, alpha: 0.16, depth: 24 },
+      h4: { width: 44, height: 12, offsetX: 3, offsetY: 44, angle: -8, alpha: 0.18, depth: 24 },
+      h5: { width: 82, height: 12, offsetX: 0, offsetY: 28, angle: 1, alpha: 0.14, depth: 17 },
+      h6: { width: 58, height: 12, offsetX: -3, offsetY: 26, angle: -4, alpha: 0.18, depth: 24 }
     };
     return shadows[hotspot.id] ?? { width: 120, height: 22, offsetX: 0, offsetY: 42, angle: 0, alpha: 0.22, depth: 24 };
   }
