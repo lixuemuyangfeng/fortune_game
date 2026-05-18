@@ -1,15 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="390" height="260" viewBox="0 0 390 260">
     <defs>
-      <filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#030b08" flood-opacity=".35"/></filter>
+      <filter id="ground" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#020806" flood-opacity=".34"/>
+    </filter>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
       <linearGradient id="g" x1="0" x2="1"><stop stop-color="#3d1f19"/><stop offset="1" stop-color="#0e221b"/></linearGradient>
     </defs>
-    <g filter="url(#s)" transform="rotate(5 195 130)">
-      <rect x="40" y="34" width="310" height="194" rx="18" fill="#f7e5b6"/>
-      <rect x="58" y="53" width="274" height="50" rx="10" fill="url(#g)"/>
-      <text x="77" y="87" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="30" font-weight="700" fill="#fff1c7">避险买盘</text>
-      <path d="M72 132h223M72 162h184M72 192h228" stroke="#775332" stroke-width="12" stroke-linecap="round" opacity=".45"/>
-      <circle cx="314" cy="134" r="11" fill="#c64628"/>
-      <path d="M286 70l25-14 13 24" stroke="#f3c45b" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M84 218h165" stroke="#c64628" stroke-width="5" stroke-dasharray="11 8" opacity=".65"/>
+    <ellipse cx="196" cy="228" rx="136" ry="20" fill="#03100c" opacity=".2"/>
+    <g filter="url(#ground)" transform="rotate(4 195 130)">
+      <path d="M42 55l291-29 21 170-284 36z" fill="#e6d1a0"/>
+      <path d="M66 69l248-24 6 46-247 26z" fill="url(#g)"/>
+      <path d="M89 89l126-13M235 75l48-5 24 18" stroke="#f3c45b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M82 139l205-24M86 167l165-19M90 194l214-27" stroke="#775332" stroke-width="11" stroke-linecap="round" opacity=".42"/>
+      <circle cx="303" cy="120" r="10" fill="#bd4129"/>
+      <path d="M84 215l155-20" stroke="#bd4129" stroke-width="5" stroke-dasharray="11 8" opacity=".55"/>
+      <path d="M45 58c78 22 160 17 286-27" stroke="#fff5d1" stroke-width="5" opacity=".24"/>
+      <rect x="40" y="35" width="312" height="190" fill="#fff" opacity=".01" filter="url(#grain)"/>
     </g>
   </svg>

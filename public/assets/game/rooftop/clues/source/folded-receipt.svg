@@ -1,15 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="360" height="250" viewBox="0 0 360 250">
     <defs>
-      <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#24150d" flood-opacity=".28"/></filter>
-      <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1c7"/><stop offset=".7" stop-color="#d9b16d"/><stop offset="1" stop-color="#9a7044"/></linearGradient>
+      <filter id="ground" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#020806" flood-opacity=".34"/>
+    </filter>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+      <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff3c9"/><stop offset=".58" stop-color="#dbc07e"/><stop offset="1" stop-color="#8f6a43"/></linearGradient>
     </defs>
-    <g filter="url(#s)" transform="rotate(-8 180 125)">
-      <path d="M54 36h216l42 50-29 126H75L42 82z" fill="url(#paper)"/>
-      <path d="M270 36l42 50-56-6z" fill="#f8d99a"/>
-      <path d="M73 76h164" stroke="#6c4a2b" stroke-width="7" stroke-linecap="round" opacity=".55"/>
-      <path d="M83 116h142M92 148h104M87 181h152" stroke="#6c4a2b" stroke-width="8" stroke-linecap="round" opacity=".42"/>
-      <rect x="212" y="120" width="62" height="38" rx="8" fill="#b63b24" opacity=".88"/>
-      <text x="221" y="147" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="23" font-weight="700" fill="#fff1c7">追高</text>
-      <path d="M58 91c58 24 122 28 205 8" stroke="#8e693e" stroke-width="4" fill="none" opacity=".45"/>
+    <ellipse cx="178" cy="214" rx="130" ry="22" fill="#03100c" opacity=".22"/>
+    <g filter="url(#ground)" transform="rotate(-12 180 125)">
+      <path d="M50 70l214-39 58 49-26 105L84 218 36 117z" fill="url(#paper)"/>
+      <path d="M264 31l58 49-66 3z" fill="#f6d99a"/>
+      <path d="M70 103c62 12 129 3 211-23" stroke="#6c4a2b" stroke-width="8" stroke-linecap="round" opacity=".42"/>
+      <path d="M91 132l139-25M103 158l102-18M101 187l150-27" stroke="#6c4a2b" stroke-width="7" stroke-linecap="round" opacity=".35"/>
+      <path d="M204 128l72-13 10 39-72 12z" fill="#a83a27" opacity=".82"/>
+      <path d="M217 143l45-8M222 155l34-6" stroke="#fff1c7" stroke-width="5" stroke-linecap="round" opacity=".82"/>
+      <path d="M55 124c58 23 126 20 214-16" stroke="#8e693e" stroke-width="4" fill="none" opacity=".35"/>
+      <rect x="37" y="49" width="270" height="170" fill="#fff" opacity=".01" filter="url(#grain)"/>
     </g>
   </svg>

@@ -181,11 +181,11 @@ export const gameConfig: GameConfig = {
       machineImage: "/assets/game/rooftop/machines/cooling-furnace.png",
       completeText: "家庭资产配置已冷冻。嘴硬可以，别拿嘴硬当策略。",
       hotspots: [
-        { id: "h1", evidenceId: "gold_receipt", x: 24, y: 70, hitX: 24, hitY: 70, hitWidth: 16, hitHeight: 15, radius: 7, label: "金店小票", found: false, image: "/assets/game/rooftop/clues/folded-receipt.png", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "小票垫不住追高的手", animationKind: "receipt" },
-        { id: "h2", evidenceId: "hedge_group", x: 42, y: 43, hitX: 42, hitY: 43, hitWidth: 17, hitHeight: 19, radius: 8, label: "稳健避险交流群", found: false, image: "/assets/game/rooftop/clues/group-chat.png", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
-        { id: "h3", evidenceId: "risk_headline", x: 69, y: 34, hitX: 69, hitY: 34, hitWidth: 18, hitHeight: 14, radius: 8, label: "避险快讯截图", found: false, image: "/assets/game/rooftop/clues/risk-news.png", imageWidth: 16, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
-        { id: "h4", evidenceId: "price_alarm", x: 58, y: 65, hitX: 58, hitY: 65, hitWidth: 10, hitHeight: 22, radius: 7, label: "跌幅提醒手机", found: false, image: "/assets/game/rooftop/clues/price-alert.png", imageWidth: 8, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
-        { id: "h5", evidenceId: "rooftop_warning", x: 82, y: 58, hitX: 82, hitY: 58, hitWidth: 18, hitHeight: 13, radius: 8, label: "敏感行情告示", found: false, image: "/assets/game/rooftop/clues/warning-sign.png", imageWidth: 17, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "天台门口已经替你写了风险提示", animationKind: "sign" }
+        { id: "h1", evidenceId: "gold_receipt", x: 24, y: 72, hitX: 24, hitY: 72, hitWidth: 15, hitHeight: 13, radius: 7, label: "金店小票", found: false, image: "/assets/game/rooftop/clues/folded-receipt.png", imageWidth: 13, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "小票垫不住追高的手", animationKind: "receipt" },
+        { id: "h2", evidenceId: "hedge_group", x: 42, y: 61, hitX: 42, hitY: 61, hitWidth: 15, hitHeight: 16, radius: 8, label: "稳健避险交流群", found: false, image: "/assets/game/rooftop/clues/group-chat.png", imageWidth: 12, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
+        { id: "h3", evidenceId: "risk_headline", x: 69, y: 36, hitX: 69, hitY: 36, hitWidth: 16, hitHeight: 12, radius: 8, label: "避险快讯截图", found: false, image: "/assets/game/rooftop/clues/risk-news.png", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
+        { id: "h4", evidenceId: "price_alarm", x: 58, y: 66, hitX: 58, hitY: 66, hitWidth: 9, hitHeight: 20, radius: 7, label: "跌幅提醒手机", found: false, image: "/assets/game/rooftop/clues/price-alert.png", imageWidth: 7, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
+        { id: "h5", evidenceId: "rooftop_warning", x: 82, y: 58, hitX: 82, hitY: 58, hitWidth: 16, hitHeight: 12, radius: 8, label: "敏感行情告示", found: false, image: "/assets/game/rooftop/clues/warning-sign.png", imageWidth: 15, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "天台门口已经替你写了风险提示", animationKind: "sign" }
       ]
     },
     {

@@ -25,41 +25,58 @@ function text(x, y, content, size = 30, color = "#2b1a13", weight = 700) {
   return `<text x="${x}" y="${y}" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="${size}" font-weight="${weight}" fill="${color}">${content}</text>`;
 }
 
+function commonDefs() {
+  return `<filter id="ground" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#020806" flood-opacity=".34"/>
+    </filter>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>`;
+}
+
 function foldedReceipt() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="360" height="250" viewBox="0 0 360 250">
     <defs>
-      <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#24150d" flood-opacity=".28"/></filter>
-      <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff1c7"/><stop offset=".7" stop-color="#d9b16d"/><stop offset="1" stop-color="#9a7044"/></linearGradient>
+      ${commonDefs()}
+      <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff3c9"/><stop offset=".58" stop-color="#dbc07e"/><stop offset="1" stop-color="#8f6a43"/></linearGradient>
     </defs>
-    <g filter="url(#s)" transform="rotate(-8 180 125)">
-      <path d="M54 36h216l42 50-29 126H75L42 82z" fill="url(#paper)"/>
-      <path d="M270 36l42 50-56-6z" fill="#f8d99a"/>
-      <path d="M73 76h164" stroke="#6c4a2b" stroke-width="7" stroke-linecap="round" opacity=".55"/>
-      <path d="M83 116h142M92 148h104M87 181h152" stroke="#6c4a2b" stroke-width="8" stroke-linecap="round" opacity=".42"/>
-      <rect x="212" y="120" width="62" height="38" rx="8" fill="#b63b24" opacity=".88"/>
-      ${text(221, 147, "追高", 23, "#fff1c7")}
-      <path d="M58 91c58 24 122 28 205 8" stroke="#8e693e" stroke-width="4" fill="none" opacity=".45"/>
+    <ellipse cx="178" cy="214" rx="130" ry="22" fill="#03100c" opacity=".22"/>
+    <g filter="url(#ground)" transform="rotate(-12 180 125)">
+      <path d="M50 70l214-39 58 49-26 105L84 218 36 117z" fill="url(#paper)"/>
+      <path d="M264 31l58 49-66 3z" fill="#f6d99a"/>
+      <path d="M70 103c62 12 129 3 211-23" stroke="#6c4a2b" stroke-width="8" stroke-linecap="round" opacity=".42"/>
+      <path d="M91 132l139-25M103 158l102-18M101 187l150-27" stroke="#6c4a2b" stroke-width="7" stroke-linecap="round" opacity=".35"/>
+      <path d="M204 128l72-13 10 39-72 12z" fill="#a83a27" opacity=".82"/>
+      <path d="M217 143l45-8M222 155l34-6" stroke="#fff1c7" stroke-width="5" stroke-linecap="round" opacity=".82"/>
+      <path d="M55 124c58 23 126 20 214-16" stroke="#8e693e" stroke-width="4" fill="none" opacity=".35"/>
+      <rect x="37" y="49" width="270" height="170" fill="#fff" opacity=".01" filter="url(#grain)"/>
     </g>
   </svg>`;
 }
 
 function groupChat() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="310" viewBox="0 0 400 310">
-    <defs><filter id="s"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#020806" flood-opacity=".35"/></filter></defs>
-    <g filter="url(#s)">
-      <rect x="48" y="30" width="304" height="250" rx="34" fill="#17261f"/>
-      <rect x="70" y="57" width="260" height="196" rx="22" fill="#e9eddc"/>
-      <circle cx="100" cy="93" r="17" fill="#b9944c"/>
-      <rect x="127" y="77" width="155" height="32" rx="16" fill="#fff8df"/>
-      <circle cx="292" cy="139" r="17" fill="#3d8457"/>
-      <rect x="116" y="123" width="158" height="32" rx="16" fill="#dff0dc"/>
-      <circle cx="101" cy="185" r="17" fill="#c64628"/>
-      <rect x="128" y="169" width="120" height="32" rx="16" fill="#fff8df"/>
-      <path d="M82 224h236" stroke="#829174" stroke-width="8" stroke-linecap="round" opacity=".45"/>
-      ${text(127, 99, "还拿吗", 24)}
-      ${text(140, 145, "长期", 22, "#1d3a2d")}
-      ${text(132, 191, "越跌买", 22)}
-      <path d="M68 47h264" stroke="#f3c45b" stroke-width="5" opacity=".5"/>
+    <defs>
+      ${commonDefs()}
+      <linearGradient id="body" x1="0" x2="1"><stop stop-color="#0e1713"/><stop offset="1" stop-color="#26362d"/></linearGradient>
+    </defs>
+    <ellipse cx="206" cy="268" rx="142" ry="24" fill="#03100c" opacity=".24"/>
+    <g filter="url(#ground)" transform="rotate(3 200 155)">
+      <path d="M67 42l263 18 20 199-287-25z" fill="#07100d"/>
+      <path d="M88 65l221 15 14 149-237-18z" fill="#dfe6d2"/>
+      <circle cx="113" cy="95" r="12" fill="#b9944c"/>
+      <path d="M136 84l122 9" stroke="#fff8df" stroke-width="19" stroke-linecap="round"/>
+      <circle cx="277" cy="139" r="12" fill="#3d8457"/>
+      <path d="M122 130l126 9" stroke="#cddfc7" stroke-width="19" stroke-linecap="round"/>
+      <circle cx="109" cy="178" r="12" fill="#b9462c"/>
+      <path d="M134 169l96 7" stroke="#fff8df" stroke-width="19" stroke-linecap="round"/>
+      <path d="M101 211l196 15" stroke="#829174" stroke-width="7" stroke-linecap="round" opacity=".44"/>
+      <path d="M88 65l221 15" stroke="#f3c45b" stroke-width="5" opacity=".35"/>
+      <circle cx="198" cy="245" r="8" fill="#2c3d34"/>
+      <path d="M72 45l260 18" stroke="#53665a" stroke-width="9" opacity=".38"/>
     </g>
   </svg>`;
 }
@@ -67,48 +84,57 @@ function groupChat() {
 function newsShot() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="390" height="260" viewBox="0 0 390 260">
     <defs>
-      <filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#030b08" flood-opacity=".35"/></filter>
+      ${commonDefs()}
       <linearGradient id="g" x1="0" x2="1"><stop stop-color="#3d1f19"/><stop offset="1" stop-color="#0e221b"/></linearGradient>
     </defs>
-    <g filter="url(#s)" transform="rotate(5 195 130)">
-      <rect x="40" y="34" width="310" height="194" rx="18" fill="#f7e5b6"/>
-      <rect x="58" y="53" width="274" height="50" rx="10" fill="url(#g)"/>
-      ${text(77, 87, "避险买盘", 30, "#fff1c7")}
-      <path d="M72 132h223M72 162h184M72 192h228" stroke="#775332" stroke-width="12" stroke-linecap="round" opacity=".45"/>
-      <circle cx="314" cy="134" r="11" fill="#c64628"/>
-      <path d="M286 70l25-14 13 24" stroke="#f3c45b" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M84 218h165" stroke="#c64628" stroke-width="5" stroke-dasharray="11 8" opacity=".65"/>
+    <ellipse cx="196" cy="228" rx="136" ry="20" fill="#03100c" opacity=".2"/>
+    <g filter="url(#ground)" transform="rotate(4 195 130)">
+      <path d="M42 55l291-29 21 170-284 36z" fill="#e6d1a0"/>
+      <path d="M66 69l248-24 6 46-247 26z" fill="url(#g)"/>
+      <path d="M89 89l126-13M235 75l48-5 24 18" stroke="#f3c45b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M82 139l205-24M86 167l165-19M90 194l214-27" stroke="#775332" stroke-width="11" stroke-linecap="round" opacity=".42"/>
+      <circle cx="303" cy="120" r="10" fill="#bd4129"/>
+      <path d="M84 215l155-20" stroke="#bd4129" stroke-width="5" stroke-dasharray="11 8" opacity=".55"/>
+      <path d="M45 58c78 22 160 17 286-27" stroke="#fff5d1" stroke-width="5" opacity=".24"/>
+      <rect x="40" y="35" width="312" height="190" fill="#fff" opacity=".01" filter="url(#grain)"/>
     </g>
   </svg>`;
 }
 
 function priceAlert() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="250" height="420" viewBox="0 0 250 420">
-    <defs><filter id="s"><feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#020806" flood-opacity=".42"/></filter></defs>
-    <g filter="url(#s)" transform="rotate(-4 125 210)">
-      <rect x="45" y="22" width="160" height="365" rx="34" fill="#101815"/>
-      <rect x="61" y="58" width="128" height="286" rx="18" fill="#e4d8aa"/>
-      <rect x="78" y="88" width="94" height="42" rx="14" fill="#c64628"/>
-      ${text(88, 117, "-0.5%", 28, "#fff7df")}
-      <path d="M78 178l23-28 22 22 20-42 21 15" stroke="#b63b24" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M82 236h80M82 270h58" stroke="#6d5637" stroke-width="11" stroke-linecap="round" opacity=".55"/>
-      <circle cx="125" cy="364" r="12" fill="#2d3c33"/>
-      <circle cx="178" cy="76" r="18" fill="#f3c45b"/>
+    <defs>
+      ${commonDefs()}
+      <linearGradient id="phone" x1="0" x2="1"><stop stop-color="#080d0b"/><stop offset="1" stop-color="#243229"/></linearGradient>
+    </defs>
+    <ellipse cx="126" cy="372" rx="78" ry="24" fill="#03100c" opacity=".28"/>
+    <g filter="url(#ground)" transform="rotate(-7 125 210)">
+      <path d="M47 33h153l16 329-152 18z" fill="url(#phone)"/>
+      <path d="M66 67h111l12 247-113 13z" fill="#ddd1a0"/>
+      <path d="M82 91h84l3 39-83 7z" fill="#b9462c"/>
+      <path d="M94 113l41-4M91 172l20-31 20 17 23-44 19 15" stroke="#fff0bd" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M83 220l76-8M87 254l56-7" stroke="#6d5637" stroke-width="10" stroke-linecap="round" opacity=".5"/>
+      <circle cx="129" cy="342" r="10" fill="#2d3c33"/>
+      <circle cx="174" cy="71" r="14" fill="#f3c45b"/>
+      <path d="M51 42l151-1" stroke="#53665a" stroke-width="7" opacity=".38"/>
     </g>
   </svg>`;
 }
 
 function warningSign() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="460" height="260" viewBox="0 0 460 260">
-    <defs><filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#020806" flood-opacity=".35"/></filter></defs>
-    <g filter="url(#s)" transform="rotate(2 230 130)">
-      <path d="M62 55h336l-18 145H86z" fill="#e7d18f"/>
-      <path d="M82 74h294l-12 104H96z" fill="#26342b"/>
-      <path d="M100 91h248M101 137h206" stroke="#f3c45b" stroke-width="12" stroke-linecap="round"/>
-      ${text(116, 122, "禁止聚集", 34, "#fff2ba")}
-      ${text(116, 166, "讨论敏感行情", 29, "#fff2ba")}
-      <path d="M56 202h354" stroke="#8d6b35" stroke-width="16" stroke-linecap="round"/>
-      <circle cx="82" cy="66" r="10" fill="#b63b24"/><circle cx="378" cy="66" r="10" fill="#b63b24"/>
+    <defs>
+      ${commonDefs()}
+      <linearGradient id="board" x1="0" x2="1"><stop stop-color="#d9c385"/><stop offset="1" stop-color="#8d6b35"/></linearGradient>
+    </defs>
+    <g filter="url(#ground)" transform="rotate(1 230 130)">
+      <path d="M64 57l335 4-24 137-290-7z" fill="url(#board)"/>
+      <path d="M86 76l288 4-17 95-254-7z" fill="#26342b"/>
+      <path d="M107 98l218 5M108 137l184 4" stroke="#f3c45b" stroke-width="11" stroke-linecap="round"/>
+      <path d="M112 119l108 2M112 157l154 4" stroke="#fff2ba" stroke-width="10" stroke-linecap="round" opacity=".82"/>
+      <path d="M58 202h352" stroke="#7a5b2f" stroke-width="18" stroke-linecap="round"/>
+      <circle cx="86" cy="68" r="10" fill="#b63b24"/><circle cx="378" cy="70" r="10" fill="#b63b24"/>
+      <path d="M70 58l322 4" stroke="#fff2ba" stroke-width="5" opacity=".18"/>
     </g>
   </svg>`;
 }
@@ -116,43 +142,50 @@ function warningSign() {
 function coolingFurnace() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300">
     <defs>
-      <filter id="s"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#020806" flood-opacity=".42"/></filter>
-      <linearGradient id="m" x1="0" x2="1"><stop stop-color="#17261f"/><stop offset="1" stop-color="#315344"/></linearGradient>
+      ${commonDefs()}
+      <linearGradient id="m" x1="0" x2="1"><stop stop-color="#13211b"/><stop offset=".62" stop-color="#315344"/><stop offset="1" stop-color="#16231d"/></linearGradient>
     </defs>
-    <g filter="url(#s)">
-      <rect x="48" y="70" width="264" height="164" rx="28" fill="url(#m)" stroke="#7f9e86" stroke-width="8"/>
-      <rect x="82" y="101" width="130" height="72" rx="16" fill="#09120f" stroke="#f3c45b" stroke-width="5"/>
-      <path d="M104 138h22l14-20 18 40 16-28 18 8" stroke="#f3c45b" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="256" cy="122" r="21" fill="#c64628"/><circle cx="256" cy="178" r="21" fill="#4f8d5d"/>
-      <path d="M77 238h206" stroke="#0b1712" stroke-width="18" stroke-linecap="round"/>
-      ${text(95, 213, "接盘冷却", 28, "#fff1c7")}
+    <ellipse cx="183" cy="251" rx="125" ry="25" fill="#03100c" opacity=".28"/>
+    <g filter="url(#ground)">
+      <path d="M52 78h250l23 131-22 29H57l-23-31z" fill="url(#m)" stroke="#6f8f79" stroke-width="8"/>
+      <path d="M82 106h128l10 64H91z" fill="#08120f" stroke="#d8bd61" stroke-width="5"/>
+      <path d="M105 141h21l13-19 19 39 16-29 18 9" stroke="#f3c45b" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="265" cy="122" r="18" fill="#b9462c"/><circle cx="272" cy="174" r="18" fill="#4f8d5d"/>
+      <path d="M83 210h194" stroke="#0b1712" stroke-width="16" stroke-linecap="round"/>
+      <path d="M87 234v28M276 234v28" stroke="#0b1712" stroke-width="15" stroke-linecap="round"/>
+      <path d="M66 81h224" stroke="#f2e0a4" stroke-width="5" opacity=".16"/>
+      <path d="M236 205l35 1" stroke="#fff1c7" stroke-width="8" stroke-linecap="round" opacity=".78"/>
     </g>
   </svg>`;
 }
 
 function characterFrame(progress, frame) {
   const x = frame * 720;
-  const lean = -12 + progress * 5;
-  const headY = 188 - progress * 5 + (frame % 2) * 3;
-  const shoulderY = 330 - progress * 8;
-  const phoneY = 430 + progress * 18;
+  const lean = -15 + progress * 5.4;
+  const headY = 194 - progress * 7 + (frame % 2) * 3;
+  const shoulderY = 320 - progress * 11;
+  const phoneY = 412 + progress * 24;
+  const handTension = progress < 3 ? 42 : 30;
   const eye = progress < 2 ? "M322 191h26M374 191h26" : progress < 5 ? "M322 187q13 8 26 0M374 187q13 8 26 0" : "M322 184q13 12 26 0M374 184q13 12 26 0";
   const mouth = progress < 2 ? "M345 238q28 -8 55 0" : progress < 4 ? "M348 239q24 6 49 0" : "M346 236q27 16 55 0";
   const phoneAngle = progress < 4 ? -12 : 8;
+  const neckTop = headY + 74;
   return `<g transform="translate(${x} 0) rotate(${lean} 360 390)">
     <ellipse cx="365" cy="720" rx="160" ry="34" fill="#04100d" opacity=".22"/>
-    <path d="M245 ${shoulderY + 90}q120-72 242 0l42 235H204z" fill="${progress < 3 ? "#24342e" : "#2f4d3f"}"/>
-    <path d="M257 ${shoulderY + 98}q104 38 211 0l15 70q-112 45-241 0z" fill="#17261f" opacity=".55"/>
-    <path d="M291 ${shoulderY + 190}q-52 48-72 112" stroke="#c69a64" stroke-width="42" stroke-linecap="round" fill="none"/>
-    <path d="M438 ${shoulderY + 190}q46 42 61 108" stroke="#c69a64" stroke-width="42" stroke-linecap="round" fill="none"/>
+    <path d="M338 ${neckTop}q28 18 64 1l-5 92q-34 22-69 0z" fill="url(#skin)"/>
+    <path d="M250 ${shoulderY + 44}q114-50 230 0l50 280H203z" fill="${progress < 3 ? "url(#coat-cold)" : "url(#coat-warm)"}"/>
+    <path d="M270 ${shoulderY + 50}q90 30 184 0l14 66q-96 42-212 0z" fill="#17261f" opacity=".46"/>
+    <path d="M291 ${shoulderY + 142}q-${handTension} 48-72 112" stroke="url(#skin)" stroke-width="42" stroke-linecap="round" fill="none"/>
+    <path d="M438 ${shoulderY + 142}q${Math.max(28, handTension - 4)} 42 61 108" stroke="url(#skin)" stroke-width="42" stroke-linecap="round" fill="none"/>
     <g transform="translate(0 ${headY - 185})">
-      <path d="M301 132q28-66 103-54q64 11 77 74q9 42-12 79q-25 45-84 52q-70 8-95-44q-22-46 11-107z" fill="#d2a06d"/>
+      <path d="M301 132q28-66 103-54q64 11 77 74q9 42-12 79q-25 45-84 52q-70 8-95-44q-22-46 11-107z" fill="url(#skin)"/>
       <path d="M294 153q32-87 120-78q51 5 76 43q-49-14-99-8q-52 7-97 43z" fill="#2b211b"/>
+      <path d="M438 135q24 42 8 87" stroke="#b98255" stroke-width="9" stroke-linecap="round" opacity=".28"/>
       <path d="${eye}" stroke="#241814" stroke-width="9" stroke-linecap="round" fill="none"/>
       <path d="${mouth}" stroke="#8b3d2e" stroke-width="8" stroke-linecap="round" fill="none"/>
       <path d="M358 205q-9 17-22 32" stroke="#b98255" stroke-width="7" stroke-linecap="round" fill="none"/>
     </g>
-    <g transform="translate(352 ${phoneY}) rotate(${phoneAngle})">
+    <g transform="translate(352 ${phoneY + 8}) rotate(${phoneAngle})">
       <rect x="-48" y="-78" width="96" height="142" rx="19" fill="#111814"/>
       <rect x="-36" y="-55" width="72" height="92" rx="9" fill="${progress < 3 ? "#f0d783" : "#bcd5ae"}"/>
       <path d="M-23-8l18-22 17 15 16-34" stroke="#c64628" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -163,6 +196,11 @@ function characterFrame(progress, frame) {
 
 function characterSheet(progress) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="2880" height="820" viewBox="0 0 2880 820">
+    <defs>
+      <linearGradient id="skin" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ddb27b"/><stop offset=".64" stop-color="#c8925d"/><stop offset="1" stop-color="#8f5839"/></linearGradient>
+      <linearGradient id="coat-cold" x1="0" x2="1"><stop stop-color="#182520"/><stop offset=".62" stop-color="#2d4037"/><stop offset="1" stop-color="#101a16"/></linearGradient>
+      <linearGradient id="coat-warm" x1="0" x2="1"><stop stop-color="#233a30"/><stop offset=".62" stop-color="#42664f"/><stop offset="1" stop-color="#17241e"/></linearGradient>
+    </defs>
     ${[0, 1, 2, 3].map((frame) => characterFrame(progress, frame)).join("")}
   </svg>`;
 }

@@ -1,18 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="310" viewBox="0 0 400 310">
-    <defs><filter id="s"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#020806" flood-opacity=".35"/></filter></defs>
-    <g filter="url(#s)">
-      <rect x="48" y="30" width="304" height="250" rx="34" fill="#17261f"/>
-      <rect x="70" y="57" width="260" height="196" rx="22" fill="#e9eddc"/>
-      <circle cx="100" cy="93" r="17" fill="#b9944c"/>
-      <rect x="127" y="77" width="155" height="32" rx="16" fill="#fff8df"/>
-      <circle cx="292" cy="139" r="17" fill="#3d8457"/>
-      <rect x="116" y="123" width="158" height="32" rx="16" fill="#dff0dc"/>
-      <circle cx="101" cy="185" r="17" fill="#c64628"/>
-      <rect x="128" y="169" width="120" height="32" rx="16" fill="#fff8df"/>
-      <path d="M82 224h236" stroke="#829174" stroke-width="8" stroke-linecap="round" opacity=".45"/>
-      <text x="127" y="99" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="700" fill="#2b1a13">还拿吗</text>
-      <text x="140" y="145" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#1d3a2d">长期</text>
-      <text x="132" y="191" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#2b1a13">越跌买</text>
-      <path d="M68 47h264" stroke="#f3c45b" stroke-width="5" opacity=".5"/>
+    <defs>
+      <filter id="ground" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#020806" flood-opacity=".34"/>
+    </filter>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+      <linearGradient id="body" x1="0" x2="1"><stop stop-color="#0e1713"/><stop offset="1" stop-color="#26362d"/></linearGradient>
+    </defs>
+    <ellipse cx="206" cy="268" rx="142" ry="24" fill="#03100c" opacity=".24"/>
+    <g filter="url(#ground)" transform="rotate(3 200 155)">
+      <path d="M67 42l263 18 20 199-287-25z" fill="#07100d"/>
+      <path d="M88 65l221 15 14 149-237-18z" fill="#dfe6d2"/>
+      <circle cx="113" cy="95" r="12" fill="#b9944c"/>
+      <path d="M136 84l122 9" stroke="#fff8df" stroke-width="19" stroke-linecap="round"/>
+      <circle cx="277" cy="139" r="12" fill="#3d8457"/>
+      <path d="M122 130l126 9" stroke="#cddfc7" stroke-width="19" stroke-linecap="round"/>
+      <circle cx="109" cy="178" r="12" fill="#b9462c"/>
+      <path d="M134 169l96 7" stroke="#fff8df" stroke-width="19" stroke-linecap="round"/>
+      <path d="M101 211l196 15" stroke="#829174" stroke-width="7" stroke-linecap="round" opacity=".44"/>
+      <path d="M88 65l221 15" stroke="#f3c45b" stroke-width="5" opacity=".35"/>
+      <circle cx="198" cy="245" r="8" fill="#2c3d34"/>
+      <path d="M72 45l260 18" stroke="#53665a" stroke-width="9" opacity=".38"/>
     </g>
   </svg>

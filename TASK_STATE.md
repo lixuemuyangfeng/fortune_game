@@ -63,19 +63,21 @@ The first level now has a playable raster-background iteration, but still needs 
 
 ## Current Second-Level Status
 
-The second level is now wired as a playable Phaser flow, but the latest visual QA rejected the current temporary art direction as not production-acceptable.
+The second level is now wired as a playable Phaser flow and has received a first art-repair pass. It is playable and visually cleaner than the rejected sticker pass, but still should be treated as interim generated art until final production assets are approved.
 
 - Done: added the real campaign second level `黄金大师天台局` after the office level.
 - Done: first-level completion now enters the rooftop level instead of a placeholder.
 - Done: added second-level gameplay config, evidence entries, local state switching, Phaser scene loading, hotspot access buttons, click feedback, audio profiles, and Playwright coverage.
 - Done: added generated rooftop background, five clue assets, a cooling-furnace asset, and `progress-0` through `progress-5` trader spritesheets.
+- Done: replaced the first temporary flat clue/machine assets with heavier shaded PNG assets from `scripts/generate-rooftop-assets.mjs`.
+- Done: removed always-on floating clue tweens; clue objects now stay physically placed and only animate through local hit feedback.
+- Done: added local contact shadows for all five rooftop clues and the cooling furnace.
+- Done: retuned second-level hotspot positions so the group-chat clue no longer overlaps the character head.
+- Done: rebuilt the trader spritesheets with stronger progress-linked posture changes, gradient shading, and an attached neck/body silhouette so the character reads as one scene unit.
 - Not done: final second-level art acceptance.
-- QA finding: the rooftop background is semi-realistic, while the character, clues, and machine read as flat SVG/sticker-style overlays; this violates the art rule against mixing flat SVG/icon assets directly over raster or semi-realistic backgrounds.
-- QA finding: clue objects float above the scene without believable perspective, contact shadows, physical placement, or foreground occlusion, so they read as UI stickers rather than rooftop props.
-- QA finding: the proxy character is a flat cartoon figure with weak material/style match to the background; it satisfies the six-state contract technically, but not the production art standard.
-- QA finding: some clue objects visually compete with or overlap the character, especially the group-chat card near the head.
-- QA finding: the cooling furnace reads more like a dashboard badge than an in-world machine.
-- QA finding: visible text inside props risks feeling like answer labels unless it is naturally embedded as screen/sign content with matching perspective and material.
+- Remaining QA risk: the rooftop background is still more realistic than the script-generated character and foreground props. The pass reduces sticker/floating issues, but final acceptance likely still needs coherent rendered PNG/WebP assets.
+- Remaining QA risk: the proxy character now has six readable states and a connected body, but it is still stylized temporary art rather than final production character art.
+- Remaining QA risk: the news/screen/sign props still contain abstract in-world marks. They are no longer answer-label cards, but final art should make them look more naturally printed or displayed.
 
 Second-level optimization plan:
 
@@ -119,3 +121,4 @@ Second-level optimization plan:
 - After expanding Zhou Qiming to 6 per-clue progress expressions, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-15; Playwright screenshots were captured at `artifacts/progress-expression-scale-0.png` through `artifacts/progress-expression-scale-5.png`.
 - After documenting the cross-level game-feel rules and adding validation coverage, `npm test` and `npm run build` passed on 2026-05-15.
 - After adding the playable second-level rooftop loop, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-15; Playwright screenshots were captured at `artifacts/rooftop-progress-0.png` through `artifacts/rooftop-progress-5.png` and `artifacts/rooftop-mobile-complete.png`.
+- After the second-level art-repair pass, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-v4-progress-0.png`, `artifacts/rooftop-v3-progress-3.png`, `artifacts/rooftop-v3-progress-5.png`, and `artifacts/rooftop-v2-mobile-complete.png`.
