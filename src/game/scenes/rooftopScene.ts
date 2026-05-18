@@ -131,7 +131,7 @@ export class RooftopScene extends Phaser.Scene {
       const image = this.add.image(x, y, key).setDepth(this.getClueDepth(hotspot));
       const width = ((hotspot.imageWidth ?? hotspot.radius * 2) / 100) * worldWidth;
       image.setDisplaySize(width, width * (image.height / image.width));
-      image.setAlpha(this.rooftopData.foundHotspotIds.includes(hotspot.id) ? 0.62 : 0.86);
+      image.setAlpha(this.getClueAlpha(hotspot));
       image.setAngle(this.getClueAngle(hotspot));
     }
   }
@@ -173,19 +173,22 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addFoundMarkers(): void {
+    const progress = getOfficeProgress(this.rooftopData.scene, this.rooftopData.foundHotspotIds);
+    if (progress.complete) return;
+
     for (const hotspot of this.rooftopData.scene.hotspots) {
       if (!this.rooftopData.foundHotspotIds.includes(hotspot.id)) continue;
       const { x, y } = this.getHotspotPoint(hotspot);
-      const marker = this.add.container(x + 10, y - 10).setDepth(45);
+      const marker = this.add.container(x + 8, y - 8).setDepth(45);
       const pin = this.add.graphics();
       pin.fillStyle(0x2f7a49, 0.96);
-      pin.lineStyle(2, 0xffffff, 0.82);
-      pin.fillCircle(0, 0, 8);
-      pin.strokeCircle(0, 0, 8);
+      pin.lineStyle(1.5, 0xffffff, 0.78);
+      pin.fillCircle(0, 0, 6);
+      pin.strokeCircle(0, 0, 6);
       const check = this.add.text(0, -2, "✓", {
         color: "#ffffff",
         fontFamily: "Arial, sans-serif",
-        fontSize: "11px",
+        fontSize: "8px",
         fontStyle: "bold"
       }).setOrigin(0.5);
       marker.add([pin, check]);
@@ -234,10 +237,10 @@ export class RooftopScene extends Phaser.Scene {
       color: "#c64628",
       backgroundColor: "rgba(255, 246, 223, 0.88)",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
-      fontSize: "18px",
+      fontSize: "14px",
       fontStyle: "bold",
-      padding: { x: 7, y: 4 }
-    }).setOrigin(0.5).setAngle(-7).setDepth(52).setScale(1.26);
+      padding: { x: 6, y: 3 }
+    }).setOrigin(0.5).setAngle(-7).setDepth(52).setScale(1.12);
     this.tweens.add({ targets: stamp, scale: 1, duration: 170, ease: "Back.out" });
     this.tweens.add({ targets: stamp, alpha: 0, duration: 240, delay: 700 });
   }
@@ -292,9 +295,9 @@ export class RooftopScene extends Phaser.Scene {
   private addCoolingFurnace(): void {
     if (!this.textures.exists("rooftop-cooling-furnace")) return;
     const progress = getOfficeProgress(this.rooftopData.scene, this.rooftopData.foundHotspotIds);
-    this.add.ellipse(1036, 603, 182, 32, 0x03100c, 0.28).setDepth(25);
-    const machine = this.add.image(1035, 538, "rooftop-cooling-furnace").setDepth(27);
-    machine.setDisplaySize(176, 147);
+    this.add.ellipse(1048, 614, 136, 24, 0x03100c, 0.25).setDepth(25);
+    const machine = this.add.image(1048, 560, "rooftop-cooling-furnace").setDepth(27);
+    machine.setDisplaySize(132, 110);
     machine.setAlpha(progress.complete ? 1 : 0.93);
 
     if (progress.complete) {
@@ -303,17 +306,17 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addMachinePulse(): void {
-    const pulse = this.add.ellipse(1008, 515, 66, 34, 0xf3c45b, 0.22).setDepth(31);
+    const pulse = this.add.ellipse(1028, 542, 46, 24, 0xf3c45b, 0.2).setDepth(31);
     this.tweens.add({ targets: pulse, alpha: 0, scaleX: 1.4, scaleY: 1.18, duration: 560, ease: "Cubic.out" });
   }
 
   private addPlayableCharacter(): void {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
-    this.add.ellipse(628, 538, 118, 22, 0x03100c, 0.28).setDepth(23);
-    const sprite = this.add.sprite(628, 492, `trader-${state}`, 0).setDepth(24);
+    this.add.ellipse(620, 562, 132, 24, 0x03100c, 0.28).setDepth(23);
+    const sprite = this.add.sprite(620, 512, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    sprite.setScale(0.225 * (1 + progressIndex * 0.004));
+    sprite.setScale(0.252 * (1 + progressIndex * 0.004));
     sprite.setOrigin(0.5, 0.84);
     sprite.play(`trader-${state}-anim`);
 
@@ -369,20 +372,20 @@ export class RooftopScene extends Phaser.Scene {
     if (this.rooftopData.justFoundHotspotId) playHitSound("complete");
 
     const panel = this.add.graphics().setDepth(58);
-    panel.fillStyle(0x17261f, 0.9);
-    panel.lineStyle(2, 0xf3c45b, 0.5);
-    panel.fillRoundedRect(910, 418, 204, 78, 12);
-    panel.strokeRoundedRect(910, 418, 204, 78, 12);
-    this.add.text(930, 436, "证据袋已封口", {
+    panel.fillStyle(0x17261f, 0.82);
+    panel.lineStyle(1.5, 0xf3c45b, 0.42);
+    panel.fillRoundedRect(944, 454, 150, 48, 8);
+    panel.strokeRoundedRect(944, 454, 150, 48, 8);
+    this.add.text(960, 465, "证据封口", {
       color: "#f3c45b",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
-      fontSize: "15px",
+      fontSize: "11px",
       fontStyle: "bold"
     }).setDepth(59);
-    this.add.text(930, 460, "接盘已冷却", {
+    this.add.text(960, 480, "接盘已冷却", {
       color: "#fff7df",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
-      fontSize: "20px",
+      fontSize: "16px",
       fontStyle: "bold"
     }).setDepth(59);
   }
@@ -393,24 +396,37 @@ export class RooftopScene extends Phaser.Scene {
 
   private getClueDepth(hotspot: SceneHotspot): number {
     if (hotspot.id === "h5") return 18;
-    if (hotspot.id === "h1") return 28;
+    if (hotspot.id === "h1") return 26;
     if (hotspot.id === "h6") return 25;
     return 26;
   }
 
+  private getClueAlpha(hotspot: SceneHotspot): number {
+    if (this.rooftopData.foundHotspotIds.includes(hotspot.id)) return 0.58;
+    const alphas: Record<string, number> = {
+      h1: 0.8,
+      h2: 0.82,
+      h3: 0.76,
+      h4: 0.8,
+      h5: 0.78,
+      h6: 0.74
+    };
+    return alphas[hotspot.id] ?? 0.82;
+  }
+
   private getClueAngle(hotspot: SceneHotspot): number {
-    const angles: Record<string, number> = { h1: -7, h2: 2, h3: 4, h4: -8, h5: 1, h6: -4 };
+    const angles: Record<string, number> = { h1: -11, h2: 2, h3: 7, h4: -8, h5: 1, h6: -9 };
     return angles[hotspot.id] ?? 0;
   }
 
   private getClueShadow(hotspot: SceneHotspot): { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number } {
     const shadows: Record<string, { width: number; height: number; offsetX: number; offsetY: number; angle: number; alpha: number; depth: number }> = {
-      h1: { width: 76, height: 16, offsetX: 3, offsetY: 30, angle: -9, alpha: 0.2, depth: 25 },
-      h2: { width: 62, height: 14, offsetX: 0, offsetY: 34, angle: 3, alpha: 0.18, depth: 24 },
-      h3: { width: 70, height: 14, offsetX: 5, offsetY: 28, angle: 4, alpha: 0.16, depth: 24 },
-      h4: { width: 44, height: 12, offsetX: 3, offsetY: 44, angle: -8, alpha: 0.18, depth: 24 },
-      h5: { width: 82, height: 12, offsetX: 0, offsetY: 28, angle: 1, alpha: 0.14, depth: 17 },
-      h6: { width: 58, height: 12, offsetX: -3, offsetY: 26, angle: -4, alpha: 0.18, depth: 24 }
+      h1: { width: 60, height: 13, offsetX: 3, offsetY: 27, angle: -11, alpha: 0.16, depth: 25 },
+      h2: { width: 46, height: 11, offsetX: 0, offsetY: 30, angle: 3, alpha: 0.15, depth: 24 },
+      h3: { width: 54, height: 12, offsetX: 5, offsetY: 25, angle: 7, alpha: 0.13, depth: 24 },
+      h4: { width: 36, height: 10, offsetX: 3, offsetY: 39, angle: -8, alpha: 0.15, depth: 24 },
+      h5: { width: 58, height: 9, offsetX: 0, offsetY: 24, angle: 1, alpha: 0.1, depth: 17 },
+      h6: { width: 46, height: 10, offsetX: -2, offsetY: 24, angle: -9, alpha: 0.14, depth: 24 }
     };
     return shadows[hotspot.id] ?? { width: 120, height: 22, offsetX: 0, offsetY: 42, angle: 0, alpha: 0.22, depth: 24 };
   }

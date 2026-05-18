@@ -79,22 +79,26 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: removed the old `scripts/generate-rooftop-assets.mjs` SVG generation path and obsolete SVG source directories so final assets are not overwritten by placeholder art.
 - Done: saved the generated source plates under `public/assets/game/rooftop/source/`.
 - Done: retuned second-level hotspot positions and object sizes against the final bitmap assets.
+- Done: reworked the latest rooftop layout review findings: character scale/grounding was adjusted, the group-chat clue now uses the trader's hand-held phone as an embedded hotspot instead of an extra phone on the floor, found markers were reduced and removed from the completion scene, and the completion machine panel was shrunk so it no longer blocks the furnace.
+- Done: second-level clue placement now escalates beyond the office by using 6 clues across multiple scene layers: wall sign, pipe-side contract, hand-held phone, machine-side news, floor receipt, and price alert.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
 - QA finding resolved: second-level clue count now increases from 5 to 6, with a new `杠杆合同边角` clue.
-- QA finding resolved: the trader no longer uses toy/mascot proportions.
+- QA finding resolved: the trader no longer uses toy/mascot proportions and no longer reads as a small floating sticker in the completed scene.
+- QA finding resolved: the completion state no longer exposes all answers through large green check markers.
+- QA finding resolved: not all rooftop clues are separate floor props; the group-chat clue is now embedded in the character's phone.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
 
-- Get user approval or rejection on the final-direction rooftop screenshots before expanding later levels.
-- If rejected, iterate through the bitmap generation/editing pipeline, not through SVG placeholder scripts.
+- Keep future level difficulty increasing by clue count, smaller object scale, and placement across different scene layers instead of dumping props on one floor band.
+- If future rooftop art is rejected, iterate through the bitmap generation/editing pipeline, not through SVG placeholder scripts.
 
 ## Next Steps
 
-- Review the final-direction rooftop screenshots with the user and tune only if the user rejects the visual direction.
 - Keep later levels on the bitmap asset pipeline; do not restart SVG placeholder generation for production scenes.
+- Apply the second-level lesson to later levels before coding them: each next level needs more deliberate clue hiding, scene-layer distribution, and per-clue character/proxy state progression.
 - Add tests for backend ad placement limits and level progress snapshots.
 - Then implement real backend adapter boundaries for WeChat friend ranking and remote ad placement.
 
@@ -128,3 +132,4 @@ Second-level optimization plan:
 - After replacing the second-level placeholder art with final-direction bitmap assets and removing the SVG generation path, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-final-pass2-progress-0.png`, `artifacts/rooftop-final-pass2-progress-3.png`, `artifacts/rooftop-final-pass2-progress-5.png`, and `artifacts/rooftop-final-pass2-mobile-complete.png`.
 - After increasing the rooftop level to 6 clues and replacing the trader with an adult human-proportioned 7-state character, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-incremental-human-grounded-progress-0.png`, `artifacts/rooftop-incremental-human-grounded-progress-6.png`, and `artifacts/rooftop-incremental-human-grounded-mobile-complete.png`.
 - After shrinking and embedding the second-level visible clue sprites into the rooftop scene, `npm test`, `npm run build`, and `npm run test:e2e` passed on 2026-05-18; Playwright screenshots were captured at `artifacts/rooftop-hidden-scale-progress-0.png`, `artifacts/rooftop-hidden-scale-progress-3.png`, `artifacts/rooftop-hidden-scale-progress-6.png`, `artifacts/rooftop-hidden-scale-mobile-progress-0.png`, and `artifacts/rooftop-hidden-scale-mobile-complete.png`.
+- After the latest rooftop QA pass for character scale, clue layering, embedded group-chat hotspot, found-marker spoilers, and completion-panel occlusion, Playwright screenshots were captured at `artifacts/rooftop-layout-review-progress-0.png`, `artifacts/rooftop-layout-review-progress-3.png`, `artifacts/rooftop-layout-review-progress-6.png`, `artifacts/rooftop-layout-review-mobile-progress-0.png`, and `artifacts/rooftop-layout-review-mobile-complete.png`.
