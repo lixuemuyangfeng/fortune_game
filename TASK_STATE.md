@@ -93,6 +93,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: retuned the v6 embedded hotspots so the table receipt and left hand-held phone no longer overlap and the sixth clue remains accessible.
 - Done: resized, darkened, and grounded the independent trader state sprite on the foreground ledge so it reads as a foreground character state rather than a tiny floating sticker.
 - Done: strengthened the active hint marker with a local double outline and dot; Playwright verified the sixth hint lands on `杠杆合同边角` after the first five rooftop clues are found.
+- Done: replaced the old seated rooftop trader spritesheets with standing full-body protagonist spritesheets generated on chroma key and converted into the existing `progress-0` through `progress-6` Phaser sheet contract.
+- Done: changed the rooftop protagonist from a wall/ground seated pose to a grounded standing pose, retuned his scene scale, origin, shadow, and completion-state scale so the character reads closer to the background adults.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
@@ -108,6 +110,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the v5 pass still looked too similar from the player view. The v6 pass changes the actual composition and investigation density instead of only nudging clue positions.
 - QA finding resolved: h1/h2 access hotspots no longer overlap, so label-based clicks hit the intended clue.
 - QA finding resolved: the sixth hint waits for the rewarded-ad flow and then highlights the remaining contract clue visibly.
+- QA finding resolved: the protagonist is no longer the old small seated cutout; Playwright screenshots `artifacts/rooftop-standing-progress-0.png` and `artifacts/rooftop-standing-progress-6.png` verify the replacement standing state in both start and completion states.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
