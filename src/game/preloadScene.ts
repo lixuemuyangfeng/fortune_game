@@ -7,7 +7,7 @@ export class PreloadScene extends Phaser.Scene {
   preload(): void {
     this.load.image("office-background", "/assets/game/office/office-background-clean.png");
     this.load.image("office-foreground", "/assets/game/office/office-foreground-occluders.png");
-    this.load.image("rooftop-background", "/assets/game/rooftop/rooftop-background-v2.png");
+    this.load.image("rooftop-background", "/assets/game/rooftop/rooftop-background-v3.png");
     this.load.image("rooftop-cooling-furnace", "/assets/game/rooftop/machines/cooling-furnace.png");
     [
       ["h1", "/assets/game/rooftop/clues/folded-receipt.png"],

@@ -181,7 +181,7 @@ export const gameConfig: GameConfig = {
       name: "黄金大师天台局",
       theme: "gold",
       description: "傍晚天台，刚追完黄金的人都说自己不是短线，只是每三分钟看一次价格。",
-      backgroundImage: "/assets/game/rooftop/rooftop-background-v2.png",
+      backgroundImage: "/assets/game/rooftop/rooftop-background-v3.png",
       hint: "别急着补仓",
       enemyName: "接盘幻影",
       enemyDescription: "它把追高包装成理性建议：长期配置，越跌越买，你这是避险。",
@@ -189,12 +189,12 @@ export const gameConfig: GameConfig = {
       machineEmbedded: true,
       completeText: "家庭资产配置已冷冻。嘴硬可以，别拿嘴硬当策略。",
       hotspots: [
-        { id: "h1", evidenceId: "gold_receipt", x: 22.2, y: 61.2, hitX: 22.2, hitY: 61.2, hitWidth: 5.2, hitHeight: 5.8, radius: 7, label: "金店小票", found: false, renderMode: "embedded", revealText: "小票垫不住追高的手", animationKind: "receipt" },
-        { id: "h2", evidenceId: "hedge_group", x: 44.8, y: 73.2, hitX: 44.8, hitY: 73.2, hitWidth: 5.2, hitHeight: 7.2, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
-        { id: "h3", evidenceId: "risk_headline", x: 89.2, y: 49.8, hitX: 89.2, hitY: 49.8, hitWidth: 6.2, hitHeight: 8, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
-        { id: "h4", evidenceId: "price_alarm", x: 65.8, y: 75.4, hitX: 65.8, hitY: 75.4, hitWidth: 4.8, hitHeight: 10, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
-        { id: "h5", evidenceId: "rooftop_warning", x: 36.4, y: 42.2, hitX: 36.4, hitY: 42.2, hitWidth: 6.2, hitHeight: 8.2, radius: 8, label: "敏感行情告示", found: false, renderMode: "embedded", revealText: "天台门口已经替你写了风险提示", animationKind: "sign" },
-        { id: "h6", evidenceId: "leverage_contract", x: 5.6, y: 78.2, hitX: 5.6, hitY: 78.2, hitWidth: 5.6, hitHeight: 8.2, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气已经躲到管道边", animationKind: "contract" }
+        { id: "h1", evidenceId: "gold_receipt", x: 24.2, y: 47.2, hitX: 24.2, hitY: 47.2, hitWidth: 6.2, hitHeight: 6.8, radius: 7, label: "金店小票", found: false, renderMode: "embedded", revealText: "小票垫不住追高的手", animationKind: "receipt" },
+        { id: "h2", evidenceId: "hedge_group", x: 39.8, y: 67.2, hitX: 39.8, hitY: 67.2, hitWidth: 5.8, hitHeight: 8.2, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
+        { id: "h3", evidenceId: "risk_headline", x: 89.2, y: 39.8, hitX: 89.2, hitY: 39.8, hitWidth: 8.6, hitHeight: 12.4, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
+        { id: "h4", evidenceId: "price_alarm", x: 55.6, y: 72.4, hitX: 55.6, hitY: 72.4, hitWidth: 5.4, hitHeight: 11.2, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
+        { id: "h5", evidenceId: "rooftop_warning", x: 30.6, y: 16.8, hitX: 30.6, hitY: 16.8, hitWidth: 5.6, hitHeight: 7.2, radius: 8, label: "敏感行情告示", found: false, renderMode: "embedded", revealText: "天台门口已经替你写了风险提示", animationKind: "sign" },
+        { id: "h6", evidenceId: "leverage_contract", x: 11.5, y: 73.2, hitX: 11.5, hitY: 73.2, hitWidth: 7.2, hitHeight: 9.4, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气已经躲到管道边", animationKind: "contract" }
       ]
     },
     {
