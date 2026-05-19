@@ -27,7 +27,7 @@ export interface GameBackend {
 }
 
 const placementLimits: Record<AdPlacementId, { dailyLimit: number; rewardMultiplier: number }> = {
-  hint: { dailyLimit: 5, rewardMultiplier: 1 }
+  hint: { dailyLimit: 12, rewardMultiplier: 1 }
 };
 
 export class LocalGameBackend implements GameBackend {

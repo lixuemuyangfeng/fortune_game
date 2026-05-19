@@ -85,6 +85,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: replaced the sparse rooftop plate with `public/assets/game/rooftop/rooftop-background-v3.png`, increasing foreground and mid-ground density with pipes, crates, tarp, cables, tools, utility cart, clipboard, AC unit, paper clutter, and machine props so the level has real places to hide clues.
 - Done: replaced the dense-but-odd rooftop plate with `public/assets/game/rooftop/rooftop-background-v4.png`, adding several background adults to make the rooftop "gold discussion" scene socially coherent and correcting the oversized/standing phone problem.
 - Done: repositioned the independent trader sprite back onto the central platform area so he no longer reads as sitting on the front parapet.
+- Done: replaced the rooftop plate again with `public/assets/game/rooftop/rooftop-background-v5.png`, keeping coherent background adults while making phone clues human-scale and semantically tied to hands, clothes, toolbox, AC news, door receipt, warning sign, and pipe-contract locations.
+- Done: raised the local hint placement daily limit from 5 to 12 so a 6-clue level can still reveal the final remaining clue.
 - Done: changed the rooftop machine to an embedded scene object and removed the duplicate overlaid cooling-furnace sprite from runtime.
 - Done: changed all six rooftop clues to embedded-scene hotspots. Phaser still owns hit zones, found markers, localized feedback, progress, and character state switching, but no longer renders mismatched clue sprites over the background.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
@@ -98,6 +100,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the previous rooftop plate was still too scenic and empty, with too much floor and skyline. The v3 plate reduces skyline dominance and makes the investigation area the visual focus.
 - QA finding resolved: phone clues no longer appear larger than people or standing upright as props; they now read as normal-scale hand/table objects.
 - QA finding resolved: the rooftop scene no longer feels like one isolated person surrounded by props; background people now support the "天台局" premise.
+- QA finding resolved: the sixth hint no longer gets blocked by the old 5-hint daily cap.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -146,3 +149,4 @@ Second-level optimization plan:
 - After redesigning the second level per the Phaser 3 requirements spec, Playwright screenshots were captured at `artifacts/rooftop-redesign-progress-0.png`, `artifacts/rooftop-redesign-progress-3.png`, `artifacts/rooftop-redesign-progress-6.png`, `artifacts/rooftop-redesign-mobile-progress-0.png`, and `artifacts/rooftop-redesign-mobile-complete.png`.
 - After increasing the second-level scene density and re-marking embedded hotspots, Playwright screenshots were captured at `artifacts/rooftop-density-progress-0.png`, `artifacts/rooftop-density-progress-3.png`, `artifacts/rooftop-density-progress-6.png`, `artifacts/rooftop-density-mobile-progress-0.png`, and `artifacts/rooftop-density-mobile-complete.png`.
 - After adding background people and correcting phone scale/placement, Playwright screenshots were captured at `artifacts/rooftop-people-progress-0.png`, `artifacts/rooftop-people-progress-3.png`, `artifacts/rooftop-people-progress-6.png`, `artifacts/rooftop-people-mobile-progress-0.png`, and `artifacts/rooftop-people-mobile-complete.png`.
+- After improving rooftop clue semantics and raising the hint limit, Playwright screenshots were captured at `artifacts/rooftop-v5-progress-0.png`, `artifacts/rooftop-v5-hint-sixth.png`, and `artifacts/rooftop-v5-progress-6.png`.
