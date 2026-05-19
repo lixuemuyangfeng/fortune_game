@@ -89,6 +89,10 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: raised the local hint placement daily limit from 5 to 12 so a 6-clue level can still reveal the final remaining clue.
 - Done: changed the rooftop machine to an embedded scene object and removed the duplicate overlaid cooling-furnace sprite from runtime.
 - Done: changed all six rooftop clues to embedded-scene hotspots. Phaser still owns hit zones, found markers, localized feedback, progress, and character state switching, but no longer renders mismatched clue sprites over the background.
+- Done: replaced the rooftop plate with `public/assets/game/rooftop/rooftop-background-v6.png`, moving from a mostly open scenic roof to a tighter U-shaped rooftop discussion setup with multiple adults, table papers, hand-held phones, tool cart, wall sign, AC poster, hose-side contract, crates, cups, and foreground cover so clues sit in explainable places.
+- Done: retuned the v6 embedded hotspots so the table receipt and left hand-held phone no longer overlap and the sixth clue remains accessible.
+- Done: resized, darkened, and grounded the independent trader state sprite on the foreground ledge so it reads as a foreground character state rather than a tiny floating sticker.
+- Done: strengthened the active hint marker with a local double outline and dot; Playwright verified the sixth hint lands on `杠杆合同边角` after the first five rooftop clues are found.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
@@ -101,6 +105,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: phone clues no longer appear larger than people or standing upright as props; they now read as normal-scale hand/table objects.
 - QA finding resolved: the rooftop scene no longer feels like one isolated person surrounded by props; background people now support the "天台局" premise.
 - QA finding resolved: the sixth hint no longer gets blocked by the old 5-hint daily cap.
+- QA finding resolved: the v5 pass still looked too similar from the player view. The v6 pass changes the actual composition and investigation density instead of only nudging clue positions.
+- QA finding resolved: h1/h2 access hotspots no longer overlap, so label-based clicks hit the intended clue.
+- QA finding resolved: the sixth hint waits for the rewarded-ad flow and then highlights the remaining contract clue visibly.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:

@@ -201,9 +201,13 @@ export class RooftopScene extends Phaser.Scene {
     if (!hotspot) return;
     const rect = this.getHotspotRect(hotspot);
     const hint = this.add.graphics().setDepth(44);
-    hint.lineStyle(5, 0xf3c45b, 0.9);
+    hint.lineStyle(6, 0xf3c45b, 0.95);
     hint.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 16);
-    this.tweens.add({ targets: hint, alpha: 0.24, duration: 460, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    hint.lineStyle(2, 0xfff7df, 0.75);
+    hint.strokeRoundedRect(rect.x - rect.width / 2 + 5, rect.y - rect.height / 2 + 5, rect.width - 10, rect.height - 10, 12);
+    hint.fillStyle(0xf3c45b, 0.95);
+    hint.fillCircle(rect.x + rect.width * 0.36, rect.y - rect.height * 0.36, 8);
+    this.tweens.add({ targets: hint, alpha: 0.42, duration: 520, yoyo: true, repeat: 5, ease: "Sine.inOut" });
   }
 
   private addRecentHitEffect(): void {
@@ -316,10 +320,12 @@ export class RooftopScene extends Phaser.Scene {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
     this.addCharacterContactShadows();
-    const sprite = this.add.sprite(594, 560, `trader-${state}`, 0).setDepth(24);
+    const sprite = this.add.sprite(608, 638, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    sprite.setScale(0.198 * (1 + progressIndex * 0.004));
-    sprite.setOrigin(0.5, 0.84);
+    sprite.setScale(0.305 * (1 + progressIndex * 0.004));
+    sprite.setOrigin(0.5, 0.94);
+    sprite.setTint(0xa7a08a);
+    sprite.setAlpha(0.94);
     sprite.play(`trader-${state}-anim`);
 
     if (progressIndex === 0) {
@@ -345,9 +351,9 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addCharacterContactShadows(): void {
-    this.add.ellipse(580, 617, 124, 19, 0x03100c, 0.19).setDepth(23).setAngle(-4);
-    this.add.ellipse(532, 638, 72, 12, 0x03100c, 0.15).setDepth(23).setAngle(-9);
-    this.add.ellipse(642, 615, 72, 13, 0x03100c, 0.11).setDepth(23).setAngle(5);
+    this.add.ellipse(600, 650, 176, 26, 0x03100c, 0.22).setDepth(23).setAngle(-4);
+    this.add.ellipse(540, 675, 98, 14, 0x03100c, 0.17).setDepth(23).setAngle(-9);
+    this.add.ellipse(680, 648, 96, 15, 0x03100c, 0.13).setDepth(23).setAngle(5);
   }
 
   private getCharacterState(): CharacterState {
