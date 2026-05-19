@@ -95,6 +95,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Done: strengthened the active hint marker with a local double outline and dot; Playwright verified the sixth hint lands on `杠杆合同边角` after the first five rooftop clues are found.
 - Done: replaced the old seated rooftop trader spritesheets with standing full-body protagonist spritesheets generated on chroma key and converted into the existing `progress-0` through `progress-6` Phaser sheet contract.
 - Done: changed the rooftop protagonist from a wall/ground seated pose to a grounded standing pose, retuned his scene scale, origin, shadow, and completion-state scale so the character reads closer to the background adults.
+- Done: replaced the v6 rooftop plate with `public/assets/game/rooftop/rooftop-background-v7.png`, changing the background adults from work/inspection poses into a casual rooftop bragging session with phones, drinks, rumor sheets, snacks, receipts, and an ashtray.
+- Done: replaced the standing-center protagonist with corner-smoking/cold-smirk protagonist states, moved him into the left corner, and retuned scale/shadows so he no longer occupies the center of the scene.
+- Done: retuned v7 clue hotspots for the new composition and separated the right-side `金店小票` and `跌幅提醒手机` hit zones so Playwright can click each clue cleanly.
 - QA finding resolved: the previous script-generated flat/sticker mismatch has been replaced by unified bitmap scene art.
 - QA finding resolved: the quick-news clipping now sits on the rooftop floor instead of floating.
 - QA finding resolved: green chroma-key fringe was removed from transparent character and prop assets.
@@ -111,6 +114,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: h1/h2 access hotspots no longer overlap, so label-based clicks hit the intended clue.
 - QA finding resolved: the sixth hint waits for the rewarded-ad flow and then highlights the remaining contract clue visibly.
 - QA finding resolved: the protagonist is no longer the old small seated cutout; Playwright screenshots `artifacts/rooftop-standing-progress-0.png` and `artifacts/rooftop-standing-progress-6.png` verify the replacement standing state in both start and completion states.
+- QA finding resolved: the background adults no longer read as working on the rooftop; the v7 plate frames them as phone-checking, drinking, rumor-reading, and bragging.
+- QA finding resolved: the protagonist is now in the left corner smoking/cold-smiling instead of standing in the center foreground; Playwright screenshots `artifacts/rooftop-v7-progress-0.png` and `artifacts/rooftop-v7-progress-6.png` verify start and completion states.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:

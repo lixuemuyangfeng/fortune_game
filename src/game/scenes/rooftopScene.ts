@@ -320,9 +320,9 @@ export class RooftopScene extends Phaser.Scene {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
     this.addCharacterContactShadows();
-    const sprite = this.add.sprite(612, 666, `trader-${state}`, 0).setDepth(24);
+    const sprite = this.add.sprite(160, 630, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    const stateScale = progressIndex === characterStates.length - 1 ? 0.47 : 0.56 * (1 + progressIndex * 0.004);
+    const stateScale = progressIndex === characterStates.length - 1 ? 0.44 : 0.46 * (1 + progressIndex * 0.004);
     sprite.setScale(stateScale);
     sprite.setOrigin(0.5, 0.98);
     sprite.setTint(0xa7a08a);
@@ -352,9 +352,9 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addCharacterContactShadows(): void {
-    this.add.ellipse(612, 666, 150, 22, 0x03100c, 0.25).setDepth(23).setAngle(-5);
-    this.add.ellipse(558, 678, 72, 12, 0x03100c, 0.16).setDepth(23).setAngle(-10);
-    this.add.ellipse(674, 674, 64, 11, 0x03100c, 0.13).setDepth(23).setAngle(6);
+    this.add.ellipse(160, 630, 116, 18, 0x03100c, 0.24).setDepth(23).setAngle(-7);
+    this.add.ellipse(118, 640, 54, 9, 0x03100c, 0.16).setDepth(23).setAngle(-12);
+    this.add.ellipse(202, 638, 50, 9, 0x03100c, 0.12).setDepth(23).setAngle(5);
   }
 
   private getCharacterState(): CharacterState {
