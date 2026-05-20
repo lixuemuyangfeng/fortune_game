@@ -5,6 +5,8 @@ import { getOfficeProgress } from "../systems/progressSystem";
 
 const worldWidth = 1280;
 const worldHeight = 720;
+const protagonistX = 150;
+const protagonistY = 584;
 const characterStates = ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"] as const;
 type CharacterState = (typeof characterStates)[number];
 
@@ -320,9 +322,9 @@ export class RooftopScene extends Phaser.Scene {
     const state = this.getCharacterState();
     this.ensureCharacterAnimations();
     this.addCharacterContactShadows();
-    const sprite = this.add.sprite(160, 630, `trader-${state}`, 0).setDepth(24);
+    const sprite = this.add.sprite(protagonistX, protagonistY, `trader-${state}`, 0).setDepth(24);
     const progressIndex = this.getCharacterProgressIndex();
-    const stateScale = progressIndex === characterStates.length - 1 ? 0.44 : 0.46 * (1 + progressIndex * 0.004);
+    const stateScale = progressIndex === characterStates.length - 1 ? 0.34 : 0.35 * (1 + progressIndex * 0.004);
     sprite.setScale(stateScale);
     sprite.setOrigin(0.5, 0.98);
     sprite.setTint(0xa7a08a);
@@ -352,9 +354,9 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addCharacterContactShadows(): void {
-    this.add.ellipse(160, 630, 116, 18, 0x03100c, 0.24).setDepth(23).setAngle(-7);
-    this.add.ellipse(118, 640, 54, 9, 0x03100c, 0.16).setDepth(23).setAngle(-12);
-    this.add.ellipse(202, 638, 50, 9, 0x03100c, 0.12).setDepth(23).setAngle(5);
+    this.add.ellipse(protagonistX, protagonistY, 84, 14, 0x03100c, 0.22).setDepth(23).setAngle(-7);
+    this.add.ellipse(protagonistX - 28, protagonistY + 8, 38, 7, 0x03100c, 0.14).setDepth(23).setAngle(-12);
+    this.add.ellipse(protagonistX + 32, protagonistY + 7, 36, 7, 0x03100c, 0.1).setDepth(23).setAngle(5);
   }
 
   private getCharacterState(): CharacterState {

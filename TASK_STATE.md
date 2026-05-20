@@ -116,6 +116,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the protagonist is no longer the old small seated cutout; Playwright screenshots `artifacts/rooftop-standing-progress-0.png` and `artifacts/rooftop-standing-progress-6.png` verify the replacement standing state in both start and completion states.
 - QA finding resolved: the background adults no longer read as working on the rooftop; the v7 plate frames them as phone-checking, drinking, rumor-reading, and bragging.
 - QA finding resolved: the protagonist is now in the left corner smoking/cold-smiling instead of standing in the center foreground; Playwright screenshots `artifacts/rooftop-v7-progress-0.png` and `artifacts/rooftop-v7-progress-6.png` verify start and completion states.
+- QA finding resolved: the fourth rooftop protagonist state no longer contains adjacent-row contact-sheet residue, so the fourth clue no longer spawns floating legs or visual clipping; Playwright screenshot `artifacts/rooftop-v7-progress-4.png` verifies the repaired state in-scene.
+- QA finding resolved: the corner-smoking protagonist has been scaled down and moved inward from the front parapet so he reads as standing on the rooftop corner floor rather than stepping through the foreground wall.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -165,3 +167,4 @@ Second-level optimization plan:
 - After increasing the second-level scene density and re-marking embedded hotspots, Playwright screenshots were captured at `artifacts/rooftop-density-progress-0.png`, `artifacts/rooftop-density-progress-3.png`, `artifacts/rooftop-density-progress-6.png`, `artifacts/rooftop-density-mobile-progress-0.png`, and `artifacts/rooftop-density-mobile-complete.png`.
 - After adding background people and correcting phone scale/placement, Playwright screenshots were captured at `artifacts/rooftop-people-progress-0.png`, `artifacts/rooftop-people-progress-3.png`, `artifacts/rooftop-people-progress-6.png`, `artifacts/rooftop-people-mobile-progress-0.png`, and `artifacts/rooftop-people-mobile-complete.png`.
 - After improving rooftop clue semantics and raising the hint limit, Playwright screenshots were captured at `artifacts/rooftop-v5-progress-0.png`, `artifacts/rooftop-v5-hint-sixth.png`, and `artifacts/rooftop-v5-progress-6.png`.
+- After fixing the v7 corner-smoking protagonist sheet and placement, Playwright screenshots were captured at `artifacts/rooftop-v7-progress-0.png`, `artifacts/rooftop-v7-progress-4.png`, and `artifacts/rooftop-v7-progress-6.png`.
