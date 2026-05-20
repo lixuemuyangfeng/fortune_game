@@ -149,7 +149,7 @@ export const gameConfig: GameConfig = {
     leverage_contract: {
       id: "leverage_contract",
       title: "杠杆合同边角",
-      detail: "藏在管道旁的纸角，说明嘴上长期配置，手上已经开始借力。",
+      detail: "压在工具箱钥匙旁的纸角，说明嘴上长期配置，手上已经开始借力。",
       emotion: "breakdown",
       theme: "gold",
       counterText: "借来的勇气，最先收利息。"
@@ -194,7 +194,7 @@ export const gameConfig: GameConfig = {
         { id: "h3", evidenceId: "risk_headline", x: 88.8, y: 29.2, hitX: 88.8, hitY: 29.2, hitWidth: 9.4, hitHeight: 13.8, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
         { id: "h4", evidenceId: "price_alarm", x: 83.5, y: 74.2, hitX: 83.5, hitY: 74.2, hitWidth: 4.4, hitHeight: 6.8, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
         { id: "h5", evidenceId: "rooftop_warning", x: 28, y: 21.8, hitX: 28, hitY: 21.8, hitWidth: 4.8, hitHeight: 8.8, radius: 8, label: "敏感行情告示", found: false, renderMode: "embedded", revealText: "天台门口已经替你写了风险提示", animationKind: "sign" },
-        { id: "h6", evidenceId: "leverage_contract", x: 10.8, y: 76.8, hitX: 10.8, hitY: 76.8, hitWidth: 8, hitHeight: 10.8, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气已经躲到管道边", animationKind: "contract" }
+        { id: "h6", evidenceId: "leverage_contract", x: 93.8, y: 76.8, hitX: 93.8, hitY: 76.8, hitWidth: 5.8, hitHeight: 6.8, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气压在钥匙旁", animationKind: "contract" }
       ]
     },
     {

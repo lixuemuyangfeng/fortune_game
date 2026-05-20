@@ -5,8 +5,8 @@ import { getOfficeProgress } from "../systems/progressSystem";
 
 const worldWidth = 1280;
 const worldHeight = 720;
-const protagonistX = 150;
-const protagonistY = 584;
+const protagonistX = 314;
+const protagonistY = 626;
 const characterStates = ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"] as const;
 type CharacterState = (typeof characterStates)[number];
 
@@ -354,9 +354,9 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addCharacterContactShadows(): void {
-    this.add.ellipse(protagonistX, protagonistY, 84, 14, 0x03100c, 0.22).setDepth(23).setAngle(-7);
-    this.add.ellipse(protagonistX - 28, protagonistY + 8, 38, 7, 0x03100c, 0.14).setDepth(23).setAngle(-12);
-    this.add.ellipse(protagonistX + 32, protagonistY + 7, 36, 7, 0x03100c, 0.1).setDepth(23).setAngle(5);
+    this.add.ellipse(protagonistX, protagonistY, 78, 13, 0x03100c, 0.22).setDepth(23).setAngle(-7);
+    this.add.ellipse(protagonistX - 24, protagonistY + 7, 34, 7, 0x03100c, 0.14).setDepth(23).setAngle(-12);
+    this.add.ellipse(protagonistX + 29, protagonistY + 6, 32, 7, 0x03100c, 0.1).setDepth(23).setAngle(5);
   }
 
   private getCharacterState(): CharacterState {
