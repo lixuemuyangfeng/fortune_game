@@ -182,7 +182,7 @@ export class RooftopScene extends Phaser.Scene {
     for (const hotspot of this.rooftopData.scene.hotspots) {
       if (!this.rooftopData.foundHotspotIds.includes(hotspot.id)) continue;
       const { x, y } = this.getHotspotPoint(hotspot);
-      const marker = this.add.container(x + 8, y - 8).setDepth(45);
+      const marker = this.add.container(x, y).setDepth(45);
       const pin = this.add.graphics();
       pin.fillStyle(0x2f7a49, 0.96);
       pin.lineStyle(1.5, 0xffffff, 0.78);
@@ -270,7 +270,7 @@ export class RooftopScene extends Phaser.Scene {
     const rect = this.getHotspotRect(hotspot);
     const pulse = this.add.graphics().setDepth(52);
     pulse.fillStyle(0xc64628, 0.82);
-    pulse.fillCircle(rect.x + rect.width * 0.28, rect.y - rect.height * 0.3, 14);
+    pulse.fillCircle(rect.x, rect.y, 9);
     this.tweens.add({ targets: pulse, x: 8, duration: 70, yoyo: true, repeat: 5, ease: "Sine.inOut" });
     this.tweens.add({ targets: pulse, alpha: 0, scale: 1.5, duration: 220, delay: 520 });
   }

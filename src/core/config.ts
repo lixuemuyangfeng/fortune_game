@@ -190,11 +190,11 @@ export const gameConfig: GameConfig = {
       completeText: "家庭资产配置已冷冻。嘴硬可以，别拿嘴硬当策略。",
       hotspots: [
         { id: "h1", evidenceId: "gold_receipt", x: 77.1, y: 83.6, hitX: 77.1, hitY: 83.6, hitWidth: 5.2, hitHeight: 7.2, radius: 7, label: "金店小票", found: false, renderMode: "embedded", revealText: "小票垫不住追高的手", animationKind: "receipt" },
-        { id: "h2", evidenceId: "hedge_group", x: 45.9, y: 35.8, hitX: 45.9, hitY: 35.8, hitWidth: 4.2, hitHeight: 8.2, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
-        { id: "h3", evidenceId: "risk_headline", x: 91.8, y: 30.6, hitX: 91.8, hitY: 30.6, hitWidth: 8.2, hitHeight: 12.8, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
-        { id: "h4", evidenceId: "price_alarm", x: 86.9, y: 75.5, hitX: 86.9, hitY: 75.5, hitWidth: 4.4, hitHeight: 6.4, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
-        { id: "h5", evidenceId: "rooftop_warning", x: 34.4, y: 21.2, hitX: 34.4, hitY: 21.2, hitWidth: 5.2, hitHeight: 9.8, radius: 8, label: "敏感行情告示", found: false, renderMode: "embedded", revealText: "天台门口已经替你写了风险提示", animationKind: "sign" },
-        { id: "h6", evidenceId: "leverage_contract", x: 95.8, y: 75.8, hitX: 95.8, hitY: 75.8, hitWidth: 6.6, hitHeight: 10.4, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气压在钥匙旁", animationKind: "contract" }
+        { id: "h2", evidenceId: "hedge_group", x: 45.1, y: 36.1, hitX: 45.1, hitY: 36.1, hitWidth: 3.8, hitHeight: 7.6, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
+        { id: "h3", evidenceId: "risk_headline", x: 92.4, y: 30.6, hitX: 92.4, hitY: 30.6, hitWidth: 7.2, hitHeight: 11.8, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
+        { id: "h4", evidenceId: "price_alarm", x: 87.6, y: 75.1, hitX: 87.6, hitY: 75.1, hitWidth: 3.8, hitHeight: 5.8, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
+        { id: "h5", evidenceId: "rooftop_warning", x: 33.8, y: 20.9, hitX: 33.8, hitY: 20.9, hitWidth: 4.8, hitHeight: 9.2, radius: 8, label: "敏感行情告示", found: false, renderMode: "embedded", revealText: "天台门口已经替你写了风险提示", animationKind: "sign" },
+        { id: "h6", evidenceId: "leverage_contract", x: 94.7, y: 75.6, hitX: 94.7, hitY: 75.6, hitWidth: 5.4, hitHeight: 9.2, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气压在钥匙旁", animationKind: "contract" }
       ]
     },
     {

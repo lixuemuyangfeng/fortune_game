@@ -124,6 +124,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: v9 diversifies the second-level clue bodies from mostly paper into a hand-held group-chat phone, AC risk-news poster, right-side price-alert phone, door warning sign, gold receipt, and contract/key folder.
 - QA finding resolved: v9 hotspots were re-marked against the new clue bodies so the found markers land closer to the visible objects instead of detached paper-like areas.
 - QA finding resolved: the v9 rooftop hotspot centers were tightened again after screenshot review: the group-chat target now sits on the hand-held phone, the risk-news target sits on the AC poster body, and the right-side price-alert/contract targets sit on their visible phone and contract/key objects.
+- QA finding resolved: v9 found markers no longer use the old `+8,-8` visual offset, and the price-alert hit effect now pulses from the phone center instead of drifting toward the contract paper.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -178,3 +179,4 @@ Second-level optimization plan:
 - After replacing the rooftop plate with same-source v8 artwork and disabling the old pasted protagonist sprite, Playwright screenshots were captured at `artifacts/rooftop-v8-unified-progress-0.png`, `artifacts/rooftop-v8-unified-progress-4.png`, and `artifacts/rooftop-v8-unified-progress-6.png`.
 - After adding v9 same-source progress backgrounds, varied clue objects, and updated hotspot positions, Playwright screenshots were captured at `artifacts/rooftop-v9-progress-0.png`, `artifacts/rooftop-v9-progress-4.png`, and `artifacts/rooftop-v9-progress-6.png`.
 - After tightening the v9 hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-hotspots-progress-0.png`, `artifacts/rooftop-v9-hotspots-progress-4.png`, and `artifacts/rooftop-v9-hotspots-progress-6.png`.
+- After removing found-marker offset and centering the price-alert hit pulse, Playwright screenshots were captured at `artifacts/rooftop-v9-marker-center-progress-4b.png` and `artifacts/rooftop-v9-marker-center-progress-6b.png`.
