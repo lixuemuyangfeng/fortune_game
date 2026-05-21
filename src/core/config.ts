@@ -181,7 +181,7 @@ export const gameConfig: GameConfig = {
       name: "黄金大师天台局",
       theme: "gold",
       description: "傍晚天台，刚追完黄金的人都说自己不是短线，只是每三分钟看一次价格。",
-      backgroundImage: "/assets/game/rooftop/rooftop-background-v8.png",
+      backgroundImage: "/assets/game/rooftop/states/rooftop-v9-progress-0.png",
       hint: "别急着补仓",
       enemyName: "接盘幻影",
       enemyDescription: "它把追高包装成理性建议：长期配置，越跌越买，你这是避险。",

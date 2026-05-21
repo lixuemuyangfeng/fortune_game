@@ -51,8 +51,9 @@ export class RooftopScene extends Phaser.Scene {
   }
 
   private addBackground(): void {
-    if (!this.textures.exists("rooftop-background")) return;
-    const image = this.add.image(worldWidth / 2, worldHeight / 2, "rooftop-background");
+    const backgroundKey = `rooftop-background-${this.getCharacterState()}`;
+    if (!this.textures.exists(backgroundKey)) return;
+    const image = this.add.image(worldWidth / 2, worldHeight / 2, backgroundKey);
     const scale = Math.max(worldWidth / image.width, worldHeight / image.height);
     image.setScale(scale).setDepth(0);
   }

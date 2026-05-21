@@ -120,7 +120,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the corner-smoking protagonist has been scaled down and moved inward from the front parapet so he reads as standing on the rooftop corner floor rather than stepping through the foreground wall.
 - QA finding resolved: the rooftop protagonist was moved off the left coil/pipe area onto the left-side open floor, and the blocked `杠杆合同边角` clue moved to the right toolbox/key paper so the character no longer stands on the clue or the pipe.
 - QA finding resolved: the rooftop protagonist is no longer a separately composited green-screen cutout. `rooftop-background-v8.png` regenerates the rooftop, background adults, and lower-left smoking protagonist as one coherent bitmap scene so scale, rim light, shadows, and edge treatment match.
-- Remaining QA risk: v8 intentionally disables the old overlaid trader sprite to remove the sticker mismatch. Strict per-clue protagonist state progression still needs a v8-derived same-source state pass rather than reusing the rejected green-screen sheet.
+- QA finding resolved: v9 replaces the single v8 rooftop plate with seven same-source full-scene progress backgrounds, `rooftop-v9-progress-0.png` through `rooftop-v9-progress-6.png`, so the protagonist visibly changes expression/posture without reintroducing a pasted green-screen sprite.
+- QA finding resolved: v9 diversifies the second-level clue bodies from mostly paper into a hand-held group-chat phone, AC risk-news poster, right-side price-alert phone, door warning sign, gold receipt, and contract/key folder.
+- QA finding resolved: v9 hotspots were re-marked against the new clue bodies so the found markers land closer to the visible objects instead of detached paper-like areas.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -173,3 +175,4 @@ Second-level optimization plan:
 - After fixing the v7 corner-smoking protagonist sheet and placement, Playwright screenshots were captured at `artifacts/rooftop-v7-progress-0.png`, `artifacts/rooftop-v7-progress-4.png`, and `artifacts/rooftop-v7-progress-6.png`.
 - After moving the v7 protagonist off the pipe area and relocating the blocked contract clue, Playwright screenshots were captured at `artifacts/rooftop-v7-leftwall-progress-0.png`, `artifacts/rooftop-v7-leftwall-progress-4.png`, and `artifacts/rooftop-v7-leftwall-progress-6.png`.
 - After replacing the rooftop plate with same-source v8 artwork and disabling the old pasted protagonist sprite, Playwright screenshots were captured at `artifacts/rooftop-v8-unified-progress-0.png`, `artifacts/rooftop-v8-unified-progress-4.png`, and `artifacts/rooftop-v8-unified-progress-6.png`.
+- After adding v9 same-source progress backgrounds, varied clue objects, and updated hotspot positions, Playwright screenshots were captured at `artifacts/rooftop-v9-progress-0.png`, `artifacts/rooftop-v9-progress-4.png`, and `artifacts/rooftop-v9-progress-6.png`.
