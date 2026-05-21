@@ -35,7 +35,6 @@ export class RooftopScene extends Phaser.Scene {
     this.addBackground();
     this.addRooftopWash();
     this.addCoolingFurnace();
-    this.addPlayableCharacter();
     this.addSceneCopy();
 
     if (data.challengeActive && !getOfficeProgress(data.scene, data.foundHotspotIds).complete) {
