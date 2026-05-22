@@ -57,7 +57,7 @@ test.describe("phaser level flow", () => {
       await expect(page.getByText("已找到")).toBeVisible();
     }
 
-    await expect(page.getByText("接盘已冷却").first()).toBeVisible();
+    await expect(page.getByText("这波先冷下来了").first()).toBeVisible();
     await expect(page.getByText("证据袋已封口").first()).toBeVisible();
     await expect(page.getByText("好友榜")).toHaveCount(0);
     await expect(page.getByText("资源产出")).toHaveCount(0);

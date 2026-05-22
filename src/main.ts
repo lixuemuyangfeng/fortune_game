@@ -138,7 +138,7 @@ function render(): void {
             <div class="case-progress">
               <div class="case-progress-head">
                 <div>
-                  <span>${progress.complete ? "已完成" : "当前目标"}</span>
+                  <span>${progress.complete ? "收工" : "先做这件事"}</span>
                   <strong>${escapeHtml(progress.complete ? sceneMeta.completeGoal : sceneMeta.goal)}</strong>
                 </div>
                 <b>${progress.foundCount}/${progress.totalCount}</b>
@@ -342,7 +342,7 @@ function showNextScenePlaceholder(): void {
     return;
   }
 
-  toast = "第三关入口已占位：刮刮泪便利站会在后续 Phaser 阶段接入。";
+  toast = "天台这波先按住了。下一站是便利站，刮刮乐和小票还在等你翻。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -361,7 +361,7 @@ function resetDemo(): void {
 function getNarrative(scene: InvestigationScene, challengeActive: boolean, foundCount: number, totalCount: number, complete: boolean): string {
   if (complete && nextScenePlaceholderActive) return toast;
   if (complete) return getSceneMeta(scene.id).completeNarrative;
-  if (challengeActive && foundCount > 0) return `已回收 ${foundCount}/${totalCount} 个诱因。${toast}`;
+  if (challengeActive && foundCount > 0) return `已经抓到 ${foundCount}/${totalCount} 个破绽。${toast}`;
   if (challengeActive) return toast;
   return getSceneMeta(scene.id).introNarrative;
 }
@@ -382,14 +382,14 @@ function getSceneMeta(sceneId: string): {
     return {
       place: "字节跳桶公司天台",
       time: "周三 18:46",
-      goal: "找齐 6 个接盘证据",
-      goalDetail: "抓出 6 个把追高伪装成理性的嘴硬证据。",
-      completeGoal: "接盘已冷却",
+      goal: "找出 6 个上头证据",
+      goalDetail: "把这些人越聊越上头的证据找出来。",
+      completeGoal: "这波先冷下来了",
       startAction: "开始冷却",
       continueAction: "继续冷却",
-      startToast: "抓出 6 个正在给追高加温的嘴硬证据。",
-      introNarrative: "把追高、快讯和嘴硬从天台风里拽出来。",
-      completeNarrative: "天台终于降温，快讯、群聊、价格提醒和杠杆纸角都被贴上标签。"
+      startToast: "别急着劝，先把他们上头的证据一件件找出来。",
+      introNarrative: "他们嘴上说稳健，手指已经快把价格刷冒烟了。",
+      completeNarrative: "天台这波先冷下来了。群聊、快讯、价格提醒和合同边角都装进袋里。"
     };
   }
 

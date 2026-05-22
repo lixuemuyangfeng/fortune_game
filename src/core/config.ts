@@ -187,7 +187,7 @@ export const gameConfig: GameConfig = {
       enemyDescription: "它把追高包装成理性建议：长期配置，越跌越买，你这是避险。",
       machineName: "接盘冷却炉",
       machineEmbedded: true,
-      completeText: "家庭资产配置已冷冻。嘴硬可以，别拿嘴硬当策略。",
+      completeText: "先别再加仓了。今晚能睡着，比嘴硬更重要。",
       hotspots: [
         { id: "h1", evidenceId: "gold_receipt", x: 77.1, y: 83.6, hitX: 77.1, hitY: 83.6, hitWidth: 5.2, hitHeight: 7.2, radius: 7, label: "金店小票", found: false, renderMode: "embedded", revealText: "小票垫不住追高的手", animationKind: "receipt" },
         { id: "h2", evidenceId: "hedge_group", x: 44.1, y: 36.2, hitX: 44.1, hitY: 36.2, hitWidth: 3.6, hitHeight: 7.2, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },

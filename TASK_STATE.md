@@ -128,6 +128,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the ambiguous rooftop warning clue no longer uses the semantically weak high-voltage sign. It now targets the white `踩线告示` under the sign, which reads as boundary-risk/overtrading context instead of unrelated electrical safety.
 - QA finding resolved: second-level hotspot centers are now recorded as source-image pixel centers in `docs/rooftop-v9-hotspot-calibration.md`, with config percentages derived from those measured positions instead of prompt guesses.
 - QA finding resolved: the right-side price-alert phone hotspot was moved left/up to the phone screen center after user crop review.
+- QA finding resolved: the second-level left mission-panel copy no longer exposes implementation language like Phaser/占位 and uses a more player-facing tone for goals, completion, and next-level teaser text.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -184,3 +185,4 @@ Second-level optimization plan:
 - After tightening the v9 hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-hotspots-progress-0.png`, `artifacts/rooftop-v9-hotspots-progress-4.png`, and `artifacts/rooftop-v9-hotspots-progress-6.png`.
 - After removing found-marker offset and centering the price-alert hit pulse, Playwright screenshots were captured at `artifacts/rooftop-v9-marker-center-progress-4b.png` and `artifacts/rooftop-v9-marker-center-progress-6b.png`.
 - After clarifying the yellow high-voltage warning clue and calibrating source-pixel hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-calibrated-progress-4.png` and `artifacts/rooftop-v9-calibrated-progress-6.png`.
+- After polishing the second-level left-panel copy, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright updated `artifacts/playtest-rooftop-complete.png`.
