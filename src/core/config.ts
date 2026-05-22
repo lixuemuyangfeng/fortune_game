@@ -140,8 +140,8 @@ export const gameConfig: GameConfig = {
     },
     rooftop_warning: {
       id: "rooftop_warning",
-      title: "高压危险牌",
-      detail: "黄牌上写着高压危险，像是在提醒这群人别把风险当热闹。",
+      title: "踩线告示",
+      detail: "门口白色告示写着谨防踩线，旁边的人还在把追涨说成稳健。",
       emotion: "stubborn",
       theme: "gold",
       counterText: "嘴硬可以，别把嘴硬当风险管理。"
@@ -192,8 +192,8 @@ export const gameConfig: GameConfig = {
         { id: "h1", evidenceId: "gold_receipt", x: 77.1, y: 83.6, hitX: 77.1, hitY: 83.6, hitWidth: 5.2, hitHeight: 7.2, radius: 7, label: "金店小票", found: false, renderMode: "embedded", revealText: "小票垫不住追高的手", animationKind: "receipt" },
         { id: "h2", evidenceId: "hedge_group", x: 44.1, y: 36.2, hitX: 44.1, hitY: 36.2, hitWidth: 3.6, hitHeight: 7.2, radius: 8, label: "稳健避险交流群", found: false, renderMode: "embedded", revealText: "每三分钟问一次，还叫长期", animationKind: "chat" },
         { id: "h3", evidenceId: "risk_headline", x: 92.7, y: 31.2, hitX: 92.7, hitY: 31.2, hitWidth: 6.8, hitHeight: 11.2, radius: 8, label: "避险快讯截图", found: false, renderMode: "embedded", revealText: "没有来源的标题，最会替你下单", animationKind: "news" },
-        { id: "h4", evidenceId: "price_alarm", x: 86.6, y: 73.4, hitX: 86.6, hitY: 73.4, hitWidth: 3.4, hitHeight: 5.4, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
-        { id: "h5", evidenceId: "rooftop_warning", x: 33.8, y: 23.4, hitX: 33.8, hitY: 23.4, hitWidth: 4.6, hitHeight: 7.8, radius: 8, label: "高压危险牌", found: false, renderMode: "embedded", revealText: "门口黄牌已经把风险写明", animationKind: "sign" },
+        { id: "h4", evidenceId: "price_alarm", x: 85.7, y: 71.9, hitX: 85.7, hitY: 71.9, hitWidth: 3.2, hitHeight: 5.2, radius: 7, label: "跌幅提醒手机", found: false, renderMode: "embedded", revealText: "长期资产正在被五分钟一刷审问", animationKind: "alert" },
+        { id: "h5", evidenceId: "rooftop_warning", x: 33, y: 32.5, hitX: 33, hitY: 32.5, hitWidth: 4.2, hitHeight: 8.6, radius: 8, label: "踩线告示", found: false, renderMode: "embedded", revealText: "门口白纸提醒别再踩线", animationKind: "sign" },
         { id: "h6", evidenceId: "leverage_contract", x: 96.2, y: 76.4, hitX: 96.2, hitY: 76.4, hitWidth: 5.2, hitHeight: 8.8, radius: 7, label: "杠杆合同边角", found: false, renderMode: "embedded", revealText: "借来的底气压在钥匙旁", animationKind: "contract" }
       ]
     },

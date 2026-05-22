@@ -20,8 +20,8 @@ The tiny Y difference comes from the source image being a fraction taller than e
 | `h1` 金店小票 | right foreground gold-shop receipt | `77.1, 83.6` | `1289, 787` | `87x68` |
 | `h2` 稳健避险交流群 | center-left hand-held chat phone screen | `44.1, 36.2` | `737, 341` | `60x68` |
 | `h3` 避险快讯截图 | AC-unit risk-news poster | `92.7, 31.2` | `1550, 294` | `114x105` |
-| `h4` 跌幅提醒手机 | right toolbox black price-alert phone screen | `86.6, 73.4` | `1448, 691` | `57x51` |
-| `h5` 高压危险牌 | yellow high-voltage warning plate, not the white paper below | `33.8, 23.4` | `565, 220` | `77x73` |
+| `h4` 跌幅提醒手机 | right toolbox black price-alert phone screen | `85.7, 71.9` | `1432, 676` | `54x49` |
+| `h5` 踩线告示 | white boundary-risk notice below the yellow electrical sign | `33.0, 32.5` | `552, 306` | `70x81` |
 | `h6` 杠杆合同边角 | right toolbox contract folder and key ring | `96.2, 76.4` | `1608, 719` | `87x83` |
 
 Calibration rule: generated art cannot reliably encode exact clickable center points. Treat the final raster as immutable, record the object center in source-image pixels, then convert to config percentages. Do not infer points from prompt text after generation.

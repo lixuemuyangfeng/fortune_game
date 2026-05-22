@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const officeHotspots = ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"];
-const rooftopHotspots = ["金店小票", "稳健避险交流群", "避险快讯截图", "跌幅提醒手机", "高压危险牌", "杠杆合同边角"];
+const rooftopHotspots = ["金店小票", "稳健避险交流群", "避险快讯截图", "跌幅提醒手机", "踩线告示", "杠杆合同边角"];
 
 test.describe("phaser level flow", () => {
   test("player can complete the first Phaser level and enter the rooftop level", async ({ page }) => {

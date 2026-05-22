@@ -125,8 +125,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: v9 hotspots were re-marked against the new clue bodies so the found markers land closer to the visible objects instead of detached paper-like areas.
 - QA finding resolved: the v9 rooftop hotspot centers were tightened again after screenshot review: the group-chat target now sits on the hand-held phone, the risk-news target sits on the AC poster body, and the right-side price-alert/contract targets sit on their visible phone and contract/key objects.
 - QA finding resolved: v9 found markers no longer use the old `+8,-8` visual offset, and the price-alert hit effect now pulses from the phone center instead of drifting toward the contract paper.
-- QA finding resolved: the ambiguous rooftop warning clue is now explicitly the yellow high-voltage plate, not the white paper below it; its evidence title, reveal copy, hotspot center, and calibration notes were updated together.
+- QA finding resolved: the ambiguous rooftop warning clue no longer uses the semantically weak high-voltage sign. It now targets the white `踩线告示` under the sign, which reads as boundary-risk/overtrading context instead of unrelated electrical safety.
 - QA finding resolved: second-level hotspot centers are now recorded as source-image pixel centers in `docs/rooftop-v9-hotspot-calibration.md`, with config percentages derived from those measured positions instead of prompt guesses.
+- QA finding resolved: the right-side price-alert phone hotspot was moved left/up to the phone screen center after user crop review.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
