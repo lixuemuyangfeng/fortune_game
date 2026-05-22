@@ -125,6 +125,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: v9 hotspots were re-marked against the new clue bodies so the found markers land closer to the visible objects instead of detached paper-like areas.
 - QA finding resolved: the v9 rooftop hotspot centers were tightened again after screenshot review: the group-chat target now sits on the hand-held phone, the risk-news target sits on the AC poster body, and the right-side price-alert/contract targets sit on their visible phone and contract/key objects.
 - QA finding resolved: v9 found markers no longer use the old `+8,-8` visual offset, and the price-alert hit effect now pulses from the phone center instead of drifting toward the contract paper.
+- QA finding resolved: the ambiguous rooftop warning clue is now explicitly the yellow high-voltage plate, not the white paper below it; its evidence title, reveal copy, hotspot center, and calibration notes were updated together.
+- QA finding resolved: second-level hotspot centers are now recorded as source-image pixel centers in `docs/rooftop-v9-hotspot-calibration.md`, with config percentages derived from those measured positions instead of prompt guesses.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -180,3 +182,4 @@ Second-level optimization plan:
 - After adding v9 same-source progress backgrounds, varied clue objects, and updated hotspot positions, Playwright screenshots were captured at `artifacts/rooftop-v9-progress-0.png`, `artifacts/rooftop-v9-progress-4.png`, and `artifacts/rooftop-v9-progress-6.png`.
 - After tightening the v9 hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-hotspots-progress-0.png`, `artifacts/rooftop-v9-hotspots-progress-4.png`, and `artifacts/rooftop-v9-hotspots-progress-6.png`.
 - After removing found-marker offset and centering the price-alert hit pulse, Playwright screenshots were captured at `artifacts/rooftop-v9-marker-center-progress-4b.png` and `artifacts/rooftop-v9-marker-center-progress-6b.png`.
+- After clarifying the yellow high-voltage warning clue and calibrating source-pixel hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-calibrated-progress-4.png` and `artifacts/rooftop-v9-calibrated-progress-6.png`.
