@@ -3,6 +3,8 @@
 Generated: 2026-05-25
 
 
+> Existing review file overwritten by the latest config snapshot.
+
 ## Config Snapshot
 
 - Scene: `office`
@@ -24,6 +26,71 @@ Generated: 2026-05-25
 - [ ] Main/proxy character has a planned visible state for each progress step.
 - [ ] Each clue is a concrete object with a reason to exist in the scene.
 - [ ] UI copy is player-facing and contains no implementation language.
+
+## Production Prompt Contract
+
+Fill this before generating or editing art. Do not leave it as generic intent.
+
+```text
+Use case: stylized-concept game scene raster
+Scene purpose:
+Camera/layout:
+Foreground:
+Midground:
+Background:
+People and actions:
+Required clue objects:
+Character/proxy state:
+Lighting/color:
+Mobile readability:
+Forbidden:
+Output/layers:
+```
+
+## Layout Map
+
+```text
+Canvas:
+Main playable area:
+Quiet zones for markers/callouts:
+Forbidden zones:
+Foreground objects:
+Midground objects:
+Background objects:
+```
+
+## Generation Passes
+
+- [ ] Composition pass accepted before adding detail.
+- [ ] Semantic pass confirms every clue has a believable object body.
+- [ ] Character pass confirms scale, posture, grounding, and contact shadows.
+- [ ] Clarity pass confirms varied clue shapes and mobile readability.
+- [ ] State pass keeps camera/props fixed across progress variants.
+- [ ] Calibration pass records source-pixel centers after final raster freeze.
+
+## Reference Images
+
+| Image | Role | Must preserve | Must ignore |
+| --- | --- | --- | --- |
+|  | style/layout/character/edit-target/insert-object |  |  |
+
+## Negative Prompt Items
+
+- [ ] No oversized phones or upright phone props unless mounted as a screen.
+- [ ] No floating people, pipe standing, wall clipping, or missing contact shadows.
+- [ ] No work poses in a scene where people should gossip, rest, browse, drink, smoke, or perform another believable action.
+- [ ] No identical paper slips for every clue.
+- [ ] No unrelated safety signs used as financial/emotional clues.
+- [ ] No empty scenic area dominating the playable area.
+- [ ] No pasted character with mismatched sharpness, contrast, color temperature, rim light, or shadow.
+- [ ] No contact-sheet residue, extra limbs, cut-off torsos, or green-screen fringe.
+- [ ] No baked-in answer markers or labels that spoil clues.
+
+## Edit Strategy
+
+- [ ] Use local edit for small object, scale, clutter, palette, or hotspot fixes.
+- [ ] Use full regeneration only for failed camera, failed premise, sparse layout, or unrecoverable clue distribution.
+- [ ] If progress states drift, edit from the accepted base instead of generating unrelated variants.
 
 ## Review Gates
 

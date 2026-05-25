@@ -17,6 +17,134 @@ Before generating or editing an image, write a one-page brief with these decisio
 - Interaction plan: each clue has a source-pixel center, hit box, animation kind, and found marker position.
 - UI plan: left panel copy must be player-facing, not implementation-facing.
 
+## Practical Image Generation Workflow
+
+Use this workflow before any new scene image, not only after a bad result appears.
+
+### 1. Lock the Layout Before Rendering
+
+Do not ask the model for "a rich scene" and hope it composes correctly. First write a layout map in plain language:
+
+```text
+Canvas: 16:9, game crop must leave the left mission panel outside the image.
+Foreground: 2-3 occluding props and 1-2 small clues.
+Midground: main character, social/action cluster, most interactive clues.
+Background: setting proof only, never more visually important than the playable area.
+Reserved quiet zones: where UI callouts or found markers may appear.
+Forbidden zones: character faces, main hands, screen edges, future hotspot overlap areas.
+```
+
+For dense hidden-object scenes, the midground must carry the game. If skyline, wall, floor, or decorative scenery takes more attention than the clue area, regenerate the composition before polishing.
+
+### 2. Generate in Passes, Not One Giant Prompt
+
+Use a staged process:
+
+1. Composition pass: low-detail scene layout, people positions, big props, camera, lighting.
+2. Semantic pass: add or correct clue-bearing objects so every clue has a believable body.
+3. Character pass: lock scale, posture, expression direction, and contact shadows.
+4. Clarity pass: remove ambiguous labels/objects, diversify clue shapes, improve mobile readability.
+5. State pass: create `progress-0` to `progress-N` variants from the accepted base image.
+6. Calibration pass: freeze final raster and record source-pixel hotspot centers.
+
+Do not polish a composition that already fails scale, logic, or clue semantics. Throw it away or edit the large structure first.
+
+### 3. Use Reference Roles Explicitly
+
+When using images as references, label each one:
+
+- Style reference: lighting, palette, material feel only.
+- Layout reference: camera and object distribution only.
+- Character reference: identity, body scale, wardrobe, and expression direction.
+- Edit target: the actual image to preserve.
+- Insert object reference: a clue/object that must be integrated into the target.
+
+Never let a style reference override layout, and never let an insert-object reference dictate the whole scene. This avoids the common failure where a phone, paper, or person arrives at the wrong scale because it dominated the generation.
+
+### 4. Write Prompts as Contracts
+
+Every production prompt should include these blocks:
+
+```text
+Use case: stylized-concept game scene raster
+Scene purpose: <what anxiety/fantasy this level expresses>
+Camera/layout: <16:9, perspective, foreground/midground/background>
+People: <who is present, what each person is doing, why it makes sense here>
+Required clue objects: <object list with placement and semantic reason>
+Character state: <progress state and body-language change>
+Lighting/color: <shared light direction, palette, material contrast>
+Readability: <mobile-visible object silhouettes, no tiny text dependence>
+Forbidden: <empty floor dominance, giant phones, floating props, pasted cutouts, unrelated warning signs, labels that spoil answers>
+Output: <single coherent raster / clean background / transparent character / occluder layer>
+```
+
+If a clue depends on text, the text must be short, large, and secondary to the object shape. The object should remain understandable even if the text is unreadable.
+
+### 5. Use Negative Prompts From Actual Failures
+
+Carry these avoid items into future prompts when relevant:
+
+- no oversized phones or upright phone props unless mounted as a screen
+- no people floating, standing on pipes, clipping through walls, or lacking contact shadows
+- no office-work poses in non-office locations
+- no identical paper slips for every clue
+- no unrelated safety signs used as financial clues
+- no huge scenic background with an empty playable floor
+- no pasted character with different sharpness, contrast, color temperature, or rim light
+- no contact-sheet residue, extra limbs, cut-off torsos, or green-screen fringe
+- no clue labels that only make sense in UI copy but not in the picture
+- no answer-spoiling markers baked into the art
+
+### 6. Prefer Local Edits Over Full Regeneration
+
+After the base image passes composition and style, do not regenerate the entire scene for small fixes. Use targeted edits:
+
+- Off-center hotspot: keep art, update source-pixel calibration.
+- Wrong clue object: edit only that object area.
+- Character scale/pose wrong: edit the character region and nearby shadows/occluders.
+- Sparse local area: edit that region with crates, cables, cups, receipts, tools, shelves, or believable clutter.
+- Palette mismatch: color-match the inserted region, do not recolor the whole scene unless the whole scene fails.
+
+Full regeneration is reserved for structural failures: bad camera, empty layout, nonsensical scene premise, incompatible character placement, or clue distribution that cannot be repaired locally.
+
+### 7. Build State Variants From an Accepted Base
+
+For progress states, keep camera, props, clue positions, and lighting fixed. Only change the protagonist/proxy state and any intended small scene-state feedback.
+
+Allowed state differences:
+
+- expression, gaze, head angle
+- shoulders, hands, body weight, seated/standing micro-pose
+- held object state, smoke direction, phone posture, minor local light
+
+Forbidden state differences:
+
+- moving clue objects unless the clue was found and explicitly removed/marked
+- changing camera angle or object scale between states
+- changing unrelated background people or architecture
+- introducing extra body parts or residue from a sheet/contact grid
+
+If state variants drift, return to image editing from the accepted base instead of asking for "six similar images" from scratch.
+
+### 8. Decide What Must Be Separate Layers
+
+Use a single integrated raster only when the element never needs independent motion. Use separate assets when:
+
+- the protagonist/proxy must animate or change state cleanly
+- a foreground object must occlude a character
+- a clue needs a hit animation inside its own bounds
+- an object must be hidden, revealed, removed, or replaced
+
+Required layer set for high-risk scenes:
+
+```text
+background-clean.png
+foreground-occluders.png
+character-progress-0..N.png or spritesheets
+optional clue sprites for objects that need independent animation
+final screenshot reference for calibration
+```
+
 ## Image Generation Rules
 
 Use these rules when prompting or editing raster art.

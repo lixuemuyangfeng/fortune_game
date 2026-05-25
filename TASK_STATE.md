@@ -131,6 +131,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: the second-level left mission-panel copy no longer exposes implementation language like Phaser/占位 and uses a more player-facing tone for goals, completion, and next-level teaser text.
 - Process improvement: added `docs/image-review-optimize-loop.md` and `npm run art:review -- <sceneId>` so future level art must pass a repeatable generation brief, review-gate, hotspot-calibration, and screenshot-inspection loop before handoff.
 - Process improvement: generated baseline image review checklists for the current office and rooftop levels under `docs/reviews/`.
+- Process improvement: expanded the image-generation loop with concrete production tactics: layout locking, staged generation passes, reference-role labeling, prompt-contract blocks, negative prompts from prior failures, local-edit-first repair rules, progress-state consistency, and required layer decisions.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -189,3 +190,4 @@ Second-level optimization plan:
 - After clarifying the yellow high-voltage warning clue and calibrating source-pixel hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-calibrated-progress-4.png` and `artifacts/rooftop-v9-calibrated-progress-6.png`.
 - After polishing the second-level left-panel copy, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright updated `artifacts/playtest-rooftop-complete.png`.
 - After adding the image review/optimize mechanism, `npm run art:review -- office` and `npm run art:review -- rooftop` generated baseline review files for the first two levels.
+- After adding concrete image-generation tactics to the review template, `npm run art:review -- office` and `npm run art:review -- rooftop` regenerated the baseline review files.
