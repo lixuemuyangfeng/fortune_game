@@ -132,6 +132,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Process improvement: added `docs/image-review-optimize-loop.md` and `npm run art:review -- <sceneId>` so future level art must pass a repeatable generation brief, review-gate, hotspot-calibration, and screenshot-inspection loop before handoff.
 - Process improvement: generated baseline image review checklists for the current office and rooftop levels under `docs/reviews/`.
 - Process improvement: expanded the image-generation loop with concrete production tactics: layout locking, staged generation passes, reference-role labeling, prompt-contract blocks, negative prompts from prior failures, local-edit-first repair rules, progress-state consistency, and required layer decisions.
+- Third level progress: replaced the old third-slot `moments` placeholder with the playable `convenience` level, using generated bitmap convenience-store art, 7 embedded clues, a dedicated Phaser scene, route from the rooftop completion button, review/checkpoint docs, and Playwright coverage.
+- Third level QA risk: `convenience-progress-1` through `convenience-progress-7` currently duplicate the accepted base raster while true progress-state variants are produced from the base image. The level is playable but those state assets are not final production character-state art yet.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -191,3 +193,4 @@ Second-level optimization plan:
 - After polishing the second-level left-panel copy, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright updated `artifacts/playtest-rooftop-complete.png`.
 - After adding the image review/optimize mechanism, `npm run art:review -- office` and `npm run art:review -- rooftop` generated baseline review files for the first two levels.
 - After adding concrete image-generation tactics to the review template, `npm run art:review -- office` and `npm run art:review -- rooftop` regenerated the baseline review files.
+- After adding the playable third `convenience` level, `npm run art:review -- convenience`, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright captured `artifacts/playtest-convenience-intro.png` and `artifacts/playtest-convenience-complete.png`.

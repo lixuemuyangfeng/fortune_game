@@ -10,6 +10,9 @@ export class PreloadScene extends Phaser.Scene {
     for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"]) {
       this.load.image(`rooftop-background-${state}`, `/assets/game/rooftop/states/rooftop-v9-${state}.png`);
     }
+    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7"]) {
+      this.load.image(`convenience-background-${state}`, `/assets/game/convenience/states/convenience-${state}.png`);
+    }
     this.load.image("rooftop-cooling-furnace", "/assets/game/rooftop/machines/cooling-furnace.png");
     [
       ["h1", "/assets/game/rooftop/clues/folded-receipt.png"],
@@ -35,6 +38,7 @@ export class PreloadScene extends Phaser.Scene {
 
   create(): void {
     const activeSceneKey = this.registry.get("activeSceneKey") as string | undefined;
-    this.scene.start(activeSceneKey === "rooftop" ? "RooftopScene" : "OfficeScene", this.registry.get("sceneData"));
+    const sceneName = activeSceneKey === "rooftop" ? "RooftopScene" : activeSceneKey === "convenience" ? "ConvenienceScene" : "OfficeScene";
+    this.scene.start(sceneName, this.registry.get("sceneData"));
   }
 }

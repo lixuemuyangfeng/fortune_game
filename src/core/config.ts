@@ -153,6 +153,62 @@ export const gameConfig: GameConfig = {
       emotion: "breakdown",
       theme: "gold",
       counterText: "借来的勇气，最先收利息。"
+    },
+    near_miss_tickets: {
+      id: "near_miss_tickets",
+      title: "差一个图案废票排",
+      detail: "每张都差一点，排在一起就像一条专门喂幻想的流水线。",
+      emotion: "fantasy",
+      theme: "lottery",
+      counterText: "差一个图案，不是下一张的保证。"
+    },
+    covered_winner_photo: {
+      id: "covered_winner_photo",
+      title: "遮金额中奖合影",
+      detail: "照片很大，金额被贴住，剩下的部分正好够人脑补。",
+      emotion: "envy",
+      theme: "lottery",
+      counterText: "被遮住的金额，最擅长替你加戏。"
+    },
+    rider_rest_memo: {
+      id: "rider_rest_memo",
+      title: "中了休三天备忘",
+      detail: "外卖员手机上写着中了休三天，现实还在等下一单。",
+      emotion: "breakdown",
+      theme: "lottery",
+      counterText: "休三天很好，先别用下一张预支。"
+    },
+    pocket_losing_ticket: {
+      id: "pocket_losing_ticket",
+      title: "西装内袋废票",
+      detail: "销售把没中的纸片塞进内袋，说留个纪念，其实是舍不得判它死刑。",
+      emotion: "stubborn",
+      theme: "lottery",
+      counterText: "纪念可以留，幻想别续费。"
+    },
+    almost_due_note: {
+      id: "almost_due_note",
+      title: "这本快了木牌",
+      detail: "柜台边的小牌子把概率说成气氛，把气氛说成机会。",
+      emotion: "pretend",
+      theme: "lottery",
+      counterText: "这本快了，通常是钱包快了。"
+    },
+    lottery_booklet: {
+      id: "lottery_booklet",
+      title: "老板娘指的彩票本",
+      detail: "她指得很熟练，像是在给幻想找一个更顺手的入口。",
+      emotion: "fantasy",
+      theme: "lottery",
+      counterText: "被指中的那本，不等于会指中你。"
+    },
+    unsweetened_tea: {
+      id: "unsweetened_tea",
+      title: "无糖茶旁的顺手",
+      detail: "他本来只想买茶，手已经离彩票柜台太近。",
+      emotion: "stubborn",
+      theme: "lottery",
+      counterText: "买茶是需求，顺手才是入口。"
     }
   },
   scenes: [
@@ -198,24 +254,25 @@ export const gameConfig: GameConfig = {
       ]
     },
     {
-      id: "moments",
-      name: "朋友圈炫富现场",
-      theme: "gold",
-      description: "每一条动态都像在暗示你错过了某个时代，连沉默都像收益率。",
-      backgroundImage: "/assets/moments-level/background.svg",
-      hint: "别急着点赞",
-      enemyName: "社交比较雾",
-      enemyDescription: "它把别人的截图放大，把你的正常生活缩小。",
-      machineName: "朋友圈退烧机",
-      machineImage: "/assets/machines/social-detox-machine.svg",
-      completeText: "截图已经降温，今天先把手机倒扣十分钟。",
-      character: { x: 74, y: 79, scale: 0.98, source: "mascot" },
+      id: "convenience",
+      name: "刮刮泪便利站",
+      theme: "lottery",
+      description: "公司楼下的便利站亮着冷光，周启明本来只想买无糖茶，柜台却把差一点摆成一整排。",
+      backgroundImage: "/assets/game/convenience/states/convenience-progress-0.png",
+      hint: "别顺手加一张",
+      enemyName: "差一点怪圈",
+      enemyDescription: "它用差一点、下一张、这本快了，把两块钱的幻想续成一晚上。",
+      machineName: "幻想断电闸",
+      machineEmbedded: true,
+      completeText: "差一点，不等于差一张。今晚先把手从柜台边拿回来。",
       hotspots: [
-        { id: "h1", evidenceId: "friend_profit", x: 46.5, y: 28.2, hitX: 46.4, hitY: 28.4, radius: 9, label: "收益截图", found: false, image: "/assets/moments-level/profit-screenshot.svg", imageWidth: 18, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "朋友的运气，不是你的判决书" },
-        { id: "h2", evidenceId: "phone_gold", x: 27.4, y: 58.2, hitX: 27.5, hitY: 58.4, radius: 8, label: "金价手机", found: false, image: "/assets/moments-level/gold-price-phone.svg", imageWidth: 11, anchorX: 50, anchorY: 50, hitScale: 1.15, revealText: "半截曲线最会制造整段后悔" },
-        { id: "h3", evidenceId: "fund_loss", x: 67.2, y: 70.4, hitX: 67.2, hitY: 70.2, radius: 8, label: "亏损角落", found: false, image: "/assets/moments-level/loss-corner.svg", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "没有晒出来的，才是大多数" },
-        { id: "h4", evidenceId: "mortgage_bill", x: 36.8, y: 79.3, hitX: 36.8, hitY: 79, radius: 8, label: "房贷账单", found: false, image: "/assets/moments-level/mortgage-bill.svg", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "账单不会羡慕任何截图" },
-        { id: "h5", evidenceId: "ai_layoff_post", x: 76.6, y: 41.8, hitX: 76.4, hitY: 41.6, radius: 9, label: "AI裁员热帖", found: false, image: "/assets/moments-level/ai-layoff-hot-post.svg", imageWidth: 18, anchorX: 50, anchorY: 50, hitScale: 0.95, revealText: "热帖负责吓人，明天还要上班" }
+        { id: "h1", evidenceId: "near_miss_tickets", x: 48.4, y: 76.8, hitX: 48.4, hitY: 76.8, hitWidth: 46, hitHeight: 17, radius: 8, label: "差一个图案废票排", found: false, renderMode: "embedded", revealText: "差一点排成一排，也还是没中", animationKind: "scratch" },
+        { id: "h2", evidenceId: "covered_winner_photo", x: 79.9, y: 18.7, hitX: 79.9, hitY: 18.7, hitWidth: 16, hitHeight: 22, radius: 8, label: "遮金额中奖合影", found: false, renderMode: "embedded", revealText: "金额被遮住，想象开始上班", animationKind: "photo" },
+        { id: "h3", evidenceId: "rider_rest_memo", x: 37.1, y: 31.8, hitX: 37.1, hitY: 31.8, hitWidth: 5.2, hitHeight: 15.4, radius: 7, label: "中了休三天备忘", found: false, renderMode: "embedded", revealText: "休三天先写在备忘录里", animationKind: "phone" },
+        { id: "h4", evidenceId: "pocket_losing_ticket", x: 53.5, y: 32, hitX: 53.5, hitY: 32, hitWidth: 6.8, hitHeight: 13.2, radius: 7, label: "西装内袋废票", found: false, renderMode: "embedded", revealText: "没中的纸片被收进内袋", animationKind: "ticket" },
+        { id: "h5", evidenceId: "almost_due_note", x: 62.1, y: 63.3, hitX: 62.1, hitY: 63.3, hitWidth: 12.4, hitHeight: 10.2, radius: 7, label: "这本快了木牌", found: false, renderMode: "embedded", revealText: "快了两个字最会催人掏钱", animationKind: "note" },
+        { id: "h6", evidenceId: "lottery_booklet", x: 49.8, y: 61.6, hitX: 49.8, hitY: 61.6, hitWidth: 18.6, hitHeight: 13.4, radius: 8, label: "老板娘指的彩票本", found: false, renderMode: "embedded", revealText: "被指中的那本，不等于会中你", animationKind: "ticket" },
+        { id: "h7", evidenceId: "unsweetened_tea", x: 25.8, y: 61.8, hitX: 25.8, hitY: 61.8, hitWidth: 5.8, hitHeight: 14.8, radius: 7, label: "无糖茶旁的顺手", found: false, renderMode: "embedded", revealText: "买茶是需求，顺手才是入口", animationKind: "bottle" }
       ]
     },
     {

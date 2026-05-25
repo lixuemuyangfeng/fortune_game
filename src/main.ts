@@ -18,6 +18,7 @@ import { WebAdapter } from "./platform/webAdapter";
 const storageKey = "fortune-game-state-v3";
 const officeSceneId = "office";
 const rooftopSceneId = "rooftop";
+const convenienceSceneId = "convenience";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -341,8 +342,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, rooftopSceneId));
     return;
   }
+  if (scene.id === rooftopSceneId) {
+    toast = "便利站灯还亮着，差一点怪圈已经开门。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, convenienceSceneId));
+    return;
+  }
 
-  toast = "天台这波先按住了。下一站是便利站，刮刮乐和小票还在等你翻。";
+  toast = "便利站这波先断电了。下一站还在装修，先把证据袋拎稳。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -390,6 +399,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "别急着劝，先把他们上头的证据一件件找出来。",
       introNarrative: "他们嘴上说稳健，手指已经快把价格刷冒烟了。",
       completeNarrative: "天台这波先冷下来了。群聊、快讯、价格提醒和合同边角都装进袋里。"
+    };
+  }
+  if (sceneId === convenienceSceneId) {
+    return {
+      place: "福踩便利站",
+      time: "周三 21:07",
+      goal: "找出 7 个差一点仪式",
+      goalDetail: "把柜台里那些劝你顺手加一张的东西找出来。",
+      completeGoal: "幻想已断电",
+      startAction: "开始断电",
+      continueAction: "继续断电",
+      startToast: "别急着付款，先看清楚是谁在劝你再来一张。",
+      introNarrative: "他本来只想买无糖茶，柜台已经把差一点摆成一整排。",
+      completeNarrative: "便利站这波先断电。废票、合影、备忘和那句这本快了都装进袋里。"
     };
   }
 

@@ -41,7 +41,7 @@ function assetPaths(block) {
 test("all playable levels meet narrative and interaction content requirements", () => {
   const knownEvidenceIds = evidenceIds();
 
-  for (const sceneId of ["office", "rooftop", "moments", "temple"]) {
+  for (const sceneId of ["office", "rooftop", "convenience", "temple"]) {
     const block = sceneBlock(sceneId);
     const hotspots = hotspotObjects(block);
 
@@ -84,6 +84,15 @@ test("all playable levels meet narrative and interaction content requirements", 
         "rooftop hotspots have explicit click feedback animations"
       );
     }
+    if (sceneId === "convenience") {
+      assert.ok(hotspots.length > hotspotObjects(sceneBlock("rooftop")).length, "convenience increases clue count after the rooftop level");
+      const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
+      assert.deepEqual(
+        animationKinds,
+        ["scratch", "photo", "phone", "ticket", "note", "ticket", "bottle"],
+        "convenience hotspots have explicit click feedback animations"
+      );
+    }
 
     for (const assetPath of assetPaths(block)) {
       assert.ok(existsSync(join(root, "public", assetPath)), `${sceneId} asset exists: ${assetPath}`);
@@ -124,6 +133,12 @@ test("game scene design iron rules are documented and obvious failed placeholder
     assert.ok(
       existsSync(join(root, "public/assets/game/rooftop/characters", `trader-${state}-sheet.png`)),
       `rooftop character ${state} spritesheet exists`
+    );
+  }
+  for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7"]) {
+    assert.ok(
+      existsSync(join(root, "public/assets/game/convenience/states", `convenience-${state}.png`)),
+      `convenience ${state} raster state exists`
     );
   }
   assert.match(taskStateSource, /foreground Zhou Qiming character object/, "task state records the foreground character object");

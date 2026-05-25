@@ -3,8 +3,9 @@ import { BootScene } from "./bootScene";
 import { PreloadScene } from "./preloadScene";
 import { OfficeScene, type OfficeSceneData } from "./scenes/officeScene";
 import { RooftopScene, type RooftopSceneData } from "./scenes/rooftopScene";
+import { ConvenienceScene, type ConvenienceSceneData } from "./scenes/convenienceScene";
 
-export type InvestigationGameData = OfficeSceneData | RooftopSceneData;
+export type InvestigationGameData = OfficeSceneData | RooftopSceneData | ConvenienceSceneData;
 
 export function createInvestigationGame(parent: HTMLElement, data: InvestigationGameData): Phaser.Game {
   const config: Phaser.Types.Core.GameConfig = {
@@ -31,6 +32,7 @@ export function createInvestigationGame(parent: HTMLElement, data: Investigation
   game.scene.add("PreloadScene", PreloadScene, false);
   game.scene.add("OfficeScene", OfficeScene, false);
   game.scene.add("RooftopScene", RooftopScene, false);
+  game.scene.add("ConvenienceScene", ConvenienceScene, false);
   return game;
 }
 
