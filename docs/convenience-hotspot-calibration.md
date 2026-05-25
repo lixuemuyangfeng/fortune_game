@@ -17,12 +17,12 @@ These centers were estimated from the accepted base raster and must be tightened
 
 | Hotspot | Target object | Percent center | Source image center | Source box |
 | --- | --- | ---: | ---: | ---: |
-| `h1` 差一个图案废票排 | scratched losing-ticket row under glass counter | `48.4, 76.8` | `809, 723` | `769x160` |
+| `h1` 中间那张刮花废票 | single heavily scratched middle losing ticket under glass counter | `49.3, 77.1` | `824, 725` | `192x152` |
 | `h2` 遮金额中奖合影 | right wall winner photo with covered amount | `79.9, 18.7` | `1336, 176` | `268x207` |
-| `h3` 中了休三天备忘 | delivery rider phone memo | `37.1, 31.8` | `620, 299` | `87x145` |
+| `h3` 骑手休假备忘 | delivery rider phone memo | `37.1, 31.8` | `620, 299` | `87x145` |
 | `h4` 西装内袋废票 | salesman pocket ticket | `53.5, 32.0` | `894, 301` | `114x124` |
-| `h5` 这本快了木牌 | small counter note near lottery booklet | `62.1, 63.3` | `1038, 596` | `207x96` |
+| `h5` 柜台这本快了牌 | small counter note near lottery booklet | `62.1, 63.3` | `1038, 596` | `207x96` |
 | `h6` 老板娘指的彩票本 | lottery booklet under shopkeeper finger | `49.8, 61.6` | `833, 580` | `311x126` |
-| `h7` 无糖茶旁的顺手 | Zhou's tea bottle near lottery counter | `25.8, 61.8` | `431, 582` | `97x139` |
+| `h7` 周启明手里的无糖茶 | Zhou's tea bottle near lottery counter | `25.8, 61.8` | `431, 582` | `97x139` |
 
 Known review risk: current `progress-1` through `progress-7` images are duplicated from the accepted base raster while the next local-edit pass creates true progress-state variants from this base. Do not treat these duplicated states as final production character-state art.

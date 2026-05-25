@@ -156,11 +156,11 @@ export const gameConfig: GameConfig = {
     },
     near_miss_tickets: {
       id: "near_miss_tickets",
-      title: "差一个图案废票排",
-      detail: "每张都差一点，排在一起就像一条专门喂幻想的流水线。",
+      title: "中间那张刮花废票",
+      detail: "柜台下那张刮得最狠的废票，被留在最显眼的位置继续劝人补一张。",
       emotion: "fantasy",
       theme: "lottery",
-      counterText: "差一个图案，不是下一张的保证。"
+      counterText: "刮得再用力，也不能把没中刮成中了。"
     },
     covered_winner_photo: {
       id: "covered_winner_photo",
@@ -172,8 +172,8 @@ export const gameConfig: GameConfig = {
     },
     rider_rest_memo: {
       id: "rider_rest_memo",
-      title: "中了休三天备忘",
-      detail: "外卖员手机上写着中了休三天，现实还在等下一单。",
+      title: "骑手休假备忘",
+      detail: "外卖员举着手机，备忘录里写着休三天，下一单却还在响。",
       emotion: "breakdown",
       theme: "lottery",
       counterText: "休三天很好，先别用下一张预支。"
@@ -188,7 +188,7 @@ export const gameConfig: GameConfig = {
     },
     almost_due_note: {
       id: "almost_due_note",
-      title: "这本快了木牌",
+      title: "柜台这本快了牌",
       detail: "柜台边的小牌子把概率说成气氛，把气氛说成机会。",
       emotion: "pretend",
       theme: "lottery",
@@ -204,11 +204,11 @@ export const gameConfig: GameConfig = {
     },
     unsweetened_tea: {
       id: "unsweetened_tea",
-      title: "无糖茶旁的顺手",
-      detail: "他本来只想买茶，手已经离彩票柜台太近。",
+      title: "周启明手里的无糖茶",
+      detail: "他本来只想买一瓶无糖茶，人已经被柜台拦住了。",
       emotion: "stubborn",
       theme: "lottery",
-      counterText: "买茶是需求，顺手才是入口。"
+      counterText: "买茶可以，别让顺手变成入口。"
     }
   },
   scenes: [
@@ -266,13 +266,13 @@ export const gameConfig: GameConfig = {
       machineEmbedded: true,
       completeText: "差一点，不等于差一张。今晚先把手从柜台边拿回来。",
       hotspots: [
-        { id: "h1", evidenceId: "near_miss_tickets", x: 48.4, y: 76.8, hitX: 48.4, hitY: 76.8, hitWidth: 46, hitHeight: 17, radius: 8, label: "差一个图案废票排", found: false, renderMode: "embedded", revealText: "差一点排成一排，也还是没中", animationKind: "scratch" },
+        { id: "h1", evidenceId: "near_miss_tickets", x: 49.3, y: 77.1, hitX: 49.3, hitY: 77.1, hitWidth: 11.5, hitHeight: 16.2, radius: 8, label: "中间那张刮花废票", found: false, renderMode: "embedded", revealText: "刮得最狠，也还是没中", animationKind: "scratch" },
         { id: "h2", evidenceId: "covered_winner_photo", x: 79.9, y: 18.7, hitX: 79.9, hitY: 18.7, hitWidth: 16, hitHeight: 22, radius: 8, label: "遮金额中奖合影", found: false, renderMode: "embedded", revealText: "金额被遮住，想象开始上班", animationKind: "photo" },
-        { id: "h3", evidenceId: "rider_rest_memo", x: 37.1, y: 31.8, hitX: 37.1, hitY: 31.8, hitWidth: 5.2, hitHeight: 15.4, radius: 7, label: "中了休三天备忘", found: false, renderMode: "embedded", revealText: "休三天先写在备忘录里", animationKind: "phone" },
+        { id: "h3", evidenceId: "rider_rest_memo", x: 37.1, y: 31.8, hitX: 37.1, hitY: 31.8, hitWidth: 5.2, hitHeight: 15.4, radius: 7, label: "骑手休假备忘", found: false, renderMode: "embedded", revealText: "休三天先写在备忘录里", animationKind: "phone" },
         { id: "h4", evidenceId: "pocket_losing_ticket", x: 53.5, y: 32, hitX: 53.5, hitY: 32, hitWidth: 6.8, hitHeight: 13.2, radius: 7, label: "西装内袋废票", found: false, renderMode: "embedded", revealText: "没中的纸片被收进内袋", animationKind: "ticket" },
-        { id: "h5", evidenceId: "almost_due_note", x: 62.1, y: 63.3, hitX: 62.1, hitY: 63.3, hitWidth: 12.4, hitHeight: 10.2, radius: 7, label: "这本快了木牌", found: false, renderMode: "embedded", revealText: "快了两个字最会催人掏钱", animationKind: "note" },
+        { id: "h5", evidenceId: "almost_due_note", x: 62.1, y: 63.3, hitX: 62.1, hitY: 63.3, hitWidth: 12.4, hitHeight: 10.2, radius: 7, label: "柜台这本快了牌", found: false, renderMode: "embedded", revealText: "快了两个字最会催人掏钱", animationKind: "note" },
         { id: "h6", evidenceId: "lottery_booklet", x: 49.8, y: 61.6, hitX: 49.8, hitY: 61.6, hitWidth: 18.6, hitHeight: 13.4, radius: 8, label: "老板娘指的彩票本", found: false, renderMode: "embedded", revealText: "被指中的那本，不等于会中你", animationKind: "ticket" },
-        { id: "h7", evidenceId: "unsweetened_tea", x: 25.8, y: 61.8, hitX: 25.8, hitY: 61.8, hitWidth: 5.8, hitHeight: 14.8, radius: 7, label: "无糖茶旁的顺手", found: false, renderMode: "embedded", revealText: "买茶是需求，顺手才是入口", animationKind: "bottle" }
+        { id: "h7", evidenceId: "unsweetened_tea", x: 25.8, y: 61.8, hitX: 25.8, hitY: 61.8, hitWidth: 5.8, hitHeight: 14.8, radius: 7, label: "周启明手里的无糖茶", found: false, renderMode: "embedded", revealText: "买茶可以，别让顺手变成入口", animationKind: "bottle" }
       ]
     },
     {
