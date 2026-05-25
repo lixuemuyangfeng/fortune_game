@@ -129,6 +129,8 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - QA finding resolved: second-level hotspot centers are now recorded as source-image pixel centers in `docs/rooftop-v9-hotspot-calibration.md`, with config percentages derived from those measured positions instead of prompt guesses.
 - QA finding resolved: the right-side price-alert phone hotspot was moved left/up to the phone screen center after user crop review.
 - QA finding resolved: the second-level left mission-panel copy no longer exposes implementation language like Phaser/占位 and uses a more player-facing tone for goals, completion, and next-level teaser text.
+- Process improvement: added `docs/image-review-optimize-loop.md` and `npm run art:review -- <sceneId>` so future level art must pass a repeatable generation brief, review-gate, hotspot-calibration, and screenshot-inspection loop before handoff.
+- Process improvement: generated baseline image review checklists for the current office and rooftop levels under `docs/reviews/`.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -186,3 +188,4 @@ Second-level optimization plan:
 - After removing found-marker offset and centering the price-alert hit pulse, Playwright screenshots were captured at `artifacts/rooftop-v9-marker-center-progress-4b.png` and `artifacts/rooftop-v9-marker-center-progress-6b.png`.
 - After clarifying the yellow high-voltage warning clue and calibrating source-pixel hotspot centers, Playwright screenshots were captured at `artifacts/rooftop-v9-calibrated-progress-4.png` and `artifacts/rooftop-v9-calibrated-progress-6.png`.
 - After polishing the second-level left-panel copy, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright updated `artifacts/playtest-rooftop-complete.png`.
+- After adding the image review/optimize mechanism, `npm run art:review -- office` and `npm run art:review -- rooftop` generated baseline review files for the first two levels.

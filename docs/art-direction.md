@@ -6,6 +6,7 @@
 
 ## 视觉生产方式
 
+- 所有关卡生图和改图必须先走 `docs/image-review-optimize-loop.md`。它把主题、布局、色彩、角色、线索语义、热区点位和截图验收串成一个反复执行的 review/optimize loop；没有通过该 loop 的图片不能标记为最终素材。
 - 当前方向样张：`docs/art-samples/office-clarity-sample.png`。它只作为风格和清晰度参考，不直接作为最终关卡素材。
 - 当前第一关 playable raster 版本：`public/assets/office-level/office-raster-v2.png`。它是原始场景参考；Phaser 版实际运行时应使用 clean background、独立人物层、前景遮挡层和可交互反馈层。
 - 每个关卡先生成一张统一风格的场景底图，底图负责空间、氛围和叙事密度，但不得把需要动的主角、代理角色或关键交互物件永久烘焙成唯一图层。

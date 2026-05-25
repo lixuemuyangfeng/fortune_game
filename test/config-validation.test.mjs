@@ -8,6 +8,7 @@ const configSource = readFileSync(join(root, "src/core/config.ts"), "utf8");
 const agentsSource = readFileSync(join(root, "AGENTS.md"), "utf8");
 const phaserSpecSource = readFileSync(join(root, "docs/phaser3-requirements-spec.md"), "utf8");
 const artDirectionSource = readFileSync(join(root, "docs/art-direction.md"), "utf8");
+const imageReviewSource = readFileSync(join(root, "docs/image-review-optimize-loop.md"), "utf8");
 const taskStateSource = readFileSync(join(root, "TASK_STATE.md"), "utf8");
 
 function sceneBlock(sceneId) {
@@ -106,6 +107,13 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(phaserSpecSource, /禁止背景块动画/, "Phaser spec forbids animating rectangular background crops");
   assert.match(artDirectionSource, /角色进度反馈/, "Art direction documents character progress feedback");
   assert.match(artDirectionSource, /截图验收清单/, "Art direction requires screenshot QA");
+  assert.match(artDirectionSource, /image-review-optimize-loop/, "Art direction requires the image review loop");
+  assert.match(phaserSpecSource, /art:review/, "Phaser spec requires generated image review files");
+  assert.match(imageReviewSource, /Generation Brief/, "Image review loop includes a pre-generation brief");
+  assert.match(imageReviewSource, /Review Gates/, "Image review loop includes review gates");
+  assert.match(imageReviewSource, /Hotspot Calibration/, "Image review loop includes source-pixel hotspot calibration");
+  assert.match(imageReviewSource, /Required Loop/, "Image review loop defines the repeat-until-pass process");
+  assert.ok(existsSync(join(root, "scripts/create-image-review.mjs")), "image review generator script exists");
   for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
     assert.ok(
       existsSync(join(root, "public/assets/game/office/characters", `zhou-${state}-sheet.png`)),

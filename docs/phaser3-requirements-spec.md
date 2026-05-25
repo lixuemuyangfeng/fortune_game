@@ -257,6 +257,7 @@ SKIP_VERIFY=1 npm run ship -- "message"
 
 ### 10.2 视觉验收
 
+- 新关卡或新图片必须执行 `docs/image-review-optimize-loop.md`：先写生成 brief，再生成/编辑图片，再用 `npm run art:review -- <sceneId>` 建立 review 文件，最后用 Playwright 截图人工验收。任何主题错位、布局空洞、角色比例异常、线索语义不清、热区偏移、UI 遮挡或技术文案外露都视为不通过。
 - 画面统一，不出现 PNG 背景拼贴扁平 SVG 的割裂感。
 - 人物状态变化来自素材，不出现补丁式五官。
 - 每个关卡的主角或代理角色在 `progress-0` 到 `progress-N` 每个进度状态中必须有可见的表情或身体动作差异；只有环境变暖、机器亮起或文字变化不算通过。
