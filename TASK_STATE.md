@@ -140,6 +140,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Third level QA finding resolved: the new `付款码旁加购贴` and `最高奖金立牌` anchors were tightened against source-image crops; the payment target now centers on the blue checkout sign and the prize target on the maximum-prize strip instead of the whole rack.
 - Third level QA finding resolved: convenience hit feedback for note/photo clues was upgraded from plain underlines/text stamps to localized scan sweeps, corner pulses, and prize sparkles that stay inside or near the clicked object.
 - Third level QA risk: progress states are improved but still use local compositing from generated full-scene variants rather than clean transparent character source layers. Treat them as a playable improvement, not the final layered production pipeline.
+- Fourth level progress: replaced the old `temple` placeholder with playable `social` / `小红薯暴击夜`, using apartment late-night bitmap art, 5 embedded social-comparison clues, a dedicated Phaser scene, route from the convenience completion button, source-pixel hotspot calibration, and Playwright coverage.
+- Fourth level QA note: the first social slice uses concrete clue bodies instead of pure text labels: cropped profit phone, social group QR card, new-home photo plus loan contract, AI course deadline laptop, and an unsent reply draft.
+- Fourth level QA risk: `social-progress-0..5` currently share the same accepted base plate. The level is playable and calibrated, but a production art pass still needs fixed-layout progress variants or layered protagonist/proxy assets before final approval.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -203,3 +206,4 @@ Second-level optimization plan:
 - After tightening third-level clue labels and shrinking the large losing-ticket hotspot to one ticket, `npm test`, `npm run build`, and `npm run test:e2e` passed again.
 - After locally redrawing unreasonable third-level clue elements, all `convenience-progress-0..7` rasters were updated from the new base image and `docs/convenience-hotspot-calibration.md` was recalibrated with new source-pixel centers.
 - After adding third-level progress-state composites, `convenience-progress-1..7` now have distinct Zhou Qiming posture/expression states while retaining the accepted clue layout.
+- After adding the playable fourth `social` level, `npm run art:review -- social`, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright captured `artifacts/playtest-social-intro.png` and `artifacts/playtest-social-complete.png`.

@@ -209,6 +209,46 @@ export const gameConfig: GameConfig = {
       emotion: "envy",
       theme: "lottery",
       counterText: "最大数字很醒目，中奖概率很安静。"
+    },
+    cropped_profit_screenshot: {
+      id: "cropped_profit_screenshot",
+      title: "没露本金的收益图",
+      detail: "手机里只截了涨幅和红线，本金、持仓和亏损区间都被裁掉。",
+      emotion: "envy",
+      theme: "ai",
+      counterText: "收益图只晒结果，不替你承担本金。"
+    },
+    humblebrag_group_qr: {
+      id: "humblebrag_group_qr",
+      title: "收益帖下的社群码",
+      detail: "嘴上说只是运气好，旁边却把进群入口摆得很顺手。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "谦虚如果带二维码，多半不是谦虚。"
+    },
+    home_photo_loan_folder: {
+      id: "home_photo_loan_folder",
+      title: "新房照后的贷款合同",
+      detail: "照片只露客厅和夕阳，贷款合同压在相框后面没入镜。",
+      emotion: "breakdown",
+      theme: "gold",
+      counterText: "别人的新房照，不会替你显示月供。"
+    },
+    ai_course_deadline: {
+      id: "ai_course_deadline",
+      title: "裁掉日期的课程截止",
+      detail: "课程海报把今晚 23:59 放到最醒目，日期却被裁在画面外。",
+      emotion: "fantasy",
+      theme: "ai",
+      counterText: "倒计时是真的，机会未必是真的。"
+    },
+    unsent_reply_draft: {
+      id: "unsent_reply_draft",
+      title: "没发出去的祝福",
+      detail: "输入框里停着那句你们都挺好的，手指却一直没按发送。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "看见羡慕，比假装大方更有用。"
     }
   },
   scenes: [
@@ -276,24 +316,23 @@ export const gameConfig: GameConfig = {
       ]
     },
     {
-      id: "temple",
-      name: "财神庙",
-      theme: "lottery",
-      description: "这里处理所有低成本暴富幻想和高浓度嘴硬，香灰里全是没说出口的再来一张。",
-      backgroundImage: "/assets/temple-level/background.svg",
-      hint: "香火太旺了",
-      enemyName: "低成本暴富瘴气",
-      enemyDescription: "它会把两块钱的希望吹成年度战略。",
-      machineName: "彩票冷却炉",
-      machineImage: "/assets/machines/lottery-cooling-furnace.svg",
-      completeText: "愿望已经冷却，暴富梦先放进图鉴。",
-      character: { x: 73, y: 80, scale: 1, flipX: false, source: "mascot" },
+      id: "social",
+      name: "小红薯暴击夜",
+      theme: "ai",
+      description: "凌晨一点半，周启明想刷手机放松，首页第一条就把别人的高光推到脸上。",
+      backgroundImage: "/assets/game/social/states/social-progress-0.png",
+      hint: "别拿高光照黑眼圈",
+      enemyName: "高光滤镜兽",
+      enemyDescription: "它把别人生活里最亮的一帧裁剪、锐化、加滤镜，然后砸到你脸上。",
+      machineName: "高光拆帧机",
+      machineEmbedded: true,
+      completeText: "朋友圈不是生活，是可发布版本。别人的高光，不该拿来照你的黑眼圈。",
       hotspots: [
-        { id: "h1", evidenceId: "incense_gold", x: 49.5, y: 45.8, hitX: 49.5, hitY: 45.5, radius: 10, label: "黄金香炉", found: false, image: "/assets/temple-level/golden-incense-burner.svg", imageWidth: 20, anchorX: 50, anchorY: 50, hitScale: 0.95, revealText: "金色烟雾很浓，理性还能看见" },
-        { id: "h2", evidenceId: "wish_wall", x: 74.5, y: 42.6, hitX: 74.3, hitY: 42.8, radius: 10, label: "许愿墙", found: false, image: "/assets/temple-level/wish-wall.svg", imageWidth: 18, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "财富自由先写在墙上" },
-        { id: "h3", evidenceId: "lottery_ticket", x: 37.6, y: 72.5, hitX: 37.5, hitY: 72.2, radius: 9, label: "彩票摊", found: false, image: "/assets/temple-level/lottery-stand.svg", imageWidth: 18, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "再来一张，是幻想的回声" },
-        { id: "h4", evidenceId: "macro_news", x: 24.2, y: 34.8, hitX: 24, hitY: 35, radius: 8, label: "宏观告示", found: false, image: "/assets/temple-level/geopolitics-news-sign.svg", imageWidth: 16, anchorX: 50, anchorY: 50, hitScale: 0.95, revealText: "世界很大，别让标题替你下注" },
-        { id: "h5", evidenceId: "boss_phone", x: 65.2, y: 72.6, hitX: 65.4, hitY: 72.4, radius: 8, label: "老板来电牌", found: false, image: "/assets/temple-level/boss-phone-sign.svg", imageWidth: 14, anchorX: 50, anchorY: 50, hitScale: 1, revealText: "财神不接 KPI 电话" }
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 41.5, y: 57.9, hitX: 41.5, hitY: 57.9, hitWidth: 8.5, hitHeight: 23, radius: 8, label: "没露本金的收益图", found: false, renderMode: "embedded", revealText: "只截涨幅，没截本金", animationKind: "phone" },
+        { id: "h2", evidenceId: "humblebrag_group_qr", x: 25.1, y: 78.1, hitX: 25.1, hitY: 78.1, hitWidth: 10.5, hitHeight: 20.5, radius: 8, label: "收益帖下的社群码", found: false, renderMode: "embedded", revealText: "只是运气好，旁边却有进群口", animationKind: "note" },
+        { id: "h3", evidenceId: "home_photo_loan_folder", x: 57.1, y: 77.8, hitX: 57.1, hitY: 77.8, hitWidth: 22, hitHeight: 15, radius: 8, label: "新房照后的贷款合同", found: false, renderMode: "embedded", revealText: "新房照片后面压着月供", animationKind: "photo" },
+        { id: "h4", evidenceId: "ai_course_deadline", x: 77.9, y: 68.4, hitX: 77.9, hitY: 68.4, hitWidth: 18, hitHeight: 24, radius: 8, label: "裁掉日期的课程截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，日期被裁掉", animationKind: "note" },
+        { id: "h5", evidenceId: "unsent_reply_draft", x: 68.9, y: 80.8, hitX: 68.9, hitY: 80.8, hitWidth: 17, hitHeight: 13, radius: 8, label: "没发出去的祝福", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" }
       ]
     }
   ]

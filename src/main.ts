@@ -19,6 +19,7 @@ const storageKey = "fortune-game-state-v3";
 const officeSceneId = "office";
 const rooftopSceneId = "rooftop";
 const convenienceSceneId = "convenience";
+const socialSceneId = "social";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -359,8 +360,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, convenienceSceneId));
     return;
   }
+  if (scene.id === convenienceSceneId) {
+    toast = "凌晨首页已经刷新，高光滤镜兽正在开屏。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, socialSceneId));
+    return;
+  }
 
-  toast = "便利站这波先断电了。下一站还在装修，先把证据袋拎稳。";
+  toast = "高光这波先拆完了。下一站还在接线，先别拿别人的可发布版本审判自己。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -465,6 +474,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "别急着付款，先看清楚是谁在劝你再来一张。",
       introNarrative: "他本来只想买无糖茶，柜台已经把差一点摆成一整排。",
       completeNarrative: "便利站这波先断电。废票、合影、备忘和那句这本快了都装进袋里。"
+    };
+  }
+  if (sceneId === socialSceneId) {
+    return {
+      place: "周启明家里",
+      time: "周四 01:30",
+      goal: "找出 5 个滤镜裂缝",
+      goalDetail: "把别人高光里没拍进去的成本找出来。",
+      completeGoal: "比较心已降噪",
+      startAction: "开始拆帧",
+      continueAction: "继续拆帧",
+      startToast: "别急着比较，先看清每张高光没拍进去的部分。",
+      introNarrative: "他想刷手机放松，首页第一条就开始上强度。",
+      completeNarrative: "收益、本金、贷款、课程截止和没发出去的祝福都拆开了。"
     };
   }
 
