@@ -29,6 +29,7 @@ let justFoundHotspotId = "";
 let nextScenePlaceholderActive = false;
 let justFoundHotspotTimer: number | undefined;
 let phaserGame: Phaser.Game | undefined;
+const localDevToolsEnabled = getViteDevMode() && isLocalRuntime();
 
 const appContainer = document.querySelector<HTMLDivElement>("#app");
 if (!appContainer) {
@@ -122,7 +123,10 @@ function render(): void {
           <div>
             <h1>暴富幻想所</h1>
           </div>
-          <button class="secondary compact" data-action="reset">重置</button>
+          <div class="top-actions">
+            ${renderLocalScenePicker(scene.id)}
+            <button class="secondary compact" data-action="reset">重置</button>
+          </div>
         </header>
 
         <section class="phaser-layout" data-scene-id="${escapeAttribute(scene.id)}">
@@ -267,6 +271,11 @@ function bindEvents(): void {
       if (action === "next-scene") showNextScenePlaceholder();
     });
   });
+
+  const localScenePicker = app.querySelector<HTMLSelectElement>("[data-action='local-scene-picker']");
+  localScenePicker?.addEventListener("change", () => {
+    selectLocalScene(localScenePicker.value);
+  });
 }
 
 function handleHotspot(hotspotId: string): void {
@@ -356,6 +365,40 @@ function showNextScenePlaceholder(): void {
   render();
 }
 
+function selectLocalScene(sceneId: string): void {
+  if (!localDevToolsEnabled) return;
+  if (!gameConfig.scenes.some((scene) => scene.id === sceneId)) return;
+  if (sceneId === state.currentSceneId) return;
+
+  hintedHotspotId = "";
+  nextScenePlaceholderActive = false;
+  clearFoundPulse();
+  const sceneName = gameConfig.scenes.find((scene) => scene.id === sceneId)?.name ?? sceneId;
+  toast = `本机临时入口：已切到「${sceneName}」。`;
+  setState(setCurrentScene(state, sceneId));
+}
+
+function renderLocalScenePicker(activeSceneId: string): string {
+  if (!localDevToolsEnabled) return "";
+
+  return `
+    <label class="local-scene-picker">
+      <span>本机选关</span>
+      <select data-action="local-scene-picker" aria-label="本机临时选关">
+        ${gameConfig.scenes
+          .map(
+            (scene) => `
+              <option value="${escapeAttribute(scene.id)}" ${scene.id === activeSceneId ? "selected" : ""}>
+                ${escapeHtml(scene.name)}
+              </option>
+            `
+          )
+          .join("")}
+      </select>
+    </label>
+  `;
+}
+
 function resetDemo(): void {
   phaserGame?.destroy(true);
   localStorage.removeItem(storageKey);
@@ -365,6 +408,15 @@ function resetDemo(): void {
   clearFoundPulse();
   toast = "抓住偷走注意力的噪声。";
   render();
+}
+
+function isLocalRuntime(): boolean {
+  const { hostname } = window.location;
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+}
+
+function getViteDevMode(): boolean {
+  return Boolean((import.meta as ImportMeta & { env?: { DEV?: boolean } }).env?.DEV);
 }
 
 function getNarrative(scene: InvestigationScene, challengeActive: boolean, foundCount: number, totalCount: number, complete: boolean): string {

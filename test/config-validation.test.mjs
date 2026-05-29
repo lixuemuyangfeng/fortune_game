@@ -89,7 +89,7 @@ test("all playable levels meet narrative and interaction content requirements", 
       const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
       assert.deepEqual(
         animationKinds,
-        ["scratch", "photo", "phone", "ticket", "note", "ticket", "bottle"],
+        ["scratch", "photo", "note", "ticket", "note", "ticket", "photo"],
         "convenience hotspots have explicit click feedback animations"
       );
     }

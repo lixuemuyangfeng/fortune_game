@@ -170,13 +170,13 @@ export const gameConfig: GameConfig = {
       theme: "lottery",
       counterText: "被遮住的金额，最擅长替你加戏。"
     },
-    rider_rest_memo: {
-      id: "rider_rest_memo",
-      title: "骑手休假备忘",
-      detail: "外卖员举着手机，备忘录里写着休三天，下一单却还在响。",
-      emotion: "breakdown",
+    payment_addon_prompt: {
+      id: "payment_addon_prompt",
+      title: "付款码旁加购贴",
+      detail: "付款码旁边贴着加购提示，把结账动作顺手拐成再买一张。",
+      emotion: "pretend",
       theme: "lottery",
-      counterText: "休三天很好，先别用下一张预支。"
+      counterText: "最危险的不是想买，是付款时顺手。"
     },
     pocket_losing_ticket: {
       id: "pocket_losing_ticket",
@@ -202,13 +202,13 @@ export const gameConfig: GameConfig = {
       theme: "lottery",
       counterText: "被指中的那本，不等于会指中你。"
     },
-    unsweetened_tea: {
-      id: "unsweetened_tea",
-      title: "周启明手里的无糖茶",
-      detail: "他本来只想买一瓶无糖茶，人已经被柜台拦住了。",
-      emotion: "stubborn",
+    max_prize_stand: {
+      id: "max_prize_stand",
+      title: "最高奖金立牌",
+      detail: "右侧立牌把最大数字放得很大，故意让概率小到看不见。",
+      emotion: "envy",
       theme: "lottery",
-      counterText: "买茶可以，别让顺手变成入口。"
+      counterText: "最大数字很醒目，中奖概率很安静。"
     }
   },
   scenes: [
@@ -266,13 +266,13 @@ export const gameConfig: GameConfig = {
       machineEmbedded: true,
       completeText: "差一点，不等于差一张。今晚先把手从柜台边拿回来。",
       hotspots: [
-        { id: "h1", evidenceId: "near_miss_tickets", x: 49.3, y: 77.1, hitX: 49.3, hitY: 77.1, hitWidth: 11.5, hitHeight: 16.2, radius: 8, label: "中间那张刮花废票", found: false, renderMode: "embedded", revealText: "刮得最狠，也还是没中", animationKind: "scratch" },
-        { id: "h2", evidenceId: "covered_winner_photo", x: 79.9, y: 18.7, hitX: 79.9, hitY: 18.7, hitWidth: 16, hitHeight: 22, radius: 8, label: "遮金额中奖合影", found: false, renderMode: "embedded", revealText: "金额被遮住，想象开始上班", animationKind: "photo" },
-        { id: "h3", evidenceId: "rider_rest_memo", x: 37.1, y: 31.8, hitX: 37.1, hitY: 31.8, hitWidth: 5.2, hitHeight: 15.4, radius: 7, label: "骑手休假备忘", found: false, renderMode: "embedded", revealText: "休三天先写在备忘录里", animationKind: "phone" },
-        { id: "h4", evidenceId: "pocket_losing_ticket", x: 53.5, y: 32, hitX: 53.5, hitY: 32, hitWidth: 6.8, hitHeight: 13.2, radius: 7, label: "西装内袋废票", found: false, renderMode: "embedded", revealText: "没中的纸片被收进内袋", animationKind: "ticket" },
-        { id: "h5", evidenceId: "almost_due_note", x: 62.1, y: 63.3, hitX: 62.1, hitY: 63.3, hitWidth: 12.4, hitHeight: 10.2, radius: 7, label: "柜台这本快了牌", found: false, renderMode: "embedded", revealText: "快了两个字最会催人掏钱", animationKind: "note" },
-        { id: "h6", evidenceId: "lottery_booklet", x: 49.8, y: 61.6, hitX: 49.8, hitY: 61.6, hitWidth: 18.6, hitHeight: 13.4, radius: 8, label: "老板娘指的彩票本", found: false, renderMode: "embedded", revealText: "被指中的那本，不等于会中你", animationKind: "ticket" },
-        { id: "h7", evidenceId: "unsweetened_tea", x: 25.8, y: 61.8, hitX: 25.8, hitY: 61.8, hitWidth: 5.8, hitHeight: 14.8, radius: 7, label: "周启明手里的无糖茶", found: false, renderMode: "embedded", revealText: "买茶可以，别让顺手变成入口", animationKind: "bottle" }
+        { id: "h1", evidenceId: "near_miss_tickets", x: 46.2, y: 82.8, hitX: 46.2, hitY: 82.8, hitWidth: 7.2, hitHeight: 13, radius: 8, label: "中间那张刮花废票", found: false, renderMode: "embedded", revealText: "刮得最狠，也还是没中", animationKind: "scratch" },
+        { id: "h2", evidenceId: "covered_winner_photo", x: 81.1, y: 25.9, hitX: 81.1, hitY: 25.9, hitWidth: 10, hitHeight: 8.2, radius: 8, label: "遮金额中奖合影", found: false, renderMode: "embedded", revealText: "金额被遮住，想象开始上班", animationKind: "photo" },
+        { id: "h3", evidenceId: "payment_addon_prompt", x: 77.7, y: 68.1, hitX: 77.7, hitY: 68.1, hitWidth: 5.4, hitHeight: 13.8, radius: 7, label: "付款码旁加购贴", found: false, renderMode: "embedded", revealText: "结账时最容易被顺手带走", animationKind: "note" },
+        { id: "h4", evidenceId: "pocket_losing_ticket", x: 52.6, y: 34.6, hitX: 52.6, hitY: 34.6, hitWidth: 4.2, hitHeight: 8.2, radius: 7, label: "西装内袋废票", found: false, renderMode: "embedded", revealText: "没中的纸片被收进内袋", animationKind: "ticket" },
+        { id: "h5", evidenceId: "almost_due_note", x: 65.6, y: 67.2, hitX: 65.6, hitY: 67.2, hitWidth: 8, hitHeight: 8.8, radius: 7, label: "柜台这本快了牌", found: false, renderMode: "embedded", revealText: "快了两个字最会催人掏钱", animationKind: "note" },
+        { id: "h6", evidenceId: "lottery_booklet", x: 49.6, y: 65.1, hitX: 49.6, hitY: 65.1, hitWidth: 18.6, hitHeight: 10.8, radius: 8, label: "老板娘指的彩票本", found: false, renderMode: "embedded", revealText: "被指中的那本，不等于会中你", animationKind: "ticket" },
+        { id: "h7", evidenceId: "max_prize_stand", x: 88.3, y: 47, hitX: 88.3, hitY: 47, hitWidth: 11.2, hitHeight: 9.8, radius: 8, label: "最高奖金立牌", found: false, renderMode: "embedded", revealText: "最大数字负责让概率闭嘴", animationKind: "photo" }
       ]
     },
     {

@@ -88,6 +88,34 @@ p {
   line-height: 1;
 }
 
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.local-scene-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.local-scene-picker select {
+  width: min(190px, 28vw);
+  min-height: 36px;
+  border-color: rgba(243, 196, 91, 0.42);
+  background: rgba(255, 255, 255, 0.94);
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .compact {
   min-height: 36px;
   padding: 8px 12px;
@@ -2086,6 +2114,26 @@ h2 {
 
   .phaser-actions button {
     flex: 1 1 150px;
+  }
+
+  .game-top {
+    align-items: flex-start;
+  }
+
+  .top-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .local-scene-picker {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .local-scene-picker select {
+    width: min(178px, 45vw);
   }
 
   .scene-art {

@@ -2,9 +2,21 @@ import { expect, test } from "@playwright/test";
 
 const officeHotspots = ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"];
 const rooftopHotspots = ["金店小票", "稳健避险交流群", "避险快讯截图", "跌幅提醒手机", "踩线告示", "杠杆合同边角"];
-const convenienceHotspots = ["中间那张刮花废票", "遮金额中奖合影", "骑手休假备忘", "西装内袋废票", "柜台这本快了牌", "老板娘指的彩票本", "周启明手里的无糖茶"];
+const convenienceHotspots = ["中间那张刮花废票", "遮金额中奖合影", "付款码旁加购贴", "西装内袋废票", "柜台这本快了牌", "老板娘指的彩票本", "最高奖金立牌"];
 
 test.describe("phaser level flow", () => {
+  test("local dev scene picker can jump to a fixed level", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+
+    await expect(page.getByLabel("本机临时选关")).toBeVisible();
+    await page.getByLabel("本机临时选关").selectOption("convenience");
+    await expect(page.getByRole("heading", { name: "刮刮泪便利站" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始断电" })).toBeVisible();
+  });
+
   test("player can complete the first Phaser level and enter the rooftop level", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto("http://localhost:5173/");

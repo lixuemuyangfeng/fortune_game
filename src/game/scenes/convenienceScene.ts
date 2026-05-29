@@ -156,10 +156,10 @@ export class ConvenienceScene extends Phaser.Scene {
     const rect = this.getHotspotRect(hotspot);
     const kind = hotspot.animationKind;
     if (kind === "scratch" || kind === "ticket") this.addScratchEffect(rect);
-    else if (kind === "photo") this.addPhotoEffect(rect);
+    else if (kind === "photo") this.addPhotoEffect(rect, hotspot.evidenceId);
     else if (kind === "phone") this.addPhoneEffect(rect);
     else if (kind === "bottle") this.addBottleEffect(rect);
-    else this.addNoteEffect(rect);
+    else this.addNoteEffect(rect, hotspot.evidenceId);
   }
 
   private addScratchEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -173,17 +173,24 @@ export class ConvenienceScene extends Phaser.Scene {
     this.tweens.add({ targets: line, alpha: 0, duration: 180, delay: 620 });
   }
 
-  private addPhotoEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const stamp = this.add.text(rect.x + rect.width * 0.08, rect.y + rect.height * 0.18, "遮住", {
-      color: "#c64628",
-      backgroundColor: "rgba(255, 246, 223, 0.86)",
-      fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
-      fontSize: "14px",
-      fontStyle: "bold",
-      padding: { x: 6, y: 3 }
-    }).setOrigin(0.5).setAngle(-6).setDepth(52).setScale(1.08);
-    this.tweens.add({ targets: stamp, scale: 1, duration: 170, ease: "Back.out" });
-    this.tweens.add({ targets: stamp, alpha: 0, duration: 240, delay: 700 });
+  private addPhotoEffect(rect: { x: number; y: number; width: number; height: number }, evidenceId?: string): void {
+    const frame = this.add.graphics().setDepth(52);
+    frame.lineStyle(3, evidenceId === "max_prize_stand" ? 0xf3c45b : 0xfff0b8, 0.86);
+    frame.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 8);
+
+    const sweep = this.add.graphics().setDepth(53);
+    sweep.fillStyle(evidenceId === "max_prize_stand" ? 0xf3c45b : 0xffffff, 0.24);
+    sweep.fillRoundedRect(rect.x - rect.width * 0.5, rect.y - rect.height * 0.34, rect.width * 0.22, rect.height * 0.68, 4);
+    this.tweens.add({ targets: sweep, x: rect.width * 0.72, alpha: 0.04, duration: 520, ease: "Cubic.out" });
+
+    if (evidenceId === "max_prize_stand") {
+      this.addPrizeSparkles(rect);
+    } else {
+      this.addCornerTicks(rect, 0xfff0b8);
+    }
+
+    this.tweens.add({ targets: frame, alpha: 0, scaleX: 1.08, scaleY: 1.08, duration: 620, ease: "Cubic.out" });
+    this.tweens.add({ targets: sweep, alpha: 0, duration: 120, delay: 520 });
   }
 
   private addPhoneEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -201,15 +208,57 @@ export class ConvenienceScene extends Phaser.Scene {
     this.tweens.add({ targets: ring, alpha: 0, scaleX: 1.25, scaleY: 1.18, duration: 560, ease: "Cubic.out" });
   }
 
-  private addNoteEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const underline = this.add.graphics().setDepth(52);
-    underline.lineStyle(7, 0xf3c45b, 0.82);
-    underline.beginPath();
-    underline.moveTo(rect.x - rect.width * 0.36, rect.y + rect.height * 0.1);
-    underline.lineTo(rect.x + rect.width * 0.34, rect.y + rect.height * 0.1);
-    underline.strokePath();
-    this.tweens.add({ targets: underline, angle: 2, duration: 80, yoyo: true, repeat: 5, ease: "Sine.inOut" });
-    this.tweens.add({ targets: underline, alpha: 0, duration: 180, delay: 600 });
+  private addNoteEffect(rect: { x: number; y: number; width: number; height: number }, evidenceId?: string): void {
+    const glow = this.add.graphics().setDepth(52);
+    glow.lineStyle(3, 0xf3c45b, 0.78);
+    glow.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 7);
+
+    const scan = this.add.graphics().setDepth(53);
+    scan.lineStyle(evidenceId === "payment_addon_prompt" ? 5 : 7, 0xfff0b8, 0.76);
+    scan.beginPath();
+    scan.moveTo(rect.x - rect.width * 0.36, rect.y - rect.height * 0.12);
+    scan.lineTo(rect.x + rect.width * 0.34, rect.y - rect.height * 0.12);
+    scan.strokePath();
+
+    const dot = this.add.graphics().setDepth(54);
+    dot.fillStyle(0xf3c45b, 0.86);
+    dot.fillCircle(rect.x + rect.width * 0.28, rect.y + rect.height * 0.24, 4);
+
+    this.tweens.add({ targets: glow, alpha: 0.18, scaleX: 1.08, scaleY: 1.08, duration: 620, ease: "Cubic.out" });
+    this.tweens.add({ targets: scan, y: rect.height * 0.34, alpha: 0.08, duration: 520, ease: "Cubic.out" });
+    this.tweens.add({ targets: dot, alpha: 0, scale: 2.2, duration: 420, ease: "Cubic.out" });
+  }
+
+  private addCornerTicks(rect: { x: number; y: number; width: number; height: number }, color: number): void {
+    const ticks = this.add.graphics().setDepth(54);
+    ticks.lineStyle(3, color, 0.82);
+    const left = rect.x - rect.width / 2;
+    const right = rect.x + rect.width / 2;
+    const top = rect.y - rect.height / 2;
+    const bottom = rect.y + rect.height / 2;
+    const tick = Math.min(rect.width, rect.height) * 0.18;
+    ticks.beginPath();
+    ticks.moveTo(left, top + tick);
+    ticks.lineTo(left, top);
+    ticks.lineTo(left + tick, top);
+    ticks.moveTo(right - tick, bottom);
+    ticks.lineTo(right, bottom);
+    ticks.lineTo(right, bottom - tick);
+    ticks.strokePath();
+    this.tweens.add({ targets: ticks, alpha: 0, duration: 580, ease: "Cubic.out" });
+  }
+
+  private addPrizeSparkles(rect: { x: number; y: number; width: number; height: number }): void {
+    for (const point of [
+      { x: -0.34, y: -0.24, r: 3 },
+      { x: 0.18, y: -0.18, r: 4 },
+      { x: 0.38, y: 0.12, r: 3 }
+    ]) {
+      const spark = this.add.graphics().setDepth(54);
+      spark.fillStyle(0xf3c45b, 0.86);
+      spark.fillCircle(rect.x + rect.width * point.x, rect.y + rect.height * point.y, point.r);
+      this.tweens.add({ targets: spark, alpha: 0, scale: 2.6, duration: 520, ease: "Cubic.out" });
+    }
   }
 
   private addCompletionState(): void {
