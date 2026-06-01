@@ -145,6 +145,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Fourth level QA finding resolved: `social-progress-0..5` are now distinct same-layout raster states. Zhou Qiming moves from collapsed doomscrolling to calmer self-awareness while all five clue bodies remain visible in pre-completion states.
 - Fourth level QA finding resolved: social hit feedback now uses clue-specific local effects: profit-line crop mark, QR bits, photo/loan split frame, deadline timer flash, and draft cursor pulse instead of inherited generic note/photo sweeps.
 - Fourth level QA finding resolved: the fourth-level scene intro card was moved off Zhou Qiming's face and phone, and Playwright now captures social mid-progress plus mobile-first screenshots.
+- Fourth level QA finding resolved: the iron-rule runtime guard now includes `convenienceScene` and `socialScene`, so later level scenes are covered by the same no-patchwork/no-fake-feedback checks as the first two scenes.
 - Fourth level QA risk: the progress states are full-scene bitmap states rather than clean transparent character layers. They now match the current second/third-level bitmap-state approach, but the longer-term production pipeline should still move toward layered character/proxy assets.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 

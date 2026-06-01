@@ -267,38 +267,6 @@ export class SocialScene extends Phaser.Scene {
     this.tweens.add({ targets: [input, cursor, unsent], alpha: 0, duration: 220, delay: 620, ease: "Cubic.out" });
   }
 
-  private addCornerTicks(rect: { x: number; y: number; width: number; height: number }, color: number): void {
-    const ticks = this.add.graphics().setDepth(54);
-    ticks.lineStyle(3, color, 0.82);
-    const left = rect.x - rect.width / 2;
-    const right = rect.x + rect.width / 2;
-    const top = rect.y - rect.height / 2;
-    const bottom = rect.y + rect.height / 2;
-    const tick = Math.min(rect.width, rect.height) * 0.18;
-    ticks.beginPath();
-    ticks.moveTo(left, top + tick);
-    ticks.lineTo(left, top);
-    ticks.lineTo(left + tick, top);
-    ticks.moveTo(right - tick, bottom);
-    ticks.lineTo(right, bottom);
-    ticks.lineTo(right, bottom - tick);
-    ticks.strokePath();
-    this.tweens.add({ targets: ticks, alpha: 0, duration: 580, ease: "Cubic.out" });
-  }
-
-  private addPrizeSparkles(rect: { x: number; y: number; width: number; height: number }): void {
-    for (const point of [
-      { x: -0.34, y: -0.24, r: 3 },
-      { x: 0.18, y: -0.18, r: 4 },
-      { x: 0.38, y: 0.12, r: 3 }
-    ]) {
-      const spark = this.add.graphics().setDepth(54);
-      spark.fillStyle(0xf3c45b, 0.86);
-      spark.fillCircle(rect.x + rect.width * point.x, rect.y + rect.height * point.y, point.r);
-      this.tweens.add({ targets: spark, alpha: 0, scale: 2.6, duration: 520, ease: "Cubic.out" });
-    }
-  }
-
   private addCompletionState(): void {
     const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
     if (!progress.complete) return;

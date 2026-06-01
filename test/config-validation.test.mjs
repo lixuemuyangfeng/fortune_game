@@ -117,6 +117,8 @@ test("game scene design iron rules are documented and obvious failed placeholder
   const runtimeSources = [
     readFileSync(join(root, "src/game/scenes/officeScene.ts"), "utf8"),
     readFileSync(join(root, "src/game/scenes/rooftopScene.ts"), "utf8"),
+    readFileSync(join(root, "src/game/scenes/convenienceScene.ts"), "utf8"),
+    readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"),
     readFileSync(join(root, "src/styles.css"), "utf8")
   ].join("\n");
 
