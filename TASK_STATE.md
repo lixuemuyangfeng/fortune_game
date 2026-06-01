@@ -142,7 +142,10 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Third level QA risk: progress states are improved but still use local compositing from generated full-scene variants rather than clean transparent character source layers. Treat them as a playable improvement, not the final layered production pipeline.
 - Fourth level progress: replaced the old `temple` placeholder with playable `social` / `小红薯暴击夜`, using apartment late-night bitmap art, 5 embedded social-comparison clues, a dedicated Phaser scene, route from the convenience completion button, source-pixel hotspot calibration, and Playwright coverage.
 - Fourth level QA note: the first social slice uses concrete clue bodies instead of pure text labels: cropped profit phone, social group QR card, new-home photo plus loan contract, AI course deadline laptop, and an unsent reply draft.
-- Fourth level QA risk: `social-progress-0..5` currently share the same accepted base plate. The level is playable and calibrated, but a production art pass still needs fixed-layout progress variants or layered protagonist/proxy assets before final approval.
+- Fourth level QA finding resolved: `social-progress-0..5` are now distinct same-layout raster states. Zhou Qiming moves from collapsed doomscrolling to calmer self-awareness while all five clue bodies remain visible in pre-completion states.
+- Fourth level QA finding resolved: social hit feedback now uses clue-specific local effects: profit-line crop mark, QR bits, photo/loan split frame, deadline timer flash, and draft cursor pulse instead of inherited generic note/photo sweeps.
+- Fourth level QA finding resolved: the fourth-level scene intro card was moved off Zhou Qiming's face and phone, and Playwright now captures social mid-progress plus mobile-first screenshots.
+- Fourth level QA risk: the progress states are full-scene bitmap states rather than clean transparent character layers. They now match the current second/third-level bitmap-state approach, but the longer-term production pipeline should still move toward layered character/proxy assets.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -207,3 +210,4 @@ Second-level optimization plan:
 - After locally redrawing unreasonable third-level clue elements, all `convenience-progress-0..7` rasters were updated from the new base image and `docs/convenience-hotspot-calibration.md` was recalibrated with new source-pixel centers.
 - After adding third-level progress-state composites, `convenience-progress-1..7` now have distinct Zhou Qiming posture/expression states while retaining the accepted clue layout.
 - After adding the playable fourth `social` level, `npm run art:review -- social`, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright captured `artifacts/playtest-social-intro.png` and `artifacts/playtest-social-complete.png`.
+- After improving fourth-level progress states and social-specific hit feedback, `npm test`, `npm run build`, and `npm run test:e2e` passed; Playwright captured `artifacts/playtest-social-intro.png`, `artifacts/playtest-social-mid-progress.png`, `artifacts/playtest-social-complete.png`, and `artifacts/playtest-social-mobile-intro.png`.

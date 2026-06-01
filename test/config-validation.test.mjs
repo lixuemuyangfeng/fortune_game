@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -36,6 +37,10 @@ function hotspotObjects(block) {
 
 function assetPaths(block) {
   return [...block.matchAll(/"(\/assets\/[^"]+)"/g)].map((match) => match[1]);
+}
+
+function fileHash(path) {
+  return createHash("sha1").update(readFileSync(path)).digest("hex");
 }
 
 test("all playable levels meet narrative and interaction content requirements", () => {
@@ -155,6 +160,12 @@ test("game scene design iron rules are documented and obvious failed placeholder
       `social ${state} raster state exists`
     );
   }
+  const socialStateHashes = new Set(
+    ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"].map((state) =>
+      fileHash(join(root, "public/assets/game/social/states", `social-${state}.png`))
+    )
+  );
+  assert.equal(socialStateHashes.size, 6, "social progress rasters are distinct state images");
   assert.match(taskStateSource, /foreground Zhou Qiming character object/, "task state records the foreground character object");
   assert.doesNotMatch(runtimeSources, /已归还/, "runtime does not use semantically detached chat feedback");
   assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");

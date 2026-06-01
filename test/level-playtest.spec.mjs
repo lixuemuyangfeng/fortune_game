@@ -141,9 +141,13 @@ test.describe("phaser level flow", () => {
     await page.getByRole("button", { name: "开始拆帧" }).click();
     await expect(page.getByLabel("可点击线索")).toBeVisible();
 
-    for (const hotspot of socialHotspots) {
+    for (const [index, hotspot] of socialHotspots.entries()) {
       await page.getByRole("button", { name: hotspot }).click();
       await expect(page.getByText("已找到")).toBeVisible();
+      if (index === 2) {
+        await page.waitForTimeout(700);
+        await page.screenshot({ path: "artifacts/playtest-social-mid-progress.png", fullPage: true });
+      }
     }
 
     await expect(page.getByText("比较心已降噪").first()).toBeVisible();
@@ -162,5 +166,12 @@ test.describe("phaser level flow", () => {
     await expect(page.locator("#phaser-game canvas")).toBeVisible();
     await expect(page.getByRole("button", { name: "开始还魂" })).toBeVisible();
     await page.screenshot({ path: "artifacts/playtest-mobile-phaser-intro.png", fullPage: true });
+
+    await page.getByLabel("本机临时选关").selectOption("social");
+    await expect(page.getByRole("heading", { name: "小红薯暴击夜" })).toBeVisible();
+    await expect(page.locator("#phaser-game canvas")).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始拆帧" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-social-mobile-intro.png", fullPage: true });
   });
 });

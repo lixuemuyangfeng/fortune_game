@@ -21,7 +21,7 @@ Generated: 2026-05-29
 - [x] Camera and main action area are fixed before generation.
 - [x] Foreground, midground, and background all have roles.
 - [x] There is enough believable object density to hide clues.
-- [ ] Main/proxy character has a planned visible state for each progress step.
+- [x] Main/proxy character has a planned visible state for each progress step.
 - [x] Each clue is a concrete object with a reason to exist in the scene.
 - [x] UI copy is player-facing and contains no implementation language.
 
@@ -46,7 +46,7 @@ One tired adult man staring at social feed, no unrelated crowd.
 Required clue objects:
 cropped profit screenshot, group QR card, new-home photo plus loan contract, AI course deadline, unsent reply draft.
 Character/proxy state:
-Needs fixed-camera progress variants in a later art pass; current implementation uses the accepted base plate for all six states.
+Six fixed-camera full-scene progress rasters now move Zhou Qiming from anxious and collapsed to calmer and self-aware while preserving all clue bodies.
 Lighting/color:
 Warm kitchen light against cool late-night apartment shadows.
 Mobile readability:
@@ -75,7 +75,7 @@ Background objects:
 - [x] Semantic pass confirms every clue has a believable object body.
 - [x] Character pass confirms scale, posture, grounding, and contact shadows.
 - [x] Clarity pass confirms varied clue shapes and mobile readability.
-- [ ] State pass keeps camera/props fixed across progress variants.
+- [x] State pass keeps camera/props fixed across progress variants.
 - [x] Calibration pass records source-pixel centers after final raster freeze.
 
 ## Reference Images
@@ -121,7 +121,7 @@ Background objects:
 
 - [x] Character scale matches nearby people and props.
 - [x] Pose, grounding, contact shadow, and light direction are plausible.
-- [ ] All progress states show readable body-language or expression changes.
+- [x] All progress states show readable body-language or expression changes.
 - [x] No pasted crop, green fringe, contact-sheet residue, or scene cutout remains.
 
 ### Clue Gate
@@ -148,9 +148,9 @@ Background objects:
 ### Screenshot Gate
 
 - [x] Captured progress-0 screenshot.
-- [ ] Captured at least one mid-progress screenshot.
+- [x] Captured at least one mid-progress screenshot.
 - [x] Captured completion screenshot.
-- [ ] Captured mobile first-screen screenshot.
+- [x] Captured mobile first-screen screenshot.
 - [x] Manually inspected screenshots in the game shell.
 
 ## Hotspot Calibration
@@ -172,4 +172,4 @@ Record source-pixel centers before converting to config percentages.
 - [ ] Revise config: update hotspot centers, hit boxes, feedback, or copy.
 - [ ] Blocked: needs product/design decision.
 
-Residual risk: this is a playable fourth-level slice, but the six progress rasters currently share the same accepted base plate. A production art pass should create fixed-layout progress variants or true layered protagonist/proxy assets before this level is treated as final art.
+Residual risk: the six social progress states are now distinct and playable, but they are still same-layout full-scene raster states rather than clean transparent character layers. Treat this as matching the current second/third-level bitmap-state approach, not the final long-term layered asset pipeline.

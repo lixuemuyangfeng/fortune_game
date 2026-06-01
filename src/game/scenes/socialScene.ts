@@ -69,25 +69,25 @@ export class SocialScene extends Phaser.Scene {
     const panel = this.add.graphics().setDepth(35);
     panel.fillStyle(0x17261f, 0.88);
     panel.lineStyle(2, 0xf3c45b, 0.38);
-    panel.fillRoundedRect(72, 132, 458, 158, 10);
-    panel.strokeRoundedRect(72, 132, 458, 158, 10);
+    panel.fillRoundedRect(760, 104, 420, 132, 10);
+    panel.strokeRoundedRect(760, 104, 420, 132, 10);
 
-    this.add.text(100, 154, "凌晨刷到第一条", {
+    this.add.text(786, 126, "凌晨刷到第一条", {
       color: "#f3c45b",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "22px",
       fontStyle: "bold"
     }).setDepth(36);
-    this.add.text(100, 190, this.socialData.scene.name, {
+    this.add.text(786, 160, this.socialData.scene.name, {
       color: "#fff7df",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "38px",
       fontStyle: "bold"
     }).setDepth(36);
-    this.add.text(100, 240, "开始后，把高光里没拍进去的成本找出来。", {
+    this.add.text(786, 208, "开始后，把高光里没拍进去的成本找出来。", {
       color: "#dce8dc",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
-      fontSize: "19px"
+      fontSize: "18px"
     }).setDepth(36);
   }
 
@@ -154,79 +154,117 @@ export class SocialScene extends Phaser.Scene {
     if (!hotspot) return;
 
     const rect = this.getHotspotRect(hotspot);
-    const kind = hotspot.animationKind;
-    if (kind === "scratch" || kind === "ticket") this.addScratchEffect(rect);
-    else if (kind === "photo") this.addPhotoEffect(rect, hotspot.evidenceId);
-    else if (kind === "phone") this.addPhoneEffect(rect);
-    else if (kind === "bottle") this.addBottleEffect(rect);
-    else this.addNoteEffect(rect, hotspot.evidenceId);
+    if (hotspot.evidenceId === "cropped_profit_screenshot") this.addProfitEffect(rect);
+    else if (hotspot.evidenceId === "humblebrag_group_qr") this.addQrEffect(rect);
+    else if (hotspot.evidenceId === "home_photo_loan_folder") this.addLoanEffect(rect);
+    else if (hotspot.evidenceId === "ai_course_deadline") this.addDeadlineEffect(rect);
+    else if (hotspot.evidenceId === "unsent_reply_draft") this.addDraftEffect(rect);
   }
 
-  private addScratchEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const line = this.add.graphics().setDepth(52);
-    line.lineStyle(5, 0xfff0b8, 0.78);
-    line.beginPath();
-    line.moveTo(rect.x - rect.width * 0.34, rect.y + rect.height * 0.08);
-    line.lineTo(rect.x + rect.width * 0.32, rect.y - rect.height * 0.12);
-    line.strokePath();
-    this.tweens.add({ targets: line, alpha: 0.18, duration: 100, yoyo: true, repeat: 5, ease: "Sine.inOut" });
-    this.tweens.add({ targets: line, alpha: 0, duration: 180, delay: 620 });
+  private addProfitEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const screen = this.add.graphics().setDepth(52);
+    screen.lineStyle(2, 0xf3c45b, 0.82);
+    screen.strokeRoundedRect(rect.x - rect.width * 0.32, rect.y - rect.height * 0.35, rect.width * 0.64, rect.height * 0.7, 6);
+
+    const chart = this.add.graphics().setDepth(53);
+    chart.lineStyle(3, 0x87c779, 0.88);
+    chart.beginPath();
+    chart.moveTo(rect.x - rect.width * 0.22, rect.y + rect.height * 0.15);
+    chart.lineTo(rect.x - rect.width * 0.08, rect.y + rect.height * 0.05);
+    chart.lineTo(rect.x + rect.width * 0.05, rect.y + rect.height * 0.08);
+    chart.lineTo(rect.x + rect.width * 0.21, rect.y - rect.height * 0.15);
+    chart.strokePath();
+
+    const cropLine = this.add.graphics().setDepth(54);
+    cropLine.lineStyle(2, 0xfff0b8, 0.78);
+    cropLine.beginPath();
+    cropLine.moveTo(rect.x - rect.width * 0.28, rect.y - rect.height * 0.04);
+    cropLine.lineTo(rect.x + rect.width * 0.28, rect.y - rect.height * 0.04);
+    cropLine.strokePath();
+
+    this.tweens.add({ targets: chart, alpha: 0.2, y: -8, duration: 130, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [screen, chart, cropLine], alpha: 0, duration: 240, delay: 560, ease: "Cubic.out" });
   }
 
-  private addPhotoEffect(rect: { x: number; y: number; width: number; height: number }, evidenceId?: string): void {
+  private addQrEffect(rect: { x: number; y: number; width: number; height: number }): void {
     const frame = this.add.graphics().setDepth(52);
-    frame.lineStyle(3, evidenceId === "max_prize_stand" ? 0xf3c45b : 0xfff0b8, 0.86);
-    frame.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 8);
+    frame.lineStyle(2, 0xf3c45b, 0.82);
+    frame.strokeRoundedRect(rect.x - rect.width * 0.36, rect.y - rect.height * 0.35, rect.width * 0.72, rect.height * 0.7, 6);
 
-    const sweep = this.add.graphics().setDepth(53);
-    sweep.fillStyle(evidenceId === "max_prize_stand" ? 0xf3c45b : 0xffffff, 0.24);
-    sweep.fillRoundedRect(rect.x - rect.width * 0.5, rect.y - rect.height * 0.34, rect.width * 0.22, rect.height * 0.68, 4);
-    this.tweens.add({ targets: sweep, x: rect.width * 0.72, alpha: 0.04, duration: 520, ease: "Cubic.out" });
-
-    if (evidenceId === "max_prize_stand") {
-      this.addPrizeSparkles(rect);
-    } else {
-      this.addCornerTicks(rect, 0xfff0b8);
+    for (let index = 0; index < 10; index += 1) {
+      const bit = this.add.graphics().setDepth(53);
+      const column = index % 5;
+      const row = Math.floor(index / 5);
+      bit.fillStyle(index % 2 === 0 ? 0xfff0b8 : 0x87c779, 0.75);
+      bit.fillRect(rect.x - rect.width * 0.22 + column * rect.width * 0.09, rect.y - rect.height * 0.12 + row * rect.height * 0.13, 5, 5);
+      this.tweens.add({ targets: bit, alpha: 0, duration: 360, delay: 70 * index, ease: "Cubic.out" });
     }
 
-    this.tweens.add({ targets: frame, alpha: 0, scaleX: 1.08, scaleY: 1.08, duration: 620, ease: "Cubic.out" });
-    this.tweens.add({ targets: sweep, alpha: 0, duration: 120, delay: 520 });
+    this.tweens.add({ targets: frame, alpha: 0, scaleX: 1.08, scaleY: 1.08, duration: 680, ease: "Cubic.out" });
   }
 
-  private addPhoneEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const pulse = this.add.graphics().setDepth(52);
-    pulse.fillStyle(0xf3c45b, 0.72);
-    pulse.fillCircle(rect.x, rect.y, 8);
-    this.tweens.add({ targets: pulse, x: 7, duration: 70, yoyo: true, repeat: 5, ease: "Sine.inOut" });
-    this.tweens.add({ targets: pulse, alpha: 0, scale: 1.45, duration: 220, delay: 520 });
+  private addLoanEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const photoFrame = this.add.graphics().setDepth(52);
+    photoFrame.lineStyle(3, 0xfff0b8, 0.82);
+    photoFrame.strokeRoundedRect(rect.x - rect.width * 0.48, rect.y - rect.height * 0.34, rect.width * 0.46, rect.height * 0.68, 5);
+
+    const contractFrame = this.add.graphics().setDepth(53);
+    contractFrame.lineStyle(3, 0xf3c45b, 0.82);
+    contractFrame.strokeRoundedRect(rect.x - rect.width * 0.02, rect.y - rect.height * 0.36, rect.width * 0.46, rect.height * 0.7, 5);
+
+    const underline = this.add.graphics().setDepth(54);
+    underline.lineStyle(4, 0xd35a36, 0.72);
+    underline.beginPath();
+    underline.moveTo(rect.x + rect.width * 0.05, rect.y - rect.height * 0.02);
+    underline.lineTo(rect.x + rect.width * 0.34, rect.y - rect.height * 0.02);
+    underline.strokePath();
+
+    this.tweens.add({ targets: underline, alpha: 0.1, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [photoFrame, contractFrame, underline], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
   }
 
-  private addBottleEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const ring = this.add.graphics().setDepth(52);
-    ring.lineStyle(4, 0x95d493, 0.76);
-    ring.strokeEllipse(rect.x, rect.y, rect.width * 0.8, rect.height * 0.7);
-    this.tweens.add({ targets: ring, alpha: 0, scaleX: 1.25, scaleY: 1.18, duration: 560, ease: "Cubic.out" });
-  }
-
-  private addNoteEffect(rect: { x: number; y: number; width: number; height: number }, evidenceId?: string): void {
+  private addDeadlineEffect(rect: { x: number; y: number; width: number; height: number }): void {
     const glow = this.add.graphics().setDepth(52);
     glow.lineStyle(3, 0xf3c45b, 0.78);
     glow.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 7);
 
     const scan = this.add.graphics().setDepth(53);
-    scan.lineStyle(evidenceId === "payment_addon_prompt" ? 5 : 7, 0xfff0b8, 0.76);
+    scan.lineStyle(5, 0xfff0b8, 0.76);
     scan.beginPath();
-    scan.moveTo(rect.x - rect.width * 0.36, rect.y - rect.height * 0.12);
-    scan.lineTo(rect.x + rect.width * 0.34, rect.y - rect.height * 0.12);
+    scan.moveTo(rect.x - rect.width * 0.24, rect.y + rect.height * 0.2);
+    scan.lineTo(rect.x + rect.width * 0.34, rect.y + rect.height * 0.2);
     scan.strokePath();
 
-    const dot = this.add.graphics().setDepth(54);
-    dot.fillStyle(0xf3c45b, 0.86);
-    dot.fillCircle(rect.x + rect.width * 0.28, rect.y + rect.height * 0.24, 4);
+    const tick = this.add.text(rect.x + rect.width * 0.27, rect.y + rect.height * 0.16, "23:59", {
+      color: "#fff0b8",
+      fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
+      fontSize: "13px",
+      fontStyle: "bold"
+    }).setOrigin(0.5).setDepth(54);
 
     this.tweens.add({ targets: glow, alpha: 0.18, scaleX: 1.08, scaleY: 1.08, duration: 620, ease: "Cubic.out" });
-    this.tweens.add({ targets: scan, y: rect.height * 0.34, alpha: 0.08, duration: 520, ease: "Cubic.out" });
-    this.tweens.add({ targets: dot, alpha: 0, scale: 2.2, duration: 420, ease: "Cubic.out" });
+    this.tweens.add({ targets: scan, alpha: 0.08, duration: 520, ease: "Cubic.out" });
+    this.tweens.add({ targets: tick, alpha: 0, scale: 1.18, duration: 420, delay: 260, ease: "Cubic.out" });
+  }
+
+  private addDraftEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const input = this.add.graphics().setDepth(52);
+    input.lineStyle(3, 0xf3c45b, 0.78);
+    input.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.28, rect.width * 0.72, rect.height * 0.42, 6);
+
+    const cursor = this.add.graphics().setDepth(53);
+    cursor.lineStyle(3, 0xfff0b8, 0.86);
+    cursor.beginPath();
+    cursor.moveTo(rect.x + rect.width * 0.25, rect.y - rect.height * 0.22);
+    cursor.lineTo(rect.x + rect.width * 0.25, rect.y + rect.height * 0.05);
+    cursor.strokePath();
+
+    const unsent = this.add.graphics().setDepth(54);
+    unsent.lineStyle(2, 0xd35a36, 0.76);
+    unsent.strokeCircle(rect.x + rect.width * 0.34, rect.y - rect.height * 0.2, 6);
+
+    this.tweens.add({ targets: cursor, alpha: 0.08, duration: 120, yoyo: true, repeat: 4, ease: "Stepped" });
+    this.tweens.add({ targets: [input, cursor, unsent], alpha: 0, duration: 220, delay: 620, ease: "Cubic.out" });
   }
 
   private addCornerTicks(rect: { x: number; y: number; width: number; height: number }, color: number): void {
