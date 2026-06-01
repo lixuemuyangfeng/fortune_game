@@ -174,4 +174,9 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");
   assert.doesNotMatch(runtimeSources, /addCharacterState|fillCircle\(x/, "runtime does not draw patchwork character overlays");
   assert.doesNotMatch(runtimeSources, /scene-character|char-head|char-body/, "runtime does not keep CSS-built character fallbacks");
+  assert.match(
+    readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"),
+    /const socialDecoys: DecoyZone\[\] = \[[\s\S]+charging-cable/,
+    "social level includes false-positive decoy zones for harder clue discrimination"
+  );
 });

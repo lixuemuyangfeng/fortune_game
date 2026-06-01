@@ -352,14 +352,14 @@ export const gameConfig: GameConfig = {
       machineEmbedded: true,
       completeText: "高光不是生活全貌。刷到别人的可发布版本，也先别拿它审判今晚的自己。",
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 49, y: 38.4, hitX: 49, hitY: 38.4, hitWidth: 8.2, hitHeight: 15, radius: 8, label: "没露本金的收益图", found: false, renderMode: "embedded", revealText: "只露涨幅，不露本金", animationKind: "phone" },
-        { id: "h2", evidenceId: "unsent_reply_draft", x: 49, y: 50, hitX: 49, hitY: 50, hitWidth: 8, hitHeight: 5.8, radius: 7, label: "没发出去的祝福", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" },
-        { id: "h3", evidenceId: "group_invite_popup", x: 54.2, y: 58.6, hitX: 54.2, hitY: 58.6, hitWidth: 12, hitHeight: 10, radius: 8, label: "收益帖旁的进群邀请", found: false, renderMode: "embedded", revealText: "进群入口接在收益后面", animationKind: "chat" },
-        { id: "h4", evidenceId: "pinned_review_comment", x: 53.4, y: 69.5, hitX: 53.4, hitY: 69.5, hitWidth: 12, hitHeight: 12, radius: 8, label: "置顶复盘评论", found: false, renderMode: "embedded", revealText: "评论把补课入口顶上来", animationKind: "chat" },
-        { id: "h5", evidenceId: "ai_course_deadline", x: 71.7, y: 31.8, hitX: 71.7, hitY: 31.8, hitWidth: 18, hitHeight: 20, radius: 8, label: "裁掉日期的课程截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，条件在边缘", animationKind: "note" },
-        { id: "h6", evidenceId: "side_hustle_bookmark", x: 95.2, y: 33.5, hitX: 95.2, hitY: 33.5, hitWidth: 8.2, hitHeight: 25, radius: 8, label: "副业课程收藏页", found: false, renderMode: "embedded", revealText: "副业焦虑还开着标签页", animationKind: "note" },
-        { id: "h7", evidenceId: "mortgage_debit_notice", x: 71.1, y: 68.2, hitX: 71.1, hitY: 68.2, hitWidth: 21, hitHeight: 19, radius: 8, label: "新房照旁的还款单", found: false, renderMode: "embedded", revealText: "新房照旁边压着月供", animationKind: "contract" },
-        { id: "h8", evidenceId: "household_overdue_bill", x: 84.8, y: 75.1, hitX: 84.8, hitY: 75.1, hitWidth: 17, hitHeight: 19, radius: 8, label: "电费催缴通知", found: false, renderMode: "embedded", revealText: "睡前账单还没闭嘴", animationKind: "paper" }
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 49, y: 38.4, hitX: 49, hitY: 38.4, hitWidth: 8.2, hitHeight: 15, radius: 8, label: "手机上半截红线", found: false, renderMode: "embedded", revealText: "只露涨幅，不露本金", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 49, y: 50, hitX: 49, hitY: 50, hitWidth: 8, hitHeight: 5.8, radius: 7, label: "屏幕底部那句话", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" },
+        { id: "h3", evidenceId: "group_invite_popup", x: 54.2, y: 58.6, hitX: 54.2, hitY: 58.6, hitWidth: 12, hitHeight: 10, radius: 8, label: "被顺手接上的邀请", found: false, renderMode: "embedded", revealText: "进群入口接在收益后面", animationKind: "chat" },
+        { id: "h4", evidenceId: "pinned_review_comment", x: 53.4, y: 69.5, hitX: 53.4, hitY: 69.5, hitWidth: 12, hitHeight: 12, radius: 8, label: "被顶到最前的评论", found: false, renderMode: "embedded", revealText: "评论把补课入口顶上来", animationKind: "chat" },
+        { id: "h5", evidenceId: "ai_course_deadline", x: 71.7, y: 31.8, hitX: 71.7, hitY: 31.8, hitWidth: 18, hitHeight: 20, radius: 8, label: "电脑上的今晚截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，条件在边缘", animationKind: "note" },
+        { id: "h6", evidenceId: "side_hustle_bookmark", x: 95.2, y: 33.5, hitX: 95.2, hitY: 33.5, hitWidth: 8.2, hitHeight: 25, radius: 8, label: "右侧没关的收藏页", found: false, renderMode: "embedded", revealText: "副业焦虑还开着标签页", animationKind: "note" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 71.1, y: 68.2, hitX: 71.1, hitY: 68.2, hitWidth: 21, hitHeight: 19, radius: 8, label: "相片旁的扣款纸", found: false, renderMode: "embedded", revealText: "新房照旁边压着月供", animationKind: "contract" },
+        { id: "h8", evidenceId: "household_overdue_bill", x: 84.8, y: 75.1, hitX: 84.8, hitY: 75.1, hitWidth: 17, hitHeight: 19, radius: 8, label: "插座边的催缴单", found: false, renderMode: "embedded", revealText: "睡前账单还没闭嘴", animationKind: "paper" }
       ]
     }
   ]

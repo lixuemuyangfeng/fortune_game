@@ -18,9 +18,9 @@ Generated: 2026-06-01
 
 ## Review Result
 
-- Decision: pass for implementation after the social-v2 rebuild.
-- Reason: clue count increases from the third level's 7 to 8, objects are distributed across phone content, phone-adjacent cards, other screens, and household paperwork, and the main character stays in a believable late-night relaxation posture.
-- Visual QA: Playwright desktop start, mid-progress, completion, and mobile screenshots were regenerated after hotspot recalibration. Manual inspection confirmed the left panel says 8 clues, markers land on the intended object groups, and completion state shows a clear calmer expression.
+- Decision: pass after the difficulty pass.
+- Reason: clue count stays above the third level's 7 clues, the answer labels no longer read like a solution list, and the runtime now has 8 false-positive decoy zones around plausible non-clue clutter.
+- Difficulty note: the player must distinguish pressure/cost evidence from ordinary bedroom objects such as blanket folds, the clock, snacks, mugs, pens, tissue box, charging cable, and shelf clutter.
 - Remaining risk: the progress states are still same-layout full-scene rasters, matching the current second/third-level pipeline. The longer-term production target remains layered character/state assets.
 
 ## Generation Brief
@@ -156,14 +156,14 @@ Record source-pixel centers before converting to config percentages.
 
 | ID | Label | Evidence | Config center | Config box | Animation | Source center | Review note |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `h1` | 没露本金的收益图 | `cropped_profit_screenshot` | 49, 38.4 | 8.2 x 15 | phone | `819, 361` | upper phone feed chart |
-| `h2` | 没发出去的祝福 | `unsent_reply_draft` | 49, 50 | 8 x 5.8 | chat | `819, 471` | lower phone reply strip |
-| `h3` | 收益帖旁的进群邀请 | `group_invite_popup` | 54.2, 58.6 | 12 x 10 | chat | `906, 551` | nearby invite card |
-| `h4` | 置顶复盘评论 | `pinned_review_comment` | 53.4, 69.5 | 12 x 12 | chat | `893, 654` | pinned/replay card |
-| `h5` | 裁掉日期的课程截止 | `ai_course_deadline` | 71.7, 31.8 | 18 x 20 | note | `1199, 299` | laptop deadline page |
-| `h6` | 副业课程收藏页 | `side_hustle_bookmark` | 95.2, 33.5 | 8.2 x 25 | note | `1592, 315` | right-side saved course page |
-| `h7` | 新房照旁的还款单 | `mortgage_debit_notice` | 71.1, 68.2 | 21 x 19 | contract | `1189, 642` | home photo and repayment notice |
-| `h8` | 电费催缴通知 | `household_overdue_bill` | 84.8, 75.1 | 17 x 19 | paper | `1418, 707` | lower-right household bill |
+| `h1` | 手机上半截红线 | `cropped_profit_screenshot` | 49, 38.4 | 8.2 x 15 | phone | `819, 361` | upper phone feed chart |
+| `h2` | 屏幕底部那句话 | `unsent_reply_draft` | 49, 50 | 8 x 5.8 | chat | `819, 471` | lower phone reply strip |
+| `h3` | 被顺手接上的邀请 | `group_invite_popup` | 54.2, 58.6 | 12 x 10 | chat | `906, 551` | nearby invite card |
+| `h4` | 被顶到最前的评论 | `pinned_review_comment` | 53.4, 69.5 | 12 x 12 | chat | `893, 654` | pinned/replay card |
+| `h5` | 电脑上的今晚截止 | `ai_course_deadline` | 71.7, 31.8 | 18 x 20 | note | `1199, 299` | laptop deadline page |
+| `h6` | 右侧没关的收藏页 | `side_hustle_bookmark` | 95.2, 33.5 | 8.2 x 25 | note | `1592, 315` | right-side saved course page |
+| `h7` | 相片旁的扣款纸 | `mortgage_debit_notice` | 71.1, 68.2 | 21 x 19 | contract | `1189, 642` | home photo and repayment notice |
+| `h8` | 插座边的催缴单 | `household_overdue_bill` | 84.8, 75.1 | 17 x 19 | paper | `1418, 707` | lower-right household bill |
 
 ## Decision
 

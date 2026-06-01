@@ -68,6 +68,7 @@ Life-environment layer, 2 clues:
 ## Acceptance Notes
 
 - The level must have 8 hotspots and 9 progress states.
+- The level must include false-positive decoy zones around believable non-clue clutter, so difficulty comes from discriminating actual pressure/cost evidence from ordinary bedroom objects.
 - Hotspot calibration must be re-measured from the final source image.
 - Playwright must capture intro, mid-progress, completion, and mobile intro screenshots.
 - Config validation must prove social clue count exceeds convenience clue count and social progress images are distinct.
