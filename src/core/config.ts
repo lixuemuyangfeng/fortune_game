@@ -213,42 +213,66 @@ export const gameConfig: GameConfig = {
     cropped_profit_screenshot: {
       id: "cropped_profit_screenshot",
       title: "没露本金的收益图",
-      detail: "手机里只截了涨幅和红线，本金、持仓和亏损区间都被裁掉。",
+      detail: "手机里只露涨幅和红线，本金、持仓时间和亏损区间都被裁掉。",
       emotion: "envy",
       theme: "ai",
       counterText: "收益图只晒结果，不替你承担本金。"
     },
-    humblebrag_group_qr: {
-      id: "humblebrag_group_qr",
-      title: "收益帖下的社群码",
-      detail: "嘴上说只是运气好，旁边却把进群入口摆得很顺手。",
+    group_invite_popup: {
+      id: "group_invite_popup",
+      title: "收益帖旁的进群邀请",
+      detail: "刚看完收益帖，旁边就弹出同款策略群，放松时间被顺手接走。",
       emotion: "pretend",
       theme: "ai",
-      counterText: "谦虚如果带二维码，多半不是谦虚。"
+      counterText: "真正的分享不会急着把你拉进下一场焦虑。"
     },
-    home_photo_loan_folder: {
-      id: "home_photo_loan_folder",
-      title: "新房照后的贷款合同",
-      detail: "照片只露客厅和夕阳，贷款合同压在相框后面没入镜。",
+    pinned_review_comment: {
+      id: "pinned_review_comment",
+      title: "置顶复盘评论",
+      detail: "评论区把复盘入口置顶，像在提醒你别只羡慕，还要补课。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "置顶的位置，不代表它更接近真相。"
+    },
+    mortgage_debit_notice: {
+      id: "mortgage_debit_notice",
+      title: "新房照旁的还款单",
+      detail: "相册里是装修后的客厅，旁边压着下月扣款和账户余额。",
       emotion: "breakdown",
       theme: "gold",
-      counterText: "别人的新房照，不会替你显示月供。"
+      counterText: "照片能晒空间，账单才会晒压力。"
     },
     ai_course_deadline: {
       id: "ai_course_deadline",
       title: "裁掉日期的课程截止",
-      detail: "课程海报把今晚 23:59 放到最醒目，日期却被裁在画面外。",
+      detail: "电脑把今晚 23:59 放到最醒目，日期和退款条件藏在边缘。",
       emotion: "fantasy",
       theme: "ai",
       counterText: "倒计时是真的，机会未必是真的。"
     },
+    side_hustle_bookmark: {
+      id: "side_hustle_bookmark",
+      title: "副业课程收藏页",
+      detail: "侧屏还停在变现课合集，说明这不是第一条让人上头的内容。",
+      emotion: "fantasy",
+      theme: "ai",
+      counterText: "收藏越多，越要分清行动和补偿性焦虑。"
+    },
     unsent_reply_draft: {
       id: "unsent_reply_draft",
       title: "没发出去的祝福",
-      detail: "输入框里停着那句你们都挺好的，手指却一直没按发送。",
+      detail: "输入框里停着那句挺好的，手指一直没按发送。",
       emotion: "stubborn",
       theme: "ai",
       counterText: "看见羡慕，比假装大方更有用。"
+    },
+    household_overdue_bill: {
+      id: "household_overdue_bill",
+      title: "电费催缴通知",
+      detail: "柜子边的缴费单提醒他，生活成本不会因为刷到高光而暂停。",
+      emotion: "breakdown",
+      theme: "gold",
+      counterText: "别人的高光不替你交今晚的账单。"
     }
   },
   scenes: [
@@ -319,20 +343,23 @@ export const gameConfig: GameConfig = {
       id: "social",
       name: "小红薯暴击夜",
       theme: "ai",
-      description: "凌晨一点半，周启明想刷手机放松，首页第一条就把别人的高光推到脸上。",
+      description: "凌晨一点半，周启明靠在沙发边想刷手机放松，首页第一条就把别人的高光推到脸上。",
       backgroundImage: "/assets/game/social/states/social-progress-0.png",
       hint: "别拿高光照黑眼圈",
       enemyName: "高光滤镜兽",
-      enemyDescription: "它把别人生活里最亮的一帧裁剪、锐化、加滤镜，然后砸到你脸上。",
+      enemyDescription: "它把收益、房子、副业和祝福都剪成最亮的一帧，再塞进睡前十分钟。",
       machineName: "高光拆帧机",
       machineEmbedded: true,
-      completeText: "朋友圈不是生活，是可发布版本。别人的高光，不该拿来照你的黑眼圈。",
+      completeText: "高光不是生活全貌。刷到别人的可发布版本，也先别拿它审判今晚的自己。",
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 41.5, y: 57.9, hitX: 41.5, hitY: 57.9, hitWidth: 8.5, hitHeight: 23, radius: 8, label: "没露本金的收益图", found: false, renderMode: "embedded", revealText: "只截涨幅，没截本金", animationKind: "phone" },
-        { id: "h2", evidenceId: "humblebrag_group_qr", x: 25.1, y: 78.1, hitX: 25.1, hitY: 78.1, hitWidth: 10.5, hitHeight: 20.5, radius: 8, label: "收益帖下的社群码", found: false, renderMode: "embedded", revealText: "只是运气好，旁边却有进群口", animationKind: "note" },
-        { id: "h3", evidenceId: "home_photo_loan_folder", x: 57.1, y: 77.8, hitX: 57.1, hitY: 77.8, hitWidth: 22, hitHeight: 15, radius: 8, label: "新房照后的贷款合同", found: false, renderMode: "embedded", revealText: "新房照片后面压着月供", animationKind: "photo" },
-        { id: "h4", evidenceId: "ai_course_deadline", x: 77.9, y: 68.4, hitX: 77.9, hitY: 68.4, hitWidth: 18, hitHeight: 24, radius: 8, label: "裁掉日期的课程截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，日期被裁掉", animationKind: "note" },
-        { id: "h5", evidenceId: "unsent_reply_draft", x: 68.9, y: 80.8, hitX: 68.9, hitY: 80.8, hitWidth: 17, hitHeight: 13, radius: 8, label: "没发出去的祝福", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" }
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 49, y: 38.4, hitX: 49, hitY: 38.4, hitWidth: 8.2, hitHeight: 15, radius: 8, label: "没露本金的收益图", found: false, renderMode: "embedded", revealText: "只露涨幅，不露本金", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 49, y: 50, hitX: 49, hitY: 50, hitWidth: 8, hitHeight: 5.8, radius: 7, label: "没发出去的祝福", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" },
+        { id: "h3", evidenceId: "group_invite_popup", x: 54.2, y: 58.6, hitX: 54.2, hitY: 58.6, hitWidth: 12, hitHeight: 10, radius: 8, label: "收益帖旁的进群邀请", found: false, renderMode: "embedded", revealText: "进群入口接在收益后面", animationKind: "chat" },
+        { id: "h4", evidenceId: "pinned_review_comment", x: 53.4, y: 69.5, hitX: 53.4, hitY: 69.5, hitWidth: 12, hitHeight: 12, radius: 8, label: "置顶复盘评论", found: false, renderMode: "embedded", revealText: "评论把补课入口顶上来", animationKind: "chat" },
+        { id: "h5", evidenceId: "ai_course_deadline", x: 71.7, y: 31.8, hitX: 71.7, hitY: 31.8, hitWidth: 18, hitHeight: 20, radius: 8, label: "裁掉日期的课程截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，条件在边缘", animationKind: "note" },
+        { id: "h6", evidenceId: "side_hustle_bookmark", x: 95.2, y: 33.5, hitX: 95.2, hitY: 33.5, hitWidth: 8.2, hitHeight: 25, radius: 8, label: "副业课程收藏页", found: false, renderMode: "embedded", revealText: "副业焦虑还开着标签页", animationKind: "note" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 71.1, y: 68.2, hitX: 71.1, hitY: 68.2, hitWidth: 21, hitHeight: 19, radius: 8, label: "新房照旁的还款单", found: false, renderMode: "embedded", revealText: "新房照旁边压着月供", animationKind: "contract" },
+        { id: "h8", evidenceId: "household_overdue_bill", x: 84.8, y: 75.1, hitX: 84.8, hitY: 75.1, hitWidth: 17, hitHeight: 19, radius: 8, label: "电费催缴通知", found: false, renderMode: "embedded", revealText: "睡前账单还没闭嘴", animationKind: "paper" }
       ]
     }
   ]

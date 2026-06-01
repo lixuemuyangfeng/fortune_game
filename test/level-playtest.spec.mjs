@@ -3,7 +3,16 @@ import { expect, test } from "@playwright/test";
 const officeHotspots = ["亏损曲线", "owner 意识消息", "金价手机", "花呗便利贴", "刮刮泪"];
 const rooftopHotspots = ["金店小票", "稳健避险交流群", "避险快讯截图", "跌幅提醒手机", "踩线告示", "杠杆合同边角"];
 const convenienceHotspots = ["中间那张刮花废票", "遮金额中奖合影", "付款码旁加购贴", "西装内袋废票", "柜台这本快了牌", "老板娘指的彩票本", "最高奖金立牌"];
-const socialHotspots = ["没露本金的收益图", "收益帖下的社群码", "新房照后的贷款合同", "裁掉日期的课程截止", "没发出去的祝福"];
+const socialHotspots = [
+  "没露本金的收益图",
+  "没发出去的祝福",
+  "收益帖旁的进群邀请",
+  "置顶复盘评论",
+  "裁掉日期的课程截止",
+  "副业课程收藏页",
+  "新房照旁的还款单",
+  "电费催缴通知"
+];
 
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
@@ -144,7 +153,7 @@ test.describe("phaser level flow", () => {
     for (const [index, hotspot] of socialHotspots.entries()) {
       await page.getByRole("button", { name: hotspot }).click();
       await expect(page.getByText("已找到")).toBeVisible();
-      if (index === 2) {
+      if (index === 3) {
         await page.waitForTimeout(700);
         await page.screenshot({ path: "artifacts/playtest-social-mid-progress.png", fullPage: true });
       }

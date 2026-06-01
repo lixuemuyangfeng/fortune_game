@@ -5,7 +5,17 @@ import { getOfficeProgress } from "../systems/progressSystem";
 
 const worldWidth = 1280;
 const worldHeight = 720;
-const characterStates = ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"] as const;
+const characterStates = [
+  "progress-0",
+  "progress-1",
+  "progress-2",
+  "progress-3",
+  "progress-4",
+  "progress-5",
+  "progress-6",
+  "progress-7",
+  "progress-8"
+] as const;
 type CharacterState = (typeof characterStates)[number];
 
 export interface SocialSceneData {
@@ -69,22 +79,22 @@ export class SocialScene extends Phaser.Scene {
     const panel = this.add.graphics().setDepth(35);
     panel.fillStyle(0x17261f, 0.88);
     panel.lineStyle(2, 0xf3c45b, 0.38);
-    panel.fillRoundedRect(760, 104, 420, 132, 10);
-    panel.strokeRoundedRect(760, 104, 420, 132, 10);
+    panel.fillRoundedRect(468, 70, 430, 128, 10);
+    panel.strokeRoundedRect(468, 70, 430, 128, 10);
 
-    this.add.text(786, 126, "凌晨刷到第一条", {
+    this.add.text(494, 92, "凌晨刷到第一条", {
       color: "#f3c45b",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "22px",
       fontStyle: "bold"
     }).setDepth(36);
-    this.add.text(786, 160, this.socialData.scene.name, {
+    this.add.text(494, 126, this.socialData.scene.name, {
       color: "#fff7df",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "38px",
       fontStyle: "bold"
     }).setDepth(36);
-    this.add.text(786, 208, "开始后，把高光里没拍进去的成本找出来。", {
+    this.add.text(494, 172, "开始后，把高光里没拍进去的成本找出来。", {
       color: "#dce8dc",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "18px"
@@ -155,10 +165,13 @@ export class SocialScene extends Phaser.Scene {
 
     const rect = this.getHotspotRect(hotspot);
     if (hotspot.evidenceId === "cropped_profit_screenshot") this.addProfitEffect(rect);
-    else if (hotspot.evidenceId === "humblebrag_group_qr") this.addQrEffect(rect);
-    else if (hotspot.evidenceId === "home_photo_loan_folder") this.addLoanEffect(rect);
-    else if (hotspot.evidenceId === "ai_course_deadline") this.addDeadlineEffect(rect);
     else if (hotspot.evidenceId === "unsent_reply_draft") this.addDraftEffect(rect);
+    else if (hotspot.evidenceId === "group_invite_popup") this.addInviteEffect(rect);
+    else if (hotspot.evidenceId === "pinned_review_comment") this.addPinnedCommentEffect(rect);
+    else if (hotspot.evidenceId === "ai_course_deadline") this.addDeadlineEffect(rect);
+    else if (hotspot.evidenceId === "side_hustle_bookmark") this.addBookmarkEffect(rect);
+    else if (hotspot.evidenceId === "mortgage_debit_notice") this.addMortgageEffect(rect);
+    else if (hotspot.evidenceId === "household_overdue_bill") this.addBillEffect(rect);
   }
 
   private addProfitEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -186,41 +199,56 @@ export class SocialScene extends Phaser.Scene {
     this.tweens.add({ targets: [screen, chart, cropLine], alpha: 0, duration: 240, delay: 560, ease: "Cubic.out" });
   }
 
-  private addQrEffect(rect: { x: number; y: number; width: number; height: number }): void {
+  private addInviteEffect(rect: { x: number; y: number; width: number; height: number }): void {
     const frame = this.add.graphics().setDepth(52);
     frame.lineStyle(2, 0xf3c45b, 0.82);
     frame.strokeRoundedRect(rect.x - rect.width * 0.36, rect.y - rect.height * 0.35, rect.width * 0.72, rect.height * 0.7, 6);
 
-    for (let index = 0; index < 10; index += 1) {
-      const bit = this.add.graphics().setDepth(53);
-      const column = index % 5;
-      const row = Math.floor(index / 5);
-      bit.fillStyle(index % 2 === 0 ? 0xfff0b8 : 0x87c779, 0.75);
-      bit.fillRect(rect.x - rect.width * 0.22 + column * rect.width * 0.09, rect.y - rect.height * 0.12 + row * rect.height * 0.13, 5, 5);
-      this.tweens.add({ targets: bit, alpha: 0, duration: 360, delay: 70 * index, ease: "Cubic.out" });
+    for (let index = 0; index < 3; index += 1) {
+      const line = this.add.graphics().setDepth(53);
+      line.lineStyle(4, index === 2 ? 0x87c779 : 0xfff0b8, 0.72);
+      line.beginPath();
+      line.moveTo(rect.x - rect.width * 0.22, rect.y - rect.height * 0.12 + index * rect.height * 0.13);
+      line.lineTo(rect.x + rect.width * (index === 2 ? 0.12 : 0.24), rect.y - rect.height * 0.12 + index * rect.height * 0.13);
+      line.strokePath();
+      this.tweens.add({ targets: line, alpha: 0, x: 8, duration: 420, delay: 80 * index, ease: "Cubic.out" });
     }
 
     this.tweens.add({ targets: frame, alpha: 0, scaleX: 1.08, scaleY: 1.08, duration: 680, ease: "Cubic.out" });
   }
 
-  private addLoanEffect(rect: { x: number; y: number; width: number; height: number }): void {
-    const photoFrame = this.add.graphics().setDepth(52);
-    photoFrame.lineStyle(3, 0xfff0b8, 0.82);
-    photoFrame.strokeRoundedRect(rect.x - rect.width * 0.48, rect.y - rect.height * 0.34, rect.width * 0.46, rect.height * 0.68, 5);
+  private addPinnedCommentEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const card = this.add.graphics().setDepth(52);
+    card.lineStyle(3, 0xf3c45b, 0.78);
+    card.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.3, rect.width * 0.84, rect.height * 0.6, 6);
 
-    const contractFrame = this.add.graphics().setDepth(53);
-    contractFrame.lineStyle(3, 0xf3c45b, 0.82);
-    contractFrame.strokeRoundedRect(rect.x - rect.width * 0.02, rect.y - rect.height * 0.36, rect.width * 0.46, rect.height * 0.7, 5);
+    const pin = this.add.graphics().setDepth(53);
+    pin.fillStyle(0xd35a36, 0.82);
+    pin.fillCircle(rect.x - rect.width * 0.33, rect.y - rect.height * 0.21, 5);
+    pin.lineStyle(2, 0xfff0b8, 0.8);
+    pin.beginPath();
+    pin.moveTo(rect.x - rect.width * 0.22, rect.y - rect.height * 0.08);
+    pin.lineTo(rect.x + rect.width * 0.24, rect.y - rect.height * 0.08);
+    pin.strokePath();
+
+    this.tweens.add({ targets: pin, y: -4, alpha: 0.2, duration: 130, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [card, pin], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addMortgageEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const paper = this.add.graphics().setDepth(52);
+    paper.lineStyle(3, 0xf3c45b, 0.82);
+    paper.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.32, rect.width * 0.84, rect.height * 0.64, 5);
 
     const underline = this.add.graphics().setDepth(54);
     underline.lineStyle(4, 0xd35a36, 0.72);
     underline.beginPath();
-    underline.moveTo(rect.x + rect.width * 0.05, rect.y - rect.height * 0.02);
-    underline.lineTo(rect.x + rect.width * 0.34, rect.y - rect.height * 0.02);
+    underline.moveTo(rect.x - rect.width * 0.22, rect.y + rect.height * 0.02);
+    underline.lineTo(rect.x + rect.width * 0.26, rect.y + rect.height * 0.02);
     underline.strokePath();
 
     this.tweens.add({ targets: underline, alpha: 0.1, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
-    this.tweens.add({ targets: [photoFrame, contractFrame, underline], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+    this.tweens.add({ targets: [paper, underline], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
   }
 
   private addDeadlineEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -265,6 +293,41 @@ export class SocialScene extends Phaser.Scene {
 
     this.tweens.add({ targets: cursor, alpha: 0.08, duration: 120, yoyo: true, repeat: 4, ease: "Stepped" });
     this.tweens.add({ targets: [input, cursor, unsent], alpha: 0, duration: 220, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addBookmarkEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const tab = this.add.graphics().setDepth(52);
+    tab.lineStyle(3, 0xf3c45b, 0.78);
+    tab.strokeRoundedRect(rect.x - rect.width * 0.32, rect.y - rect.height * 0.38, rect.width * 0.64, rect.height * 0.76, 5);
+
+    const fold = this.add.graphics().setDepth(53);
+    fold.lineStyle(3, 0xfff0b8, 0.78);
+    fold.beginPath();
+    fold.moveTo(rect.x + rect.width * 0.16, rect.y - rect.height * 0.3);
+    fold.lineTo(rect.x + rect.width * 0.27, rect.y - rect.height * 0.18);
+    fold.lineTo(rect.x + rect.width * 0.16, rect.y - rect.height * 0.06);
+    fold.strokePath();
+
+    this.tweens.add({ targets: fold, alpha: 0.16, duration: 140, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [tab, fold], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addBillEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const paper = this.add.graphics().setDepth(52);
+    paper.lineStyle(3, 0xf3c45b, 0.78);
+    paper.strokeRoundedRect(rect.x - rect.width * 0.38, rect.y - rect.height * 0.36, rect.width * 0.76, rect.height * 0.72, 5);
+
+    const stamp = this.add.graphics().setDepth(53);
+    stamp.lineStyle(3, 0xd35a36, 0.78);
+    stamp.strokeCircle(rect.x + rect.width * 0.18, rect.y + rect.height * 0.12, 13);
+    stamp.lineStyle(2, 0xfff0b8, 0.76);
+    stamp.beginPath();
+    stamp.moveTo(rect.x - rect.width * 0.22, rect.y - rect.height * 0.1);
+    stamp.lineTo(rect.x + rect.width * 0.1, rect.y - rect.height * 0.1);
+    stamp.strokePath();
+
+    this.tweens.add({ targets: stamp, angle: 7, alpha: 0.18, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [paper, stamp], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
   }
 
   private addCompletionState(): void {

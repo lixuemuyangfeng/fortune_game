@@ -13,7 +13,7 @@ export class PreloadScene extends Phaser.Scene {
     for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7"]) {
       this.load.image(`convenience-background-${state}`, `/assets/game/convenience/states/convenience-${state}.png`);
     }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
+    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"]) {
       this.load.image(`social-background-${state}`, `/assets/game/social/states/social-${state}.png`);
     }
     this.load.image("rooftop-cooling-furnace", "/assets/game/rooftop/machines/cooling-furnace.png");

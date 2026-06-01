@@ -480,14 +480,14 @@ function getSceneMeta(sceneId: string): {
     return {
       place: "周启明家里",
       time: "周四 01:30",
-      goal: "找出 5 个滤镜裂缝",
-      goalDetail: "把别人高光里没拍进去的成本找出来。",
+      goal: "找出 8 个滤镜裂缝",
+      goalDetail: "把收益、房子、副业和祝福背后的成本找出来。",
       completeGoal: "比较心已降噪",
       startAction: "开始拆帧",
       continueAction: "继续拆帧",
       startToast: "别急着比较，先看清每张高光没拍进去的部分。",
-      introNarrative: "他想刷手机放松，首页第一条就开始上强度。",
-      completeNarrative: "收益、本金、贷款、课程截止和没发出去的祝福都拆开了。"
+      introNarrative: "他只是想睡前刷十分钟，屏幕已经把收益、房子和副业一起推过来。",
+      completeNarrative: "收益图、进群邀请、课程截止、月供和没发出去的祝福都拆开了。"
     };
   }
 
