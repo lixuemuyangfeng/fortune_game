@@ -1,4 +1,4 @@
-# Social V3 Production Brief
+# Social V4 Production Brief
 
 Scene: `social` / `小红薯暴击夜`
 
@@ -8,7 +8,7 @@ Scene: `social` / `小红薯暴击夜`
 
 ## Core Correction
 
-The previous social scene failed because most correct targets were visible text blocks. The new scene must follow the convenience-store direction: hide pressure inside believable objects and object relationships. Text can exist, but it cannot be the only reason a clue is suspicious.
+The previous social scene failed twice: V2 was mostly visible text blocks, and V3 still made the true objects too isolated. V4 follows the convenience-store direction more strictly: every true target is a small subpart or object relationship hidden inside a group of similar decoys.
 
 ## Camera & Layout
 
@@ -19,6 +19,7 @@ The previous social scene failed because most correct targets were visible text 
 - Midground: phone, low table, laptop/tablet, ordinary clutter, most clue objects.
 - Background: window, dim shelf, side lamp, non-interactive household objects.
 - The image must be dense enough that ordinary clutter competes with clue objects.
+- Each clue group needs nearby same-category false targets so the level cannot be solved by clicking every visible paper or screen.
 
 ## Character Plan
 
@@ -36,22 +37,22 @@ State variants may use same-layout full-scene rasters for this project phase. Cl
 
 Total: 8 clues, harder than the third level's 7 clues.
 
-At least 5 clues must be object/relationship driven rather than pure text.
+At least 6 clues must be object/relationship driven rather than pure text. Hotspots must land on subparts, not whole cards.
 
-1. `cropped_profit_screenshot`: phone feed shows a red upward chart, but Zhou's thumb or screen crop hides the principal/position area.
-2. `unsent_reply_draft`: phone bottom has a visible send arrow/input area that was not pressed; this is a button-state clue, not a text-only clue.
-3. `group_invite_popup`: a small invitation card with avatar dots and a join button is tucked partly under the phone/blanket, visually connected to the profit post.
-4. `pinned_review_comment`: a pinned/replay card uses a physical pushpin or red pin marker, mixed with ordinary sticky notes.
-5. `ai_course_deadline`: laptop/tablet has a course screen plus a physical timer/hourglass/sticky countdown on the keyboard area.
-6. `side_hustle_bookmark`: a bookmark ribbon or saved-course card sticks out from a side notebook/tablet stack, not just a text page.
-7. `mortgage_debit_notice`: a house key and home photo sit on a bank envelope or repayment slip; the object relationship carries the meaning.
-8. `household_overdue_bill`: a red-stamped utility envelope sits near a power strip/plug, competing with ordinary paper clutter.
+1. `cropped_profit_screenshot`: handheld phone shows only a cropped red chart corner; thumb/screen crop hides principal and account context.
+2. `unsent_reply_draft`: the same phone has a tiny bottom input/send corner that was not pressed.
+3. `group_invite_popup`: a small invite card with avatar dots and join button is partly tucked under blanket folds and ordinary cards.
+4. `pinned_review_comment`: a red pushpin/folded note corner is mixed into a busy note wall.
+5. `ai_course_deadline`: hourglass/timer beside the laptop keyboard carries the urgency more than the screen text.
+6. `side_hustle_bookmark`: one colored bookmark ribbon sticks out from a course book/tablet stack among many ordinary tabs.
+7. `mortgage_debit_notice`: a house key tooth crosses a small repayment envelope corner near family/home photos and harmless receipts.
+8. `household_overdue_bill`: a red-stamped utility bill corner is partly trapped under cable near the power strip and ordinary plugs.
 
 ## Required Decoys
 
-Place at least 8 plausible non-clue decoys:
+Place at least 18 plausible non-clue decoys:
 
-- ordinary receipt, blank envelope, snack package, mug, tissue pile, book spine, charging cable, clock, pen, harmless photo, folded blanket edge, water bottle.
+- ordinary receipt, blank envelope, snack package, mug, tissue pile, book spine, charging cable, clock, pen, harmless photo, folded blanket edge, water bottle, ordinary sticky note, ordinary book tab, ordinary key/coin, laptop body, remote control, power adapter.
 
 Decoys should be close enough in material and shape that the player cannot solve the level by clicking every text block.
 
@@ -70,7 +71,7 @@ Decoys should be close enough in material and shape that the player cannot solve
 
 - The level must have 8 hotspots and 9 progress states.
 - At least 5/8 active clues must be visually supported by object state or object relationship.
-- Runtime must include false-positive decoy zones.
+- Runtime must include at least 18 false-positive decoy zones.
 - Hotspot calibration must be re-measured from the final source image.
 - Playwright must capture intro, mid-progress, completion, and mobile intro screenshots.
 - Config validation must prove social clue count exceeds convenience clue count and social progress images are distinct.

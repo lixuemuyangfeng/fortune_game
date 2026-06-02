@@ -101,7 +101,7 @@ test("all playable levels meet narrative and interaction content requirements", 
     if (sceneId === "social") {
       assert.ok(hotspots.length > hotspotObjects(sceneBlock("convenience")).length, "social increases clue count after the convenience level");
       assert.match(block, /decoys: \[/, "social has config-level decoy zones");
-      assert.ok([...block.matchAll(/\{ id: "[a-z-]+", x: [0-9.]+, y: [0-9.]+, hitWidth: [0-9.]+, hitHeight: [0-9.]+, label: "[^"]+" \}/g)].length >= 8, "social has at least eight decoys");
+      assert.ok([...block.matchAll(/\{ id: "[a-z-]+", x: [0-9.]+, y: [0-9.]+, hitWidth: [0-9.]+, hitHeight: [0-9.]+, label: "[^"]+" \}/g)].length >= 18, "social has at least eighteen decoys");
       const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
       assert.deepEqual(
         animationKinds,
