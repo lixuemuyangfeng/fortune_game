@@ -2033,6 +2033,7 @@ p {
   position: absolute;
   inset: 0;
   z-index: 20;
+  pointer-events: none;
 }
 
 .access-hotspot {
@@ -2045,6 +2046,7 @@ p {
   box-shadow: none;
   opacity: 0;
   transform: translate(-50%, -50%);
+  pointer-events: auto;
 }
 
 .access-hotspot:hover {

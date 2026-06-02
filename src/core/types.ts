@@ -33,6 +33,15 @@ export interface SceneHotspot {
   animationKind?: "kline" | "goldLine" | "chat" | "paper" | "scratch" | "receipt" | "news" | "alert" | "sign" | "contract" | "photo" | "phone" | "ticket" | "note" | "bottle";
 }
 
+export interface SceneDecoy {
+  id: string;
+  x: number;
+  y: number;
+  hitWidth: number;
+  hitHeight: number;
+  label: string;
+}
+
 export interface InvestigationScene {
   id: string;
   name: string;
@@ -47,6 +56,7 @@ export interface InvestigationScene {
   machineImage?: string;
   machineEmbedded?: boolean;
   completeText?: string;
+  decoys?: SceneDecoy[];
   hotspots: SceneHotspot[];
 }
 

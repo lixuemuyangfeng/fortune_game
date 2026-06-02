@@ -1,6 +1,6 @@
 # social Image Review
 
-Generated: 2026-06-01
+Generated: 2026-06-02
 
 
 > Existing review file overwritten by the latest config snapshot.
@@ -18,10 +18,11 @@ Generated: 2026-06-01
 
 ## Review Result
 
-- Decision: pass after the difficulty pass.
-- Reason: clue count stays above the third level's 7 clues, the answer labels no longer read like a solution list, and the runtime now has 8 false-positive decoy zones around plausible non-clue clutter.
-- Difficulty note: the player must distinguish pressure/cost evidence from ordinary bedroom objects such as blanket folds, the clock, snacks, mugs, pens, tissue box, charging cable, and shelf clutter.
-- Remaining risk: the progress states are still same-layout full-scene rasters, matching the current second/third-level pipeline. The longer-term production target remains layered character/state assets.
+- Decision: pass after V3 rebuild.
+- Reason: the level no longer relies on clicking every text block. The main clue bodies are object states or object relationships: thumb-cropped chart, unpressed send strip, invite card, pinned note, laptop countdown/hourglass, bookmark stack, house key plus repayment envelope, and utility envelope beside a power strip.
+- Difficulty note: 8 config-level decoys are present and shared by DOM accessibility and Phaser interaction layers, so ordinary clutter can be clicked without advancing progress.
+- Visual QA: Playwright and manual browser checks confirmed that three decoy clicks kept progress at `0/8`, while four real clues advanced to `4/8` with local found markers on the intended objects.
+- Remaining risk: the progress states remain full-scene raster variants instead of layered character assets, consistent with the current second/third-level production phase.
 
 ## Generation Brief
 
@@ -156,14 +157,14 @@ Record source-pixel centers before converting to config percentages.
 
 | ID | Label | Evidence | Config center | Config box | Animation | Source center | Review note |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `h1` | 手机上半截红线 | `cropped_profit_screenshot` | 49, 38.4 | 8.2 x 15 | phone | `819, 361` | upper phone feed chart |
-| `h2` | 屏幕底部那句话 | `unsent_reply_draft` | 49, 50 | 8 x 5.8 | chat | `819, 471` | lower phone reply strip |
-| `h3` | 被顺手接上的邀请 | `group_invite_popup` | 54.2, 58.6 | 12 x 10 | chat | `906, 551` | nearby invite card |
-| `h4` | 被顶到最前的评论 | `pinned_review_comment` | 53.4, 69.5 | 12 x 12 | chat | `893, 654` | pinned/replay card |
-| `h5` | 电脑上的今晚截止 | `ai_course_deadline` | 71.7, 31.8 | 18 x 20 | note | `1199, 299` | laptop deadline page |
-| `h6` | 右侧没关的收藏页 | `side_hustle_bookmark` | 95.2, 33.5 | 8.2 x 25 | note | `1592, 315` | right-side saved course page |
-| `h7` | 相片旁的扣款纸 | `mortgage_debit_notice` | 71.1, 68.2 | 21 x 19 | contract | `1189, 642` | home photo and repayment notice |
-| `h8` | 插座边的催缴单 | `household_overdue_bill` | 84.8, 75.1 | 17 x 19 | paper | `1418, 707` | lower-right household bill |
+| `h1` | 手机上半截红线 | `cropped_profit_screenshot` | 38.2, 35.1 | 8 x 13.5 | phone | `639, 330` | thumb/screen crop hides principal area |
+| `h2` | 屏幕底部那句话 | `unsent_reply_draft` | 38.2, 42 | 7.8 x 5.4 | chat | `639, 395` | unpressed phone input/send strip |
+| `h3` | 被顺手接上的邀请 | `group_invite_popup` | 43.2, 56.7 | 12 x 9.5 | chat | `722, 534` | invite card tucked into blanket |
+| `h4` | 被顶到最前的评论 | `pinned_review_comment` | 55.9, 65.2 | 10.8 x 15 | chat | `934, 614` | pinned note with red pushpin |
+| `h5` | 电脑上的今晚截止 | `ai_course_deadline` | 69.8, 29.5 | 16 x 18 | note | `1167, 278` | laptop countdown plus hourglass |
+| `h6` | 右侧没关的收藏页 | `side_hustle_bookmark` | 88.6, 39.3 | 8.5 x 20 | note | `1481, 370` | side bookmark/course stack |
+| `h7` | 相片旁的扣款纸 | `mortgage_debit_notice` | 67.5, 74.2 | 12 x 15 | contract | `1129, 698` | key and repayment envelope |
+| `h8` | 插座边的催缴单 | `household_overdue_bill` | 85.8, 79.5 | 15.5 x 17.5 | paper | `1434, 748` | utility envelope near power strip |
 
 ## Decision
 

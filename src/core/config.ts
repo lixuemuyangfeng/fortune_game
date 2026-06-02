@@ -351,15 +351,25 @@ export const gameConfig: GameConfig = {
       machineName: "高光拆帧机",
       machineEmbedded: true,
       completeText: "高光不是生活全貌。刷到别人的可发布版本，也先别拿它审判今晚的自己。",
+      decoys: [
+        { id: "blanket-fold", x: 29.5, y: 58, hitWidth: 10, hitHeight: 22, label: "被子褶皱" },
+        { id: "alarm-clock", x: 54.2, y: 28.6, hitWidth: 6.6, hitHeight: 7.2, label: "床头闹钟" },
+        { id: "snack-bag", x: 58.8, y: 47.5, hitWidth: 9.4, hitHeight: 10.5, label: "零食包装" },
+        { id: "table-mug", x: 78.9, y: 47.2, hitWidth: 6, hitHeight: 10, label: "桌边杯子" },
+        { id: "pen-stack", x: 59.2, y: 84.4, hitWidth: 16, hitHeight: 8, label: "纸笔杂物" },
+        { id: "tissue-box", x: 88.3, y: 66.2, hitWidth: 9.4, hitHeight: 15, label: "纸巾盒" },
+        { id: "charging-cable", x: 92.6, y: 74.8, hitWidth: 7.5, hitHeight: 14, label: "充电线" },
+        { id: "shelf-books", x: 90.5, y: 14.5, hitWidth: 12, hitHeight: 17, label: "书架书脊" }
+      ],
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 49, y: 38.4, hitX: 49, hitY: 38.4, hitWidth: 8.2, hitHeight: 15, radius: 8, label: "手机上半截红线", found: false, renderMode: "embedded", revealText: "只露涨幅，不露本金", animationKind: "phone" },
-        { id: "h2", evidenceId: "unsent_reply_draft", x: 49, y: 50, hitX: 49, hitY: 50, hitWidth: 8, hitHeight: 5.8, radius: 7, label: "屏幕底部那句话", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" },
-        { id: "h3", evidenceId: "group_invite_popup", x: 54.2, y: 58.6, hitX: 54.2, hitY: 58.6, hitWidth: 12, hitHeight: 10, radius: 8, label: "被顺手接上的邀请", found: false, renderMode: "embedded", revealText: "进群入口接在收益后面", animationKind: "chat" },
-        { id: "h4", evidenceId: "pinned_review_comment", x: 53.4, y: 69.5, hitX: 53.4, hitY: 69.5, hitWidth: 12, hitHeight: 12, radius: 8, label: "被顶到最前的评论", found: false, renderMode: "embedded", revealText: "评论把补课入口顶上来", animationKind: "chat" },
-        { id: "h5", evidenceId: "ai_course_deadline", x: 71.7, y: 31.8, hitX: 71.7, hitY: 31.8, hitWidth: 18, hitHeight: 20, radius: 8, label: "电脑上的今晚截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，条件在边缘", animationKind: "note" },
-        { id: "h6", evidenceId: "side_hustle_bookmark", x: 95.2, y: 33.5, hitX: 95.2, hitY: 33.5, hitWidth: 8.2, hitHeight: 25, radius: 8, label: "右侧没关的收藏页", found: false, renderMode: "embedded", revealText: "副业焦虑还开着标签页", animationKind: "note" },
-        { id: "h7", evidenceId: "mortgage_debit_notice", x: 71.1, y: 68.2, hitX: 71.1, hitY: 68.2, hitWidth: 21, hitHeight: 19, radius: 8, label: "相片旁的扣款纸", found: false, renderMode: "embedded", revealText: "新房照旁边压着月供", animationKind: "contract" },
-        { id: "h8", evidenceId: "household_overdue_bill", x: 84.8, y: 75.1, hitX: 84.8, hitY: 75.1, hitWidth: 17, hitHeight: 19, radius: 8, label: "插座边的催缴单", found: false, renderMode: "embedded", revealText: "睡前账单还没闭嘴", animationKind: "paper" }
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 38.2, y: 35.1, hitX: 38.2, hitY: 35.1, hitWidth: 8, hitHeight: 13.5, radius: 8, label: "手机上半截红线", found: false, renderMode: "embedded", revealText: "只露涨幅，不露本金", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 38.2, y: 42, hitX: 38.2, hitY: 42, hitWidth: 7.8, hitHeight: 5.4, radius: 7, label: "屏幕底部那句话", found: false, renderMode: "embedded", revealText: "祝福停在输入框里", animationKind: "chat" },
+        { id: "h3", evidenceId: "group_invite_popup", x: 43.2, y: 56.7, hitX: 43.2, hitY: 56.7, hitWidth: 12, hitHeight: 9.5, radius: 8, label: "被顺手接上的邀请", found: false, renderMode: "embedded", revealText: "进群入口接在收益后面", animationKind: "chat" },
+        { id: "h4", evidenceId: "pinned_review_comment", x: 55.9, y: 65.2, hitX: 55.9, hitY: 65.2, hitWidth: 10.8, hitHeight: 15, radius: 8, label: "被顶到最前的评论", found: false, renderMode: "embedded", revealText: "评论把补课入口顶上来", animationKind: "chat" },
+        { id: "h5", evidenceId: "ai_course_deadline", x: 69.8, y: 29.5, hitX: 69.8, hitY: 29.5, hitWidth: 16, hitHeight: 18, radius: 8, label: "电脑上的今晚截止", found: false, renderMode: "embedded", revealText: "倒计时醒目，条件在边缘", animationKind: "note" },
+        { id: "h6", evidenceId: "side_hustle_bookmark", x: 88.6, y: 39.3, hitX: 88.6, hitY: 39.3, hitWidth: 8.5, hitHeight: 20, radius: 8, label: "右侧没关的收藏页", found: false, renderMode: "embedded", revealText: "副业焦虑还开着标签页", animationKind: "note" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 67.5, y: 74.2, hitX: 67.5, hitY: 74.2, hitWidth: 12, hitHeight: 15, radius: 8, label: "相片旁的扣款纸", found: false, renderMode: "embedded", revealText: "新房照旁边压着月供", animationKind: "contract" },
+        { id: "h8", evidenceId: "household_overdue_bill", x: 85.8, y: 79.5, hitX: 85.8, hitY: 79.5, hitWidth: 15.5, hitHeight: 17.5, radius: 8, label: "插座边的催缴单", found: false, renderMode: "embedded", revealText: "睡前账单还没闭嘴", animationKind: "paper" }
       ]
     }
   ]

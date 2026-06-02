@@ -100,6 +100,8 @@ test("all playable levels meet narrative and interaction content requirements", 
     }
     if (sceneId === "social") {
       assert.ok(hotspots.length > hotspotObjects(sceneBlock("convenience")).length, "social increases clue count after the convenience level");
+      assert.match(block, /decoys: \[/, "social has config-level decoy zones");
+      assert.ok([...block.matchAll(/\{ id: "[a-z-]+", x: [0-9.]+, y: [0-9.]+, hitWidth: [0-9.]+, hitHeight: [0-9.]+, label: "[^"]+" \}/g)].length >= 8, "social has at least eight decoys");
       const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
       assert.deepEqual(
         animationKinds,
@@ -174,9 +176,5 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");
   assert.doesNotMatch(runtimeSources, /addCharacterState|fillCircle\(x/, "runtime does not draw patchwork character overlays");
   assert.doesNotMatch(runtimeSources, /scene-character|char-head|char-body/, "runtime does not keep CSS-built character fallbacks");
-  assert.match(
-    readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"),
-    /const socialDecoys: DecoyZone\[\] = \[[\s\S]+charging-cable/,
-    "social level includes false-positive decoy zones for harder clue discrimination"
-  );
+  assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /scene\.decoys/, "social scene consumes config-level decoy zones");
 });

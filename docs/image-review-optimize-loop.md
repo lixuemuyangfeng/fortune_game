@@ -155,6 +155,8 @@ Use these rules when prompting or editing raster art.
 - Put people where their behavior makes sense. Rooftop people can brag, smoke, check phones, drink, or gossip; they should not look like office workers doing desk work on a roof.
 - Make clues varied in form: phone, receipt, poster, ticket, key, bag, cup, chart, contract, screen, stamp, shelf object. Do not make all clues paper slips.
 - Make clue semantics direct. A high-voltage sign is not automatically a financial-risk clue. If the clue is "杠杆合同", the visible object should read as contract/key/folder/debt, not a random warning label.
+- For later levels, do not let "click every text block" become the solution. At least half of the clues should be readable from object state or object relationships without relying on text: a covered amount, a thumb hiding principal, a key sitting on a repayment envelope, a timer attached to a course device, a send button that was never pressed, or a pile of failed tickets arranged to imply near-miss pressure.
+- Add believable decoys during the image brief, not after the fact. Decoys should share the same material family as clues, such as ordinary receipts near a debt notice, snacks near a course laptop, paper scraps near a contract, or household clutter near a bill.
 - Preserve mobile readability. Important objects must still be identifiable when the scene is displayed in the game layout, not only in the raw image.
 - Avoid single-hue palettes. Keep the game's deep-green/warm-gold identity, but use material contrast from paper, metal, cloth, plastic, skin, glass, and city light.
 

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import type { HotspotEvidence, InvestigationScene, SceneHotspot } from "../../core/types";
+import type { HotspotEvidence, InvestigationScene, SceneDecoy, SceneHotspot } from "../../core/types";
 import { playHitSound } from "../systems/audioSystem";
 import { getOfficeProgress } from "../systems/progressSystem";
 
@@ -17,24 +17,6 @@ const characterStates = [
   "progress-8"
 ] as const;
 type CharacterState = (typeof characterStates)[number];
-type DecoyZone = {
-  id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-const socialDecoys: DecoyZone[] = [
-  { id: "blanket-fold", x: 40.5, y: 55.8, width: 8.2, height: 20 },
-  { id: "alarm-clock", x: 63.2, y: 29.4, width: 6.8, height: 7.2 },
-  { id: "snack-bag", x: 65.2, y: 47.5, width: 8.8, height: 9.8 },
-  { id: "table-mug", x: 79.4, y: 40.5, width: 5.2, height: 8.8 },
-  { id: "pen-stack", x: 73.8, y: 66.4, width: 12.2, height: 8 },
-  { id: "tissue-box", x: 87.4, y: 53.5, width: 9.2, height: 13.5 },
-  { id: "charging-cable", x: 90.4, y: 79.8, width: 9, height: 15.5 },
-  { id: "shelf-books", x: 56.8, y: 18.8, width: 10.5, height: 17.5 }
-];
 
 export interface SocialSceneData {
   scene: InvestigationScene;
@@ -123,8 +105,8 @@ export class SocialScene extends Phaser.Scene {
     const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
     if (progress.complete) return;
 
-    for (const decoy of socialDecoys) {
-      const rect = this.getPercentRect(decoy);
+    for (const decoy of this.socialData.scene.decoys ?? []) {
+      const rect = this.getDecoyRect(decoy);
       const zone = this.add.zone(rect.x, rect.y, rect.width, rect.height).setDepth(40).setInteractive({ useHandCursor: true });
       zone.on("pointerdown", () => this.handleDecoy(rect));
     }
@@ -423,12 +405,12 @@ export class SocialScene extends Phaser.Scene {
     };
   }
 
-  private getPercentRect(rect: { x: number; y: number; width: number; height: number }): { x: number; y: number; width: number; height: number } {
+  private getDecoyRect(decoy: SceneDecoy): { x: number; y: number; width: number; height: number } {
     return {
-      x: (rect.x / 100) * worldWidth,
-      y: (rect.y / 100) * worldHeight,
-      width: (rect.width / 100) * worldWidth,
-      height: (rect.height / 100) * worldHeight
+      x: (decoy.x / 100) * worldWidth,
+      y: (decoy.y / 100) * worldHeight,
+      width: (decoy.hitWidth / 100) * worldWidth,
+      height: (decoy.hitHeight / 100) * worldHeight
     };
   }
 }

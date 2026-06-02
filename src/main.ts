@@ -243,6 +243,19 @@ function renderAccessibilityHotspots(scene: InvestigationScene, sceneState: Scen
 
   return `
     <div class="game-accessibility" aria-label="可点击线索">
+      ${(scene.decoys ?? [])
+        .map(
+          (decoy) => `
+            <button
+              class="access-hotspot access-decoy"
+              style="left:${toPercent(decoy.x)}%; top:${toPercent(decoy.y)}%; width:${toPercent(decoy.hitWidth)}%; height:${toPercent(decoy.hitHeight)}%;"
+              data-action="decoy"
+              data-id="${escapeAttribute(decoy.id)}"
+              aria-label="${escapeAttribute(decoy.label)}"
+            ></button>
+          `
+        )
+        .join("")}
       ${scene.hotspots
         .filter((hotspot) => !sceneState.foundHotspotIds.includes(hotspot.id))
         .map(
@@ -266,6 +279,10 @@ function bindEvents(): void {
     element.addEventListener("click", async () => {
       const action = element.dataset.action;
       if (action === "hotspot") handleHotspot(element.dataset.id ?? "");
+      if (action === "decoy") {
+        handleMiss();
+        render();
+      }
       if (action === "hint-ad") await rewardHint();
       if (action === "reset") resetDemo();
       if (action === "start-challenge") startChallenge();
