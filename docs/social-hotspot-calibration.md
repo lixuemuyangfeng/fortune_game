@@ -12,8 +12,8 @@ Fourth-level difficulty rule: this level must be harder than the 7-clue convenie
 
 | Hotspot | Evidence | Source center px | Runtime % | Hit size % | Visual anchor |
 | --- | --- | ---: | ---: | ---: | --- |
-| h1 | `cropped_profit_screenshot` | `668, 350` | `40.0, 37.2` | `4.8 x 7.6` | handheld phone red chart crop, not the whole phone |
-| h2 | `unsent_reply_draft` | `661, 407` | `39.5, 43.3` | `4.2 x 3.8` | tiny bottom input/send corner |
+| h1 | `cropped_profit_screenshot` | `660, 383` | `39.5, 40.7` | `4.4 x 5.4` | handheld phone red chart middle, not the notch or whole phone |
+| h2 | `unsent_reply_draft` | `660, 428` | `39.5, 45.5` | `3.8 x 3.8` | tiny bottom input/send corner |
 | h3 | `group_invite_popup` | `700, 514` | `41.9, 54.6` | `6.2 x 5.8` | invite card edge tucked in blanket/card cluster |
 | h4 | `pinned_review_comment` | `1202, 118` | `71.9, 12.5` | `4.6 x 5.8` | red pushpin/folded note corner on busy note wall |
 | h5 | `ai_course_deadline` | `1210, 326` | `72.4, 34.6` | `5.4 x 7.0` | hourglass/timer beside laptop keyboard |

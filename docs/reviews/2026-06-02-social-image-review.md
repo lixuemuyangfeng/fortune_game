@@ -168,8 +168,8 @@ Record source-pixel centers before converting to config percentages.
 
 | ID | Label | Evidence | Config center | Config box | Animation | Source center | Review note |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `h1` | 手机红线裁边 | `cropped_profit_screenshot` | 40.0, 37.2 | 4.8 x 7.6 | phone | `668, 350` | center on red chart crop, not whole phone |
-| `h2` | 没按下的发送角 | `unsent_reply_draft` | 39.5, 43.3 | 4.2 x 3.8 | chat | `661, 407` | bottom send/input corner only |
+| `h1` | 手机红线裁边 | `cropped_profit_screenshot` | 39.5, 40.7 | 4.4 x 5.4 | phone | `660, 383` | moved from phone notch area to red chart middle |
+| `h2` | 没按下的发送角 | `unsent_reply_draft` | 39.5, 45.5 | 3.8 x 3.8 | chat | `660, 428` | moved down to bottom send/input corner only |
 | `h3` | 毯边进群卡 | `group_invite_popup` | 41.9, 54.6 | 6.2 x 5.8 | chat | `700, 514` | card edge inside blanket/card cluster |
 | `h4` | 便签墙红图钉 | `pinned_review_comment` | 71.9, 12.5 | 4.6 x 5.8 | chat | `1202, 118` | red pin and folded note corner |
 | `h5` | 键盘边沙漏 | `ai_course_deadline` | 72.4, 34.6 | 5.4 x 7.0 | note | `1210, 326` | small hourglass/timer area |

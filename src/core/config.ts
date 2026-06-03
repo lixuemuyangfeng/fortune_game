@@ -374,8 +374,8 @@ export const gameConfig: GameConfig = {
         { id: "paper-rubble", x: 72.8, y: 77.4, hitWidth: 11.5, hitHeight: 11.0, label: "杂纸堆" }
       ],
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 40.0, y: 37.2, hitX: 40.0, hitY: 37.2, hitWidth: 4.8, hitHeight: 7.6, radius: 7, label: "手机红线裁边", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
-        { id: "h2", evidenceId: "unsent_reply_draft", x: 39.5, y: 43.3, hitX: 39.5, hitY: 43.3, hitWidth: 4.2, hitHeight: 3.8, radius: 6, label: "没按下的发送角", found: false, renderMode: "embedded", revealText: "祝福卡在发送前一秒", animationKind: "chat" },
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 39.5, y: 40.7, hitX: 39.5, hitY: 40.7, hitWidth: 4.4, hitHeight: 5.4, radius: 7, label: "手机红线裁边", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 39.5, y: 45.5, hitX: 39.5, hitY: 45.5, hitWidth: 3.8, hitHeight: 3.8, radius: 6, label: "没按下的发送角", found: false, renderMode: "embedded", revealText: "祝福卡在发送前一秒", animationKind: "chat" },
         { id: "h3", evidenceId: "group_invite_popup", x: 41.9, y: 54.6, hitX: 41.9, hitY: 54.6, hitWidth: 6.2, hitHeight: 5.8, radius: 7, label: "毯边进群卡", found: false, renderMode: "embedded", revealText: "收益后面接着进群按钮", animationKind: "chat" },
         { id: "h4", evidenceId: "pinned_review_comment", x: 71.9, y: 12.5, hitX: 71.9, hitY: 12.5, hitWidth: 4.6, hitHeight: 5.8, radius: 6, label: "便签墙红图钉", found: false, renderMode: "embedded", revealText: "复盘被钉在最前面", animationKind: "chat" },
         { id: "h5", evidenceId: "ai_course_deadline", x: 72.4, y: 34.6, hitX: 72.4, hitY: 34.6, hitWidth: 5.4, hitHeight: 7.0, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
