@@ -1,4 +1,4 @@
-# Social V4 Production Brief
+# Social V5 Production Brief
 
 Scene: `social` / `小红薯暴击夜`
 
@@ -8,7 +8,9 @@ Scene: `social` / `小红薯暴击夜`
 
 ## Core Correction
 
-The previous social scene failed twice: V2 was mostly visible text blocks, and V3 still made the true objects too isolated. V4 follows the convenience-store direction more strictly: every true target is a small subpart or object relationship hidden inside a group of similar decoys.
+The previous social scene failed three times: V2 was mostly visible text blocks, V3 made true objects too isolated, and V4 stacked multiple answers on one phone while turning digital behaviors into vague paper cards. V5 uses clear object/interface bodies, but keeps the evidence meaning contextual.
+
+Core principle: the player should immediately recognize "this is a phone chart", "this is a group invite modal", "this is a comment panel", or "this is a draft notebook"; they should not immediately know why it is the answer until they relate it to Zhou's late-night envy loop.
 
 ## Camera & Layout
 
@@ -20,6 +22,7 @@ The previous social scene failed twice: V2 was mostly visible text blocks, and V
 - Background: window, dim shelf, side lamp, non-interactive household objects.
 - The image must be dense enough that ordinary clutter competes with clue objects.
 - Each clue group needs nearby same-category false targets so the level cannot be solved by clicking every visible paper or screen.
+- Digital behaviors must stay on digital surfaces. Do not represent a group invitation or pinned comment as a random physical paper card unless the scene explicitly shows it as a printout.
 
 ## Character Plan
 
@@ -39,10 +42,10 @@ Total: 8 clues, harder than the third level's 7 clues.
 
 At least 6 clues must be object/relationship driven rather than pure text. Hotspots must land on subparts, not whole cards.
 
-1. `cropped_profit_screenshot`: handheld phone shows only a cropped red chart corner; thumb/screen crop hides principal and account context.
-2. `unsent_reply_draft`: the same phone has a tiny bottom input/send corner that was not pressed.
-3. `group_invite_popup`: a small invite card with avatar dots and join button is partly tucked under blanket folds and ordinary cards.
-4. `pinned_review_comment`: a red pushpin/folded note corner is mixed into a busy note wall.
+1. `cropped_profit_screenshot`: Zhou's single handheld phone shows a red chart, while thumb/screen crop hides principal and account context. This is the only clue on that phone.
+2. `unsent_reply_draft`: an open draft notebook or memo pad on the sofa arm/table shows a half-written congratulation and a capped pen.
+3. `group_invite_popup`: a separate small device/tablet shows a group invite modal with avatar row and join button shape.
+4. `pinned_review_comment`: laptop/tablet comment interface shows a visually pinned/highlighted top comment row.
 5. `ai_course_deadline`: hourglass/timer beside the laptop keyboard carries the urgency more than the screen text.
 6. `side_hustle_bookmark`: one colored bookmark ribbon sticks out from a course book/tablet stack among many ordinary tabs.
 7. `mortgage_debit_notice`: a house key tooth crosses a small repayment envelope corner near family/home photos and harmless receipts.
@@ -66,6 +69,8 @@ Decoys should be close enough in material and shape that the player cannot solve
 - No phone screen that only faces the camera while the character cannot see it.
 - No empty scenic background dominating the playable area.
 - No duplicate paper-slip clues that only differ by written words.
+- No multiple true clues on one phone screen.
+- No vague paper-card version of a digital group invite or digital pinned comment.
 
 ## Acceptance Notes
 

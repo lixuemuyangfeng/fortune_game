@@ -221,7 +221,7 @@ export const gameConfig: GameConfig = {
     group_invite_popup: {
       id: "group_invite_popup",
       title: "收益帖旁的进群邀请",
-      detail: "刚看完收益帖，旁边就弹出同款策略群，放松时间被顺手接走。",
+      detail: "独立设备上弹着群头像和加入按钮，它不解释收益，只负责把你接进下一轮焦虑。",
       emotion: "pretend",
       theme: "ai",
       counterText: "真正的分享不会急着把你拉进下一场焦虑。"
@@ -229,7 +229,7 @@ export const gameConfig: GameConfig = {
     pinned_review_comment: {
       id: "pinned_review_comment",
       title: "置顶复盘评论",
-      detail: "评论区把复盘入口置顶，像在提醒你别只羡慕，还要补课。",
+      detail: "电脑评论区最上面那条被钉住，像把围观顺手改成补课。",
       emotion: "pretend",
       theme: "ai",
       counterText: "置顶的位置，不代表它更接近真相。"
@@ -261,7 +261,7 @@ export const gameConfig: GameConfig = {
     unsent_reply_draft: {
       id: "unsent_reply_draft",
       title: "没发出去的祝福",
-      detail: "输入框里停着那句挺好的，手指一直没按发送。",
+      detail: "草稿本上只写了一半恭喜，笔帽盖上了，祝福没有真的发出去。",
       emotion: "stubborn",
       theme: "ai",
       counterText: "看见羡慕，比假装大方更有用。"
@@ -352,36 +352,37 @@ export const gameConfig: GameConfig = {
       machineEmbedded: true,
       completeText: "别人的高光只负责发亮，不负责替你交账。今晚先把屏幕放低一点。",
       decoys: [
-        { id: "window-photo", x: 5.0, y: 18.2, hitWidth: 6.8, hitHeight: 9.2, label: "窗边相框" },
-        { id: "blanket-fold", x: 24.8, y: 61.1, hitWidth: 13.0, hitHeight: 18.0, label: "被子褶皱" },
-        { id: "alarm-clock", x: 49.0, y: 29.2, hitWidth: 5.8, hitHeight: 6.8, label: "床头闹钟" },
-        { id: "laptop-body", x: 63.1, y: 33.6, hitWidth: 13.5, hitHeight: 12.0, label: "电脑机身" },
-        { id: "notice-board", x: 67.6, y: 15.6, hitWidth: 16.0, hitHeight: 18.0, label: "普通便签墙" },
-        { id: "water-bottle", x: 45.9, y: 58.6, hitWidth: 5.2, hitHeight: 13.0, label: "桌上水瓶" },
-        { id: "snack-bag", x: 53.8, y: 52.2, hitWidth: 10.4, hitHeight: 11.2, label: "零食包装" },
-        { id: "black-mug", x: 71.5, y: 55.0, hitWidth: 7.0, hitHeight: 9.0, label: "黑色马克杯" },
-        { id: "white-mug", x: 67.9, y: 58.7, hitWidth: 6.0, hitHeight: 7.4, label: "白色杯子" },
-        { id: "coin-scatter", x: 51.4, y: 69.0, hitWidth: 10.0, hitHeight: 7.8, label: "零钱堆" },
-        { id: "table-pen", x: 57.1, y: 77.7, hitWidth: 8.6, hitHeight: 6.2, label: "桌面钢笔" },
-        { id: "normal-receipts", x: 45.5, y: 78.1, hitWidth: 13.0, hitHeight: 12.0, label: "普通小票" },
-        { id: "remote-control", x: 43.5, y: 76.0, hitWidth: 7.2, hitHeight: 8.0, label: "遥控器" },
-        { id: "ordinary-cards", x: 40.1, y: 56.9, hitWidth: 8.5, hitHeight: 7.0, label: "普通卡片" },
-        { id: "book-stack", x: 85.8, y: 49.4, hitWidth: 12.0, hitHeight: 14.0, label: "书本堆" },
-        { id: "photo-stack", x: 82.8, y: 59.0, hitWidth: 10.5, hitHeight: 9.0, label: "照片堆" },
-        { id: "tissue-box", x: 92.0, y: 53.5, hitWidth: 9.5, hitHeight: 12.5, label: "纸巾盒" },
-        { id: "power-adapter", x: 87.4, y: 73.2, hitWidth: 5.8, hitHeight: 7.2, label: "插头适配器" },
-        { id: "cable-loop", x: 92.5, y: 67.8, hitWidth: 6.4, hitHeight: 8.8, label: "线缆圈" },
-        { id: "paper-rubble", x: 72.8, y: 77.4, hitWidth: 11.5, hitHeight: 11.0, label: "杂纸堆" }
+        { id: "window-photo", x: 2.7, y: 21.6, hitWidth: 5.2, hitHeight: 10.0, label: "窗边相框" },
+        { id: "window-plant", x: 18.0, y: 12.3, hitWidth: 6.8, hitHeight: 7.4, label: "窗台绿植" },
+        { id: "bedside-clock", x: 22.4, y: 16.3, hitWidth: 6.8, hitHeight: 8.4, label: "床头日历钟" },
+        { id: "shelf-books", x: 41.3, y: 12.1, hitWidth: 11.8, hitHeight: 16.0, label: "左侧书架" },
+        { id: "tablet-cards", x: 52.6, y: 30.6, hitWidth: 9.8, hitHeight: 8.4, label: "普通消息卡片" },
+        { id: "pen-cup", x: 62.2, y: 24.5, hitWidth: 6.0, hitHeight: 11.0, label: "笔筒" },
+        { id: "course-sticky", x: 71.8, y: 45.8, hitWidth: 8.6, hitHeight: 7.4, label: "普通课程便签" },
+        { id: "desk-mug", x: 74.9, y: 48.5, hitWidth: 7.4, hitHeight: 8.0, label: "桌面杯子" },
+        { id: "snack-bag", x: 38.9, y: 84.0, hitWidth: 12.0, hitHeight: 12.0, label: "零食包装" },
+        { id: "remote-control", x: 52.6, y: 95.6, hitWidth: 9.2, hitHeight: 5.6, label: "遥控器" },
+        { id: "ashtray", x: 58.9, y: 87.7, hitWidth: 9.0, hitHeight: 8.0, label: "烟灰缸" },
+        { id: "normal-receipts", x: 47.9, y: 66.7, hitWidth: 10.0, hitHeight: 10.5, label: "普通小票" },
+        { id: "loose-keys", x: 49.2, y: 73.1, hitWidth: 8.0, hitHeight: 6.8, label: "普通钥匙" },
+        { id: "black-notebook", x: 52.5, y: 76.1, hitWidth: 9.0, hitHeight: 9.0, label: "黑色笔记本" },
+        { id: "cable-loop", x: 87.3, y: 75.8, hitWidth: 12.0, hitHeight: 13.0, label: "线缆圈" },
+        { id: "power-strip", x: 89.0, y: 88.0, hitWidth: 11.0, hitHeight: 10.0, label: "插排" },
+        { id: "adapter", x: 93.9, y: 76.5, hitWidth: 6.2, hitHeight: 9.0, label: "充电头" },
+        { id: "book-tabs", x: 89.0, y: 27.2, hitWidth: 10.0, hitHeight: 9.0, label: "普通书签" },
+        { id: "desk-lamp", x: 84.4, y: 13.8, hitWidth: 8.0, hitHeight: 12.0, label: "台灯" },
+        { id: "thermos", x: 79.7, y: 25.1, hitWidth: 5.5, hitHeight: 14.5, label: "保温杯" },
+        { id: "blank-envelopes", x: 76.0, y: 67.1, hitWidth: 10.5, hitHeight: 10.0, label: "普通信封" }
       ],
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 39.5, y: 40.7, hitX: 39.5, hitY: 40.7, hitWidth: 4.4, hitHeight: 5.4, radius: 7, label: "手机红线裁边", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
-        { id: "h2", evidenceId: "unsent_reply_draft", x: 39.5, y: 45.5, hitX: 39.5, hitY: 45.5, hitWidth: 3.8, hitHeight: 3.8, radius: 6, label: "没按下的发送角", found: false, renderMode: "embedded", revealText: "祝福卡在发送前一秒", animationKind: "chat" },
-        { id: "h3", evidenceId: "group_invite_popup", x: 41.9, y: 54.6, hitX: 41.9, hitY: 54.6, hitWidth: 6.2, hitHeight: 5.8, radius: 7, label: "毯边进群卡", found: false, renderMode: "embedded", revealText: "收益后面接着进群按钮", animationKind: "chat" },
-        { id: "h4", evidenceId: "pinned_review_comment", x: 71.9, y: 12.5, hitX: 71.9, hitY: 12.5, hitWidth: 4.6, hitHeight: 5.8, radius: 6, label: "便签墙红图钉", found: false, renderMode: "embedded", revealText: "复盘被钉在最前面", animationKind: "chat" },
-        { id: "h5", evidenceId: "ai_course_deadline", x: 72.4, y: 34.6, hitX: 72.4, hitY: 34.6, hitWidth: 5.4, hitHeight: 7.0, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
-        { id: "h6", evidenceId: "side_hustle_bookmark", x: 86.4, y: 45.0, hitX: 86.4, hitY: 45.0, hitWidth: 4.8, hitHeight: 8.2, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
-        { id: "h7", evidenceId: "mortgage_debit_notice", x: 54.4, y: 71.7, hitX: 54.4, hitY: 71.7, hitWidth: 6.6, hitHeight: 6.8, radius: 7, label: "钥匙压住的信封角", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
-        { id: "h8", evidenceId: "household_overdue_bill", x: 82.4, y: 72.3, hitX: 82.4, hitY: 72.3, hitWidth: 6.0, hitHeight: 7.4, radius: 7, label: "插排旁红章纸角", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 40.4, y: 37.7, hitX: 40.4, hitY: 37.7, hitWidth: 5.2, hitHeight: 7.4, radius: 7, label: "手机里的收益红线", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 9.2, y: 72.6, hitX: 9.2, hitY: 72.6, hitWidth: 7.8, hitHeight: 8.6, radius: 7, label: "沙发扶手草稿本", found: false, renderMode: "embedded", revealText: "祝福写了一半就停了", animationKind: "chat" },
+        { id: "h3", evidenceId: "group_invite_popup", x: 53.0, y: 15.9, hitX: 53.0, hitY: 15.9, hitWidth: 8.0, hitHeight: 8.0, radius: 7, label: "小屏上的进群弹窗", found: false, renderMode: "embedded", revealText: "高光后面接着进群按钮", animationKind: "chat" },
+        { id: "h4", evidenceId: "pinned_review_comment", x: 73.1, y: 16.0, hitX: 73.1, hitY: 16.0, hitWidth: 9.0, hitHeight: 8.5, radius: 7, label: "电脑置顶评论行", found: false, renderMode: "embedded", revealText: "复盘入口被顶到最上面", animationKind: "chat" },
+        { id: "h5", evidenceId: "ai_course_deadline", x: 70.8, y: 26.2, hitX: 70.8, hitY: 26.2, hitWidth: 5.2, hitHeight: 7.2, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
+        { id: "h6", evidenceId: "side_hustle_bookmark", x: 88.5, y: 35.1, hitX: 88.5, hitY: 35.1, hitWidth: 5.2, hitHeight: 9.2, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 67.3, y: 76.9, hitX: 67.3, hitY: 76.9, hitWidth: 8.2, hitHeight: 7.2, radius: 7, label: "照片旁还款钥匙", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
+        { id: "h8", evidenceId: "household_overdue_bill", x: 66.7, y: 94.9, hitX: 66.7, hitY: 94.9, hitWidth: 8.2, hitHeight: 6.6, radius: 7, label: "桌沿逾期红章", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
       ]
     }
   ]
