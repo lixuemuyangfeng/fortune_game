@@ -46,7 +46,7 @@ function fileHash(path) {
 test("all playable levels meet narrative and interaction content requirements", () => {
   const knownEvidenceIds = evidenceIds();
 
-  for (const sceneId of ["office", "rooftop", "convenience", "social", "ai_launch", "meeting"]) {
+  for (const sceneId of ["office", "rooftop", "convenience", "social", "ai_launch", "meeting", "nest"]) {
     const block = sceneBlock(sceneId);
     const hotspots = hotspotObjects(block);
 
@@ -131,6 +131,17 @@ test("all playable levels meet narrative and interaction content requirements", 
         "meeting hotspots have explicit click feedback animations"
       );
     }
+    if (sceneId === "nest") {
+      assert.ok(hotspots.length > hotspotObjects(sceneBlock("meeting")).length, "nest increases clue count after the meeting level");
+      assert.match(block, /decoys: \[/, "nest has config-level decoy zones");
+      assert.ok([...block.matchAll(/\{ id: "[a-z-]+", x: [0-9.]+, y: [0-9.]+, hitWidth: [0-9.]+, hitHeight: [0-9.]+, label: "[^"]+" \}/g)].length >= 30, "nest has at least thirty decoys");
+      const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
+      assert.deepEqual(
+        animationKinds,
+        ["kline", "receipt", "ticket", "photo", "alert", "contract", "sign", "goldLine", "scratch", "photo", "note", "contract"],
+        "nest hotspots have explicit click feedback animations"
+      );
+    }
 
     for (const assetPath of assetPaths(block)) {
       assert.ok(existsSync(join(root, "public", assetPath)), `${sceneId} asset exists: ${assetPath}`);
@@ -204,6 +215,12 @@ test("game scene design iron rules are documented and obvious failed placeholder
       `meeting ${state} raster state exists`
     );
   }
+  for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9", "progress-10", "progress-11", "progress-12"]) {
+    assert.ok(
+      existsSync(join(root, "public/assets/game/nest/states", `nest-${state}.png`)),
+      `nest ${state} raster state exists`
+    );
+  }
   const socialStateHashes = new Set(
     ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"].map((state) =>
       fileHash(join(root, "public/assets/game/social/states", `social-${state}.png`))
@@ -224,6 +241,12 @@ test("game scene design iron rules are documented and obvious failed placeholder
     )
   );
   assert.equal(meetingStateHashes.size, 11, "meeting progress rasters are distinct state images");
+  const nestStateHashes = new Set(
+    ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9", "progress-10", "progress-11", "progress-12"].map((state) =>
+      fileHash(join(root, "public/assets/game/nest/states", `nest-${state}.png`))
+    )
+  );
+  assert.equal(nestStateHashes.size, 13, "nest progress rasters are distinct state images");
   assert.match(taskStateSource, /foreground Zhou Qiming character object/, "task state records the foreground character object");
   assert.doesNotMatch(runtimeSources, /已归还/, "runtime does not use semantically detached chat feedback");
   assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");
@@ -232,4 +255,5 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /scene\.decoys/, "social scene consumes config-level decoy zones");
   assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /ai_launch/, "ai launch scene uses the same decoy-aware scene path");
   assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /meeting/, "meeting scene uses the same decoy-aware scene path");
+  assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /nest/, "nest scene uses the same decoy-aware scene path");
 });

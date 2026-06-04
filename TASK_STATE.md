@@ -166,6 +166,10 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Sixth level QA finding resolved: the first meeting raster was rejected during self-review because it was too close to "click all text/table blocks". It was replaced with a denser meeting-room scene where clues are anchored to object relationships: empty support boxes, Zhou's name card, red-X risk memo, expanded action tracker, target/budget chart, rejected headcount form on an empty chair, Friday calendar/cold coffee, laser pointer, locked budget folder, and whiteboard risk cluster.
 - Sixth level QA finding resolved: completion screenshot review found the whiteboard clue effect too close to Zhou Qiming's face. The h10 source center was moved from 477,187 to 560,170 and the hit box was narrowed from 20.0 x 25.0 to 14.0 x 20.0.
 - Sixth level QA risk: `meeting-progress-1..10` are mechanically derived local-state rasters, not true generated posture/expression redraws. Treat the level as playable WIP, not final production character-state art.
+- Seventh level progress: added playable final `nest` / `暴富噪声母巢` with 12 clues, increasing difficulty after the 10-clue meeting level. Routing, config, Phaser preload/scene registration, local dev picker flow, Playwright coverage, production brief, image review, hotspot calibration, and `nest-progress-0..12` raster states are in place.
+- Seventh level QA finding resolved: the first generated mother-nest candidate was rejected before integration because it used too many readable labels. The accepted candidate relies more on object/icon relationships: cracked keyboard/chart, burned gold receipt, scratch-ticket roll, lens/photo shard, AI timer module, blame pipe, toy-car tag, shield tag, stop token, film-frame tag, warning price tag, and process lock tag.
+- Seventh level QA finding resolved: Playwright caught overlap between `连环差一点票卷` and `止损停牌`. h3/h9 were narrowed and separated in both config and `docs/nest-hotspot-calibration.md`.
+- Seventh level QA risk: `nest-progress-1..12` are mechanically derived local-state rasters, not true generated posture/expression redraws. Treat the final level as playable WIP, not final production character-state art.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -177,7 +181,7 @@ Second-level optimization plan:
 
 - Keep later levels on the bitmap asset pipeline; do not restart SVG placeholder generation for production scenes.
 - Apply the second-level lesson to later levels before coding them: each next level needs more deliberate clue hiding, scene-layer distribution, and per-clue character/proxy state progression.
-- Continue with the next campaign level only after keeping the sixth-level review/calibration artifacts current; later levels must avoid text-block shortcuts and use object relationships plus same-category decoys as the default design mode.
+- Next product pass should review all seven playable levels for final-art gaps, especially mechanically derived progress states in levels 5-7, before claiming production-grade completion.
 - Add tests for backend ad placement limits and level progress snapshots.
 - Then implement real backend adapter boundaries for WeChat friend ranking and remote ad placement.
 
@@ -238,3 +242,4 @@ Second-level optimization plan:
 - After adding fifth-level hit-effect specialization, Playwright coverage, and raster-state hash guards on 2026-06-04, `npm run build` passed again with the existing chunk-size warning. `npm test` remains intentionally unrunnable until the required AI-launch assets are generated.
 - After adding the first playable AI-launch raster assets and hotspot calibration on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-ai-launch-intro.png`, `artifacts/playtest-ai-launch-mid-progress.png`, `artifacts/playtest-ai-launch-complete.png`, and `artifacts/playtest-ai-launch-mobile-intro.png`.
 - After adding and self-reworking the sixth `meeting` level on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-meeting-intro.png`, `artifacts/playtest-meeting-mid-progress.png`, `artifacts/playtest-meeting-complete.png`, and `artifacts/playtest-meeting-mobile-intro.png`.
+- After adding and self-reworking the seventh `nest` final level on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-nest-intro.png`, `artifacts/playtest-nest-mid-progress.png`, `artifacts/playtest-nest-complete.png`, and `artifacts/playtest-nest-mobile-intro.png`.

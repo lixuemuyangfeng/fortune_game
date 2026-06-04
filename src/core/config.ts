@@ -425,6 +425,102 @@ export const gameConfig: GameConfig = {
       emotion: "stubborn",
       theme: "ai",
       counterText: "擦得掉字，擦不掉责任。"
+    },
+    nest_office_noise_core: {
+      id: "nest_office_noise_core",
+      title: "碎键盘行情芯",
+      detail: "断掉的键盘还在往粉碎口里喂行情纸，踏空噪声就是这么续命的。",
+      emotion: "envy",
+      theme: "gold",
+      counterText: "不是每辆车都值得上。"
+    },
+    nest_gold_receipt_heat: {
+      id: "nest_gold_receipt_heat",
+      title: "半焦金店小票",
+      detail: "小票被烤到卷边，还在假装自己是长期配置。",
+      emotion: "stubborn",
+      theme: "gold",
+      counterText: "嘴硬不是策略。"
+    },
+    nest_lottery_near_miss_roll: {
+      id: "nest_lottery_near_miss_roll",
+      title: "连环差一点票卷",
+      detail: "每一格都差一点，卷起来就像下一张一定会中。",
+      emotion: "fantasy",
+      theme: "lottery",
+      counterText: "差一点不等于差一张。"
+    },
+    nest_social_filter_shard: {
+      id: "nest_social_filter_shard",
+      title: "高光滤镜碎片",
+      detail: "镜片只反射布好的那一角，剩下的乱桌面被裁在外面。",
+      emotion: "breakdown",
+      theme: "gold",
+      counterText: "别人发的是可发布版本。"
+    },
+    nest_ai_panic_meter: {
+      id: "nest_ai_panic_meter",
+      title: "恐慌课程计时器",
+      detail: "计时器插在课程模块旁边，先替你制造来不及。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "吓人的人先赚钱。"
+    },
+    nest_meeting_blame_pipe: {
+      id: "nest_meeting_blame_pipe",
+      title: "甩锅管阀",
+      detail: "文件夹顺着管道往同一个托盘里掉，资源还在阀门外面。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "没有资源的机会叫甩锅。"
+    },
+    tag_not_every_car: {
+      id: "tag_not_every_car",
+      title: "不上车金属牌",
+      detail: "小车坡道旁挂着刹车牌，提醒你不是每条线都通往终点。",
+      emotion: "envy",
+      theme: "gold",
+      counterText: "不是每辆车都值得上。"
+    },
+    tag_stubborn_not_strategy: {
+      id: "tag_stubborn_not_strategy",
+      title: "裂盾策略牌",
+      detail: "盾牌已经裂了，还想挡住那张发烫的小票。",
+      emotion: "stubborn",
+      theme: "gold",
+      counterText: "嘴硬不是策略。"
+    },
+    tag_near_miss_not_next: {
+      id: "tag_near_miss_not_next",
+      title: "止损停牌",
+      detail: "停止牌压在票卷出口，终于让差一点停下来。",
+      emotion: "fantasy",
+      theme: "lottery",
+      counterText: "差一点不等于差一张。"
+    },
+    tag_publishable_version: {
+      id: "tag_publishable_version",
+      title: "可发布画框",
+      detail: "画框只夹住照片里最顺眼的一角，桌上的过程被留在框外。",
+      emotion: "breakdown",
+      theme: "gold",
+      counterText: "别人发的是可发布版本。"
+    },
+    tag_panic_sellers_profit: {
+      id: "tag_panic_sellers_profit",
+      title: "恐慌价签",
+      detail: "价签挂在倒计时线缆上，急的人还没报名，卖课的人已经结账。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "吓人的人先赚钱。"
+    },
+    tag_no_resource_blame: {
+      id: "tag_no_resource_blame",
+      title: "流程封签",
+      detail: "封签卡在锁阀上，先把没有资源的锅挡回流程。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "没有资源的机会叫甩锅。"
     }
   },
   scenes: [
@@ -632,6 +728,67 @@ export const gameConfig: GameConfig = {
         { id: "h8", evidenceId: "opportunity_laser_pointer", x: 64.5, y: 24.3, hitX: 64.5, hitY: 24.3, hitWidth: 13.0, hitHeight: 20.0, radius: 7, label: "机会激光笔", found: false, renderMode: "embedded", revealText: "被照亮的是话术", animationKind: "alert" },
         { id: "h9", evidenceId: "budget_locked_folder", x: 71.9, y: 81.4, hitX: 71.9, hitY: 81.4, hitWidth: 20.0, hitHeight: 20.0, radius: 7, label: "预算锁盒", found: false, renderMode: "embedded", revealText: "预算锁住以后，机会只剩口头", animationKind: "contract" },
         { id: "h10", evidenceId: "erased_whiteboard_risk", x: 43.8, y: 23.6, hitX: 43.8, hitY: 23.6, hitWidth: 14.0, hitHeight: 20.0, radius: 7, label: "白板淡掉的风险", found: false, renderMode: "embedded", revealText: "擦掉字，不等于擦掉责任", animationKind: "sign" }
+      ]
+    },
+    {
+      id: "nest",
+      name: "暴富噪声母巢",
+      theme: "ai",
+      description: "地下室里，前六关的噪声被重新接线，等着再把人拖回同一个循环。",
+      backgroundImage: "/assets/game/nest/states/nest-progress-0.png",
+      hint: "先给噪声分类",
+      enemyName: "暴富噪声母巢",
+      enemyDescription: "它不再伪装，直接把踏空、接盘、差一点、高光、恐慌和甩锅接成一台机器。",
+      machineName: "母巢粉碎机",
+      machineEmbedded: true,
+      completeText: "噪声拆成了六类残骸。以前它们轮流打你，现在轮到你给它们分类、粉碎、挂牌。",
+      decoys: [
+        { id: "ordinary-keyboard-left", x: 16.0, y: 33.0, hitWidth: 13.0, hitHeight: 11.0, label: "普通旧键盘" },
+        { id: "left-laptop-screen", x: 13.6, y: 30.5, hitWidth: 14.0, hitHeight: 15.0, label: "普通旧屏幕" },
+        { id: "drawer-labels", x: 5.0, y: 18.0, hitWidth: 9.0, hitHeight: 20.0, label: "抽屉标签" },
+        { id: "book-shelf", x: 21.5, y: 15.0, hitWidth: 14.0, hitHeight: 18.0, label: "旧书架" },
+        { id: "lamp-head", x: 11.0, y: 48.0, hitWidth: 11.0, hitHeight: 13.0, label: "台灯" },
+        { id: "ordinary-left-tags", x: 8.0, y: 58.0, hitWidth: 12.0, hitHeight: 14.0, label: "普通旧票据" },
+        { id: "burned-paper-decoy", x: 18.0, y: 68.0, hitWidth: 10.0, hitHeight: 12.0, label: "烧焦纸片" },
+        { id: "normal-chain", x: 33.0, y: 65.0, hitWidth: 6.0, hitHeight: 12.0, label: "普通链条" },
+        { id: "ticket-scraps", x: 29.0, y: 79.0, hitWidth: 14.0, hitHeight: 10.0, label: "散落票根" },
+        { id: "ordinary-token-row", x: 38.0, y: 87.0, hitWidth: 15.0, hitHeight: 8.0, label: "普通圆牌" },
+        { id: "shield-decoy-left", x: 35.0, y: 93.0, hitWidth: 9.0, hitHeight: 9.0, label: "普通盾牌" },
+        { id: "machine-icon-row", x: 55.0, y: 17.5, hitWidth: 20.0, hitHeight: 9.0, label: "机器状态图标" },
+        { id: "machine-mouth", x: 58.0, y: 36.0, hitWidth: 14.0, hitHeight: 15.0, label: "粉碎口" },
+        { id: "zhou-arm", x: 58.5, y: 41.0, hitWidth: 12.0, hitHeight: 11.0, label: "周启明手臂" },
+        { id: "normal-market-paper", x: 55.0, y: 47.0, hitWidth: 10.0, hitHeight: 12.0, label: "普通行情纸" },
+        { id: "photo-box-edge", x: 62.0, y: 75.0, hitWidth: 11.0, hitHeight: 18.0, label: "照片盒边" },
+        { id: "ordinary-photo-left", x: 54.5, y: 72.0, hitWidth: 8.0, hitHeight: 11.0, label: "普通照片" },
+        { id: "ordinary-photo-right", x: 70.0, y: 72.0, hitWidth: 9.0, hitHeight: 12.0, label: "普通相片" },
+        { id: "black-lens-decoy", x: 48.5, y: 86.0, hitWidth: 11.0, hitHeight: 11.0, label: "黑色镜片" },
+        { id: "red-lens-decoy", x: 61.0, y: 88.0, hitWidth: 10.0, hitHeight: 9.0, label: "红色镜片" },
+        { id: "pipe-folder-row", x: 78.0, y: 24.0, hitWidth: 18.0, hitHeight: 14.0, label: "普通文件槽" },
+        { id: "pipe-nozzle-row", x: 78.0, y: 45.0, hitWidth: 18.0, hitHeight: 10.0, label: "普通管口" },
+        { id: "hanging-tags-row", x: 72.0, y: 61.0, hitWidth: 22.0, hitHeight: 12.0, label: "普通吊牌" },
+        { id: "red-valve-wheel", x: 93.0, y: 47.0, hitWidth: 10.0, hitHeight: 14.0, label: "红色阀轮" },
+        { id: "right-pipe-locks", x: 94.0, y: 19.0, hitWidth: 10.0, hitHeight: 20.0, label: "普通锁头" },
+        { id: "toy-car-silver", x: 84.0, y: 67.0, hitWidth: 10.0, hitHeight: 10.0, label: "银色玩具车" },
+        { id: "toy-car-black", x: 91.0, y: 68.0, hitWidth: 9.0, hitHeight: 10.0, label: "黑色玩具车" },
+        { id: "toy-car-yellow", x: 97.0, y: 68.0, hitWidth: 8.0, hitHeight: 10.0, label: "黄色玩具车" },
+        { id: "right-wood-box", x: 88.0, y: 80.0, hitWidth: 20.0, hitHeight: 15.0, label: "木箱边缘" },
+        { id: "foreground-keys", x: 75.0, y: 92.0, hitWidth: 12.0, hitHeight: 8.0, label: "普通钥匙圈" },
+        { id: "bottom-notes", x: 58.0, y: 94.0, hitWidth: 15.0, hitHeight: 8.0, label: "普通便签堆" },
+        { id: "cable-left", x: 5.0, y: 42.0, hitWidth: 8.0, hitHeight: 22.0, label: "普通线缆" }
+      ],
+      hotspots: [
+        { id: "h1", evidenceId: "nest_office_noise_core", x: 52.8, y: 43.0, hitX: 52.8, hitY: 43.0, hitWidth: 14.0, hitHeight: 18.0, radius: 7, label: "碎键盘行情芯", found: false, renderMode: "embedded", revealText: "踏空噪声靠半张行情纸续命", animationKind: "kline" },
+        { id: "h2", evidenceId: "nest_gold_receipt_heat", x: 10.0, y: 68.2, hitX: 10.0, hitY: 68.2, hitWidth: 14.0, hitHeight: 16.0, radius: 7, label: "半焦金店小票", found: false, renderMode: "embedded", revealText: "接盘余热还在小票边上冒烟", animationKind: "receipt" },
+        { id: "h3", evidenceId: "nest_lottery_near_miss_roll", x: 37.4, y: 67.8, hitX: 37.4, hitY: 67.8, hitWidth: 9.0, hitHeight: 13.0, radius: 7, label: "连环差一点票卷", found: false, renderMode: "embedded", revealText: "差一点卷起来也不是下一张", animationKind: "ticket" },
+        { id: "h4", evidenceId: "nest_social_filter_shard", x: 57.4, y: 73.7, hitX: 57.4, hitY: 73.7, hitWidth: 16.0, hitHeight: 18.0, radius: 7, label: "高光滤镜碎片", found: false, renderMode: "embedded", revealText: "镜片只留下可发布版本", animationKind: "photo" },
+        { id: "h5", evidenceId: "nest_ai_panic_meter", x: 18.0, y: 35.4, hitX: 18.0, hitY: 35.4, hitWidth: 18.0, hitHeight: 18.0, radius: 7, label: "恐慌课程计时器", found: false, renderMode: "embedded", revealText: "倒计时先替卖课的人工作", animationKind: "alert" },
+        { id: "h6", evidenceId: "nest_meeting_blame_pipe", x: 78.0, y: 41.6, hitX: 78.0, hitY: 41.6, hitWidth: 22.0, hitHeight: 22.0, radius: 7, label: "甩锅管阀", found: false, renderMode: "embedded", revealText: "文件沿着管子掉进同一个锅里", animationKind: "contract" },
+        { id: "h7", evidenceId: "tag_not_every_car", x: 87.4, y: 81.2, hitX: 87.4, hitY: 81.2, hitWidth: 14.0, hitHeight: 16.0, radius: 7, label: "不上车金属牌", found: false, renderMode: "embedded", revealText: "车多，不代表都值得上", animationKind: "sign" },
+        { id: "h8", evidenceId: "tag_stubborn_not_strategy", x: 31.4, y: 91.0, hitX: 31.4, hitY: 91.0, hitWidth: 12.0, hitHeight: 12.0, radius: 7, label: "裂盾策略牌", found: false, renderMode: "embedded", revealText: "盾裂了，嘴硬就挡不住了", animationKind: "goldLine" },
+        { id: "h9", evidenceId: "tag_near_miss_not_next", x: 43.0, y: 76.8, hitX: 43.0, hitY: 76.8, hitWidth: 7.0, hitHeight: 8.0, radius: 7, label: "止损停牌", found: false, renderMode: "embedded", revealText: "停止牌压住差一点出口", animationKind: "scratch" },
+        { id: "h10", evidenceId: "tag_publishable_version", x: 69.2, y: 73.2, hitX: 69.2, hitY: 73.2, hitWidth: 10.0, hitHeight: 17.0, radius: 7, label: "可发布画框", found: false, renderMode: "embedded", revealText: "画框只夹住最好看的角", animationKind: "photo" },
+        { id: "h11", evidenceId: "tag_panic_sellers_profit", x: 4.7, y: 35.6, hitX: 4.7, hitY: 35.6, hitWidth: 9.0, hitHeight: 14.0, radius: 7, label: "恐慌价签", found: false, renderMode: "embedded", revealText: "吓人的人先把价签挂好了", animationKind: "note" },
+        { id: "h12", evidenceId: "tag_no_resource_blame", x: 91.5, y: 27.0, hitX: 91.5, hitY: 27.0, hitWidth: 12.0, hitHeight: 18.0, radius: 7, label: "流程封签", found: false, renderMode: "embedded", revealText: "锁阀先把锅挡回流程", animationKind: "contract" }
       ]
     }
   ]

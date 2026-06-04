@@ -22,6 +22,7 @@ const convenienceSceneId = "convenience";
 const socialSceneId = "social";
 const aiLaunchSceneId = "ai_launch";
 const meetingSceneId = "meeting";
+const nestSceneId = "nest";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -403,8 +404,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, meetingSceneId));
     return;
   }
+  if (scene.id === meetingSceneId) {
+    toast = "地下室传来轰鸣，暴富噪声母巢开始接线。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, nestSceneId));
+    return;
+  }
 
-  toast = "画饼这波先切开了。母巢还在地下室接线，先把锅走完流程。";
+  toast = "母巢已经拆完。暴富幻想所正式开张，只是不保证发财。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -551,6 +560,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "先别接锅，看看哪些资源只停在嘴上。",
       introNarrative: "屏幕上写着关键在协同，桌上的表格却只把周启明写进了流程。",
       completeNarrative: "空资源格、红叉风险、预算剪刀差、人头申请和周五日历都切开了。没有资源的机会，叫甩锅。"
+    };
+  }
+  if (sceneId === nestSceneId) {
+    return {
+      place: "暴富幻想所地下室",
+      time: "周四 23:59",
+      goal: "找出 12 个母巢残片",
+      goalDetail: "把六类污染源和六枚反击标签从噪声堆里分出来。",
+      completeGoal: "母巢已拆解",
+      startAction: "开始粉碎",
+      continueAction: "继续粉碎",
+      startToast: "别急着被它们轮流打，先给这些噪声分类。",
+      introNarrative: "办公室、天台、便利站、家里、发布会和会议室的残片，都被接进了同一台机器。",
+      completeNarrative: "踏空、接盘、差一点、高光、恐慌和甩锅都拆成了残骸。以前它们轮流打你，现在轮到你给它们挂牌。"
     };
   }
 
