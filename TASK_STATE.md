@@ -162,6 +162,10 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Fifth level guardrail update: added fifth-level Playwright flow coverage, filled the AI-launch image-review prompt contract, and added a config-validation guard that will reject byte-identical `ai-launch-progress-0..9` rasters once assets exist. The image generation service then returned `ServerError`, so final art remains externally blocked.
 - Fifth level progress: generated and integrated the first playable AI-launch raster scene under `public/assets/game/ai-launch/`, calibrated all 9 hotspots from the 1280x720 final raster, fixed the h2/h6 overlap found by Playwright, and passed `npm test`, `npm run build`, and the full `npm run test:e2e` suite.
 - Fifth level QA risk: `ai-launch-progress-1..9` are mechanically derived local-state rasters, not true generated same-camera posture/expression redraws. The level is playable, but this state-asset shortcut should be replaced before final art approval.
+- Sixth level progress: added playable `meeting` / `邢总画饼复盘会` with 10 clues, increasing difficulty after the 9-clue AI-launch level. Routing, config, Phaser preload/scene reuse, local dev scene picker flow, Playwright coverage, production brief, image review, hotspot calibration, and `meeting-progress-0..10` raster states are in place.
+- Sixth level QA finding resolved: the first meeting raster was rejected during self-review because it was too close to "click all text/table blocks". It was replaced with a denser meeting-room scene where clues are anchored to object relationships: empty support boxes, Zhou's name card, red-X risk memo, expanded action tracker, target/budget chart, rejected headcount form on an empty chair, Friday calendar/cold coffee, laser pointer, locked budget folder, and whiteboard risk cluster.
+- Sixth level QA finding resolved: completion screenshot review found the whiteboard clue effect too close to Zhou Qiming's face. The h10 source center was moved from 477,187 to 560,170 and the hit box was narrowed from 20.0 x 25.0 to 14.0 x 20.0.
+- Sixth level QA risk: `meeting-progress-1..10` are mechanically derived local-state rasters, not true generated posture/expression redraws. Treat the level as playable WIP, not final production character-state art.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -173,6 +177,7 @@ Second-level optimization plan:
 
 - Keep later levels on the bitmap asset pipeline; do not restart SVG placeholder generation for production scenes.
 - Apply the second-level lesson to later levels before coding them: each next level needs more deliberate clue hiding, scene-layer distribution, and per-clue character/proxy state progression.
+- Continue with the next campaign level only after keeping the sixth-level review/calibration artifacts current; later levels must avoid text-block shortcuts and use object relationships plus same-category decoys as the default design mode.
 - Add tests for backend ad placement limits and level progress snapshots.
 - Then implement real backend adapter boundaries for WeChat friend ranking and remote ad placement.
 
@@ -232,3 +237,4 @@ Second-level optimization plan:
 - During the fifth-level WIP pass on 2026-06-04, `npm run build` passed with the existing chunk-size warning after adding `ai_launch` routing and config. Full `npm test` and Playwright QA are intentionally pending until the final `ai-launch-progress-0..9` rasters exist.
 - After adding fifth-level hit-effect specialization, Playwright coverage, and raster-state hash guards on 2026-06-04, `npm run build` passed again with the existing chunk-size warning. `npm test` remains intentionally unrunnable until the required AI-launch assets are generated.
 - After adding the first playable AI-launch raster assets and hotspot calibration on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-ai-launch-intro.png`, `artifacts/playtest-ai-launch-mid-progress.png`, `artifacts/playtest-ai-launch-complete.png`, and `artifacts/playtest-ai-launch-mobile-intro.png`.
+- After adding and self-reworking the sixth `meeting` level on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-meeting-intro.png`, `artifacts/playtest-meeting-mid-progress.png`, `artifacts/playtest-meeting-complete.png`, and `artifacts/playtest-meeting-mobile-intro.png`.

@@ -21,6 +21,7 @@ const rooftopSceneId = "rooftop";
 const convenienceSceneId = "convenience";
 const socialSceneId = "social";
 const aiLaunchSceneId = "ai_launch";
+const meetingSceneId = "meeting";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -394,8 +395,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, aiLaunchSceneId));
     return;
   }
+  if (scene.id === aiLaunchSceneId) {
+    toast = "玻璃会议室已经亮灯，责任切割机开始预热。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, meetingSceneId));
+    return;
+  }
 
-  toast = "恐慌这波先降噪了。下一站还在接线，先别拿发布会样片审判自己。";
+  toast = "画饼这波先切开了。母巢还在地下室接线，先把锅走完流程。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -528,6 +537,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "别急着报名转型，先把恐慌是从哪里来的找出来。",
       introNarrative: "发布会很顺，课程很急，桌上的旧系统和审批单一点也不配合。",
       completeNarrative: "演示、课程、旧令牌、盖章队列和老板追问都被拆开了。AI 可以用，恐慌不用买。"
+    };
+  }
+  if (sceneId === meetingSceneId) {
+    return {
+      place: "字节跳桶玻璃会议室",
+      time: "周四 09:00",
+      goal: "找出 10 个甩锅接口",
+      goalDetail: "把机会、协同、预算和人手之间缺掉的部分找出来。",
+      completeGoal: "画饼锅已切开",
+      startAction: "开始切割",
+      continueAction: "继续切割",
+      startToast: "先别接锅，看看哪些资源只停在嘴上。",
+      introNarrative: "屏幕上写着关键在协同，桌上的表格却只把周启明写进了流程。",
+      completeNarrative: "空资源格、红叉风险、预算剪刀差、人头申请和周五日历都切开了。没有资源的机会，叫甩锅。"
     };
   }
 

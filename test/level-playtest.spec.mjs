@@ -24,6 +24,18 @@ const aiLaunchHotspots = [
   "替代新闻剪报",
   "未接老板消息"
 ];
+const meetingHotspots = [
+  "空着的资源协同格",
+  "周启明负责人牌",
+  "红叉风险页",
+  "行动跟踪表",
+  "目标预算剪刀差",
+  "人头申请不通过",
+  "周五截止日历",
+  "机会激光笔",
+  "预算锁盒",
+  "白板淡掉的风险"
+];
 
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
@@ -204,6 +216,34 @@ test.describe("phaser level flow", () => {
     await page.screenshot({ path: "artifacts/playtest-ai-launch-complete.png", fullPage: true });
   });
 
+  test("player can enter and complete the meeting blame-shift Phaser level", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+
+    await page.getByLabel("本机临时选关").selectOption("meeting");
+    await expect(page.getByRole("heading", { name: "邢总画饼复盘会" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-meeting-intro.png", fullPage: true });
+    await page.getByRole("button", { name: "开始切割" }).click();
+    await expect(page.getByLabel("可点击线索")).toBeVisible();
+
+    for (const [index, hotspot] of meetingHotspots.entries()) {
+      await page.getByRole("button", { name: hotspot }).click();
+      await expect(page.getByText("已找到")).toBeVisible();
+      if (index === 5) {
+        await page.waitForTimeout(700);
+        await page.screenshot({ path: "artifacts/playtest-meeting-mid-progress.png", fullPage: true });
+      }
+    }
+
+    await expect(page.getByText("画饼锅已切开").first()).toBeVisible();
+    await expect(page.getByText("证据袋已封口").first()).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-meeting-complete.png", fullPage: true });
+  });
+
   test("mobile first screen keeps the Phaser stage and controls usable", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("http://localhost:5173/");
@@ -228,5 +268,12 @@ test.describe("phaser level flow", () => {
     await expect(page.getByRole("button", { name: "开始降噪" })).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-ai-launch-mobile-intro.png", fullPage: true });
+
+    await page.getByLabel("本机临时选关").selectOption("meeting");
+    await expect(page.getByRole("heading", { name: "邢总画饼复盘会" })).toBeVisible();
+    await expect(page.locator("#phaser-game canvas")).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始切割" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-meeting-mobile-intro.png", fullPage: true });
   });
 });

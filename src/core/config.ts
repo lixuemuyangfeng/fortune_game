@@ -345,6 +345,86 @@ export const gameConfig: GameConfig = {
       emotion: "breakdown",
       theme: "ai",
       counterText: "它能生成回复，不能替你接邢总的电话。"
+    },
+    empty_resource_collab_slide: {
+      id: "empty_resource_collab_slide",
+      title: "空着的资源协同格",
+      detail: "屏幕上写着协同落地，协同栏却像还没来上班。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "没有人认领的协同，不叫资源。"
+    },
+    zhou_owner_nameplate: {
+      id: "zhou_owner_nameplate",
+      title: "周启明负责人牌",
+      detail: "桌牌把项目负责人写得很清楚，其他支持人却不在同一张牌上。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "名字被摆上桌，不代表资源也到场。"
+    },
+    crossed_out_risk_page: {
+      id: "crossed_out_risk_page",
+      title: "红叉风险页",
+      detail: "风险没有被解决，只是被红笔划得更安静。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "划掉风险，不等于风险下线。"
+    },
+    scope_creep_action_sheet: {
+      id: "scope_creep_action_sheet",
+      title: "行动跟踪表",
+      detail: "会前说初稿，会后表格已经排成完整方案的节奏。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "表格最擅长把一句话变成一周活。"
+    },
+    target_budget_gap_chart: {
+      id: "target_budget_gap_chart",
+      title: "目标预算剪刀差",
+      detail: "目标往上，预算往下，中间那段差距正好落在周启明身上。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "数学不会因为叫挑战就变简单。"
+    },
+    rejected_headcount_form: {
+      id: "rejected_headcount_form",
+      title: "人头申请不通过",
+      detail: "空椅子还在，申请表已经盖了不予通过。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "人没补，目标却补了一大截。"
+    },
+    friday_deadline_calendar: {
+      id: "friday_deadline_calendar",
+      title: "周五截止日历",
+      detail: "日历把周五圈出来，旁边的咖啡已经替这周先加班了。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "截止日不是资源，只是倒计时。"
+    },
+    opportunity_laser_pointer: {
+      id: "opportunity_laser_pointer",
+      title: "机会激光笔",
+      detail: "激光点停在机会两个字上，下一秒任务就落到别人桌上。",
+      emotion: "fantasy",
+      theme: "ai",
+      counterText: "被照亮的是话术，不是资源。"
+    },
+    budget_locked_folder: {
+      id: "budget_locked_folder",
+      title: "预算锁盒",
+      detail: "目标图贴在桌面正中，预算方案却被锁在文件堆旁边。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "预算锁住以后，机会就只剩口头。"
+    },
+    erased_whiteboard_risk: {
+      id: "erased_whiteboard_risk",
+      title: "白板淡掉的风险",
+      detail: "白板上还有风险被擦过的影子，会议纪要里却像从没出现。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "擦得掉字，擦不掉责任。"
     }
   },
   scenes: [
@@ -503,6 +583,55 @@ export const gameConfig: GameConfig = {
         { id: "h7", evidenceId: "seventeen_tabs_fatigue", x: 72.6, y: 4.8, hitX: 72.6, hitY: 4.8, hitWidth: 25.0, hitHeight: 5.8, radius: 7, label: "连播标签页", found: false, renderMode: "embedded", revealText: "发布会连播先替代了睡眠", animationKind: "chat" },
         { id: "h8", evidenceId: "job_replacement_clip", x: 41.7, y: 83.0, hitX: 41.7, hitY: 83.0, hitWidth: 20.0, hitHeight: 13.0, radius: 7, label: "替代新闻剪报", found: false, renderMode: "embedded", revealText: "标题留下恐慌，剪掉上下文", animationKind: "news" },
         { id: "h9", evidenceId: "boss_followup_unanswered", x: 8.5, y: 76.0, hitX: 8.5, hitY: 76.0, hitWidth: 11.0, hitHeight: 17.0, radius: 7, label: "未接老板消息", found: false, renderMode: "embedded", revealText: "AI 写初稿，邢总找真人", animationKind: "phone" }
+      ]
+    },
+    {
+      id: "meeting",
+      name: "邢总画饼复盘会",
+      theme: "ai",
+      description: "早上九点，会议室里写满成长机会，桌上的表单却把资源和风险都推回周启明这边。",
+      backgroundImage: "/assets/game/meeting/states/meeting-progress-0.png",
+      hint: "先把锅退回流程",
+      enemyName: "画饼增殖体",
+      enemyDescription: "它把无资源任务包装成成长机会，把老板的锅滑到周启明桌上。",
+      machineName: "责任切割机",
+      machineEmbedded: true,
+      completeText: "没有资源的机会，叫甩锅。饼可以收下，锅请走流程。",
+      decoys: [
+        { id: "ordinary-slide-title", x: 72.0, y: 9.8, hitWidth: 24.0, hitHeight: 7.5, label: "普通标题区" },
+        { id: "slide-action-list", x: 84.6, y: 22.0, hitWidth: 9.2, hitHeight: 14.0, label: "普通行动列表" },
+        { id: "whiteboard-checks", x: 39.8, y: 15.5, hitWidth: 8.0, hitHeight: 14.0, label: "白板普通勾选" },
+        { id: "whiteboard-pinned-pages", x: 48.5, y: 15.0, hitWidth: 8.6, hitHeight: 17.0, label: "白板普通附件" },
+        { id: "laptop-screen", x: 37.5, y: 45.0, hitWidth: 11.0, hitHeight: 10.0, label: "普通笔记本电脑" },
+        { id: "black-mug", x: 48.6, y: 42.8, hitWidth: 5.2, hitHeight: 6.4, label: "黑色咖啡杯" },
+        { id: "tissue-box", x: 61.4, y: 37.0, hitWidth: 7.4, hitHeight: 8.4, label: "纸巾盒" },
+        { id: "pen-cup", x: 67.0, y: 40.0, hitWidth: 5.0, hitHeight: 9.6, label: "笔筒" },
+        { id: "paper-stack-right", x: 80.2, y: 49.0, hitWidth: 13.0, hitHeight: 12.0, label: "普通文件堆" },
+        { id: "dark-folder", x: 69.5, y: 53.8, hitWidth: 10.0, hitHeight: 7.0, label: "普通文件夹" },
+        { id: "calculator", x: 56.2, y: 77.0, hitWidth: 7.2, hitHeight: 9.0, label: "计算器" },
+        { id: "normal-minutes", x: 22.8, y: 74.6, hitWidth: 15.0, hitHeight: 13.0, label: "普通会议记录" },
+        { id: "sticky-note-left", x: 25.4, y: 89.0, hitWidth: 9.5, hitHeight: 8.0, label: "普通便利贴" },
+        { id: "book-stack-left", x: 8.0, y: 63.0, hitWidth: 12.0, hitHeight: 11.0, label: "左侧书堆" },
+        { id: "thermos", x: 3.8, y: 84.0, hitWidth: 5.8, hitHeight: 11.0, label: "保温杯" },
+        { id: "name-card-row", x: 86.0, y: 35.0, hitWidth: 16.0, hitHeight: 5.8, label: "普通桌牌" },
+        { id: "plant-left", x: 2.6, y: 20.0, hitWidth: 5.2, hitHeight: 18.0, label: "绿植" },
+        { id: "glass-office", x: 21.0, y: 20.0, hitWidth: 18.0, hitHeight: 25.0, label: "玻璃外办公区" },
+        { id: "empty-chair-front", x: 5.2, y: 52.0, hitWidth: 9.0, hitHeight: 16.0, label: "普通空椅" },
+        { id: "paper-lower-right", x: 81.4, y: 88.0, hitWidth: 10.0, hitHeight: 13.0, label: "右下普通笔记" },
+        { id: "calendar-checkboxes", x: 89.2, y: 72.0, hitWidth: 9.0, hitHeight: 12.0, label: "日历普通事项" },
+        { id: "screen-empty-area", x: 64.2, y: 20.4, hitWidth: 8.0, hitHeight: 9.0, label: "投影普通空白" }
+      ],
+      hotspots: [
+        { id: "h1", evidenceId: "empty_resource_collab_slide", x: 88.7, y: 22.9, hitX: 88.7, hitY: 22.9, hitWidth: 17.0, hitHeight: 15.0, radius: 7, label: "空着的资源协同格", found: false, renderMode: "embedded", revealText: "协同写在屏幕上，人没写进格子里", animationKind: "kline" },
+        { id: "h2", evidenceId: "zhou_owner_nameplate", x: 50.0, y: 59.7, hitX: 50.0, hitY: 59.7, hitWidth: 8.0, hitHeight: 8.0, radius: 7, label: "周启明负责人牌", found: false, renderMode: "embedded", revealText: "名字摆上桌，资源没到场", animationKind: "contract" },
+        { id: "h3", evidenceId: "crossed_out_risk_page", x: 28.9, y: 72.6, hitX: 28.9, hitY: 72.6, hitWidth: 14.0, hitHeight: 13.0, radius: 7, label: "红叉风险页", found: false, renderMode: "embedded", revealText: "风险被划掉，不是被解决", animationKind: "news" },
+        { id: "h4", evidenceId: "scope_creep_action_sheet", x: 37.5, y: 74.3, hitX: 37.5, hitY: 74.3, hitWidth: 15.0, hitHeight: 17.0, radius: 7, label: "行动跟踪表", found: false, renderMode: "embedded", revealText: "一句初稿长成整张表", animationKind: "paper" },
+        { id: "h5", evidenceId: "target_budget_gap_chart", x: 53.5, y: 71.1, hitX: 53.5, hitY: 71.1, hitWidth: 15.0, hitHeight: 14.0, radius: 7, label: "目标预算剪刀差", found: false, renderMode: "embedded", revealText: "目标往上，预算往下", animationKind: "kline" },
+        { id: "h6", evidenceId: "rejected_headcount_form", x: 83.6, y: 51.0, hitX: 83.6, hitY: 51.0, hitWidth: 13.0, hitHeight: 20.0, radius: 7, label: "人头申请不通过", found: false, renderMode: "embedded", revealText: "人没补，目标先补上去了", animationKind: "receipt" },
+        { id: "h7", evidenceId: "friday_deadline_calendar", x: 12.5, y: 77.2, hitX: 12.5, hitY: 77.2, hitWidth: 17.0, hitHeight: 17.0, radius: 7, label: "周五截止日历", found: false, renderMode: "embedded", revealText: "截止日不是资源", animationKind: "note" },
+        { id: "h8", evidenceId: "opportunity_laser_pointer", x: 64.5, y: 24.3, hitX: 64.5, hitY: 24.3, hitWidth: 13.0, hitHeight: 20.0, radius: 7, label: "机会激光笔", found: false, renderMode: "embedded", revealText: "被照亮的是话术", animationKind: "alert" },
+        { id: "h9", evidenceId: "budget_locked_folder", x: 71.9, y: 81.4, hitX: 71.9, hitY: 81.4, hitWidth: 20.0, hitHeight: 20.0, radius: 7, label: "预算锁盒", found: false, renderMode: "embedded", revealText: "预算锁住以后，机会只剩口头", animationKind: "contract" },
+        { id: "h10", evidenceId: "erased_whiteboard_risk", x: 43.8, y: 23.6, hitX: 43.8, hitY: 23.6, hitWidth: 14.0, hitHeight: 20.0, radius: 7, label: "白板淡掉的风险", found: false, renderMode: "embedded", revealText: "擦掉字，不等于擦掉责任", animationKind: "sign" }
       ]
     }
   ]

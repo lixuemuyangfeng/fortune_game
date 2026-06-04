@@ -15,7 +15,8 @@ const characterStates = [
   "progress-6",
   "progress-7",
   "progress-8",
-  "progress-9"
+  "progress-9",
+  "progress-10"
 ] as const;
 type CharacterState = (typeof characterStates)[number];
 
@@ -584,26 +585,32 @@ export class SocialScene extends Phaser.Scene {
     return `progress-${Math.min(progress.foundCount, characterStates.length - 1)}` as CharacterState;
   }
 
-  private getTexturePrefix(): "social" | "ai-launch" {
-    return this.socialData.scene.id === "ai_launch" ? "ai-launch" : "social";
+  private getTexturePrefix(): "social" | "ai-launch" | "meeting" {
+    if (this.socialData.scene.id === "ai_launch") return "ai-launch";
+    if (this.socialData.scene.id === "meeting") return "meeting";
+    return "social";
   }
 
   private getIntroHelpText(): string {
+    if (this.socialData.scene.id === "meeting") return "开始后，把机会话术背后缺掉的资源和责任转移找出来。";
     if (this.socialData.scene.id === "ai_launch") return "开始后，把发布会和课程里真正放大恐慌的东西找出来。";
     return "开始后，把高光里没拍进去的成本找出来。";
   }
 
   private getIntroKicker(): string {
+    if (this.socialData.scene.id === "meeting") return "复盘会刚散场";
     if (this.socialData.scene.id === "ai_launch") return "发布会自动连播";
     return "凌晨刷到第一条";
   }
 
   private getCompletionKicker(): string {
+    if (this.socialData.scene.id === "meeting") return "责任切割";
     if (this.socialData.scene.id === "ai_launch") return "恐慌降噪";
     return "高光拆帧";
   }
 
   private getCompletionLabel(): string {
+    if (this.socialData.scene.id === "meeting") return "画饼锅已切开";
     if (this.socialData.scene.id === "ai_launch") return "替代恐慌已降噪";
     return "比较心已降噪";
   }
@@ -637,5 +644,11 @@ export class SocialScene extends Phaser.Scene {
 export class AiLaunchScene extends SocialScene {
   constructor() {
     super("AiLaunchScene");
+  }
+}
+
+export class MeetingScene extends SocialScene {
+  constructor() {
+    super("MeetingScene");
   }
 }
