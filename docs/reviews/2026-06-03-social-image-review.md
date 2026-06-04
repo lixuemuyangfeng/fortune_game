@@ -149,12 +149,12 @@ Record source-pixel centers before converting to config percentages.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `h1` | 手机里的收益红线 | `cropped_profit_screenshot` | 40.4, 37.7 | 5.2 x 7.4 | phone | `675, 355` | only true clue on Zhou's phone |
 | `h2` | 沙发扶手草稿本 | `unsent_reply_draft` | 9.2, 72.6 | 7.8 x 8.6 | chat | `154, 683` | moved off phone to visible draft notebook |
-| `h3` | 小屏上的进群弹窗 | `group_invite_popup` | 53.0, 15.9 | 8.0 x 8.0 | chat | `886, 150` | independent digital invite modal with avatar/button shape |
+| `h3` | 小屏上的进群弹窗 | `group_invite_popup` | 54.4, 19.4 | 7.4 x 7.2 | chat | `910, 183` | centered on invite modal/join button area |
 | `h4` | 电脑置顶评论行 | `pinned_review_comment` | 73.1, 16.0 | 9.0 x 8.5 | chat | `1222, 151` | laptop comment interface, not paper card |
-| `h5` | 键盘边沙漏 | `ai_course_deadline` | 70.8, 26.2 | 5.2 x 7.2 | note | `1184, 247` | physical hourglass/timer |
-| `h6` | 书堆里的彩色书签 | `side_hustle_bookmark` | 88.5, 35.1 | 5.2 x 9.2 | note | `1480, 330` | colored bookmark ribbon |
-| `h7` | 照片旁还款钥匙 | `mortgage_debit_notice` | 67.3, 76.9 | 8.2 x 7.2 | contract | `1126, 724` | house key and repayment envelope near home photo |
-| `h8` | 桌沿逾期红章 | `household_overdue_bill` | 66.7, 94.9 | 8.2 x 6.6 | paper | `1116, 893` | overdue stamp on bill near table edge |
+| `h5` | 键盘边沙漏 | `ai_course_deadline` | 65.1, 22.5 | 4.6 x 6.2 | note | `1088, 212` | moved from laptop list to physical hourglass |
+| `h6` | 书堆里的彩色书签 | `side_hustle_bookmark` | 92.5, 30.9 | 4.2 x 7.6 | note | `1547, 291` | moved onto colored bookmark ribbon |
+| `h7` | 照片旁还款钥匙 | `mortgage_debit_notice` | 75.0, 85.0 | 7.2 x 7.8 | contract | `1254, 800` | moved to key/photo/envelope relation point |
+| `h8` | 桌沿逾期红章 | `household_overdue_bill` | 75.8, 94.5 | 7.2 x 5.8 | paper | `1268, 889` | moved onto overdue red stamp |
 
 ## Decision
 

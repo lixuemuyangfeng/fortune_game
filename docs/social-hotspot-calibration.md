@@ -14,12 +14,12 @@ Fourth-level difficulty rule: this level must be harder than the 7-clue convenie
 | --- | --- | ---: | ---: | ---: | --- |
 | h1 | `cropped_profit_screenshot` | `675, 355` | `40.4, 37.7` | `5.2 x 7.4` | one handheld phone with cropped red profit chart; this is the only phone clue |
 | h2 | `unsent_reply_draft` | `154, 683` | `9.2, 72.6` | `7.8 x 8.6` | open draft notebook on sofa arm, half-written congratulation and capped pen |
-| h3 | `group_invite_popup` | `886, 150` | `53.0, 15.9` | `8.0 x 8.0` | independent small device with avatar row and join-button shaped invite modal |
+| h3 | `group_invite_popup` | `910, 183` | `54.4, 19.4` | `7.4 x 7.2` | independent small device, centered on the invite modal/join button area |
 | h4 | `pinned_review_comment` | `1222, 151` | `73.1, 16.0` | `9.0 x 8.5` | laptop/tablet comment interface with a visually pinned top row |
-| h5 | `ai_course_deadline` | `1184, 247` | `70.8, 26.2` | `5.2 x 7.2` | physical hourglass/timer beside laptop keyboard |
-| h6 | `side_hustle_bookmark` | `1480, 330` | `88.5, 35.1` | `5.2 x 9.2` | colored bookmark ribbon in book stack |
-| h7 | `mortgage_debit_notice` | `1126, 724` | `67.3, 76.9` | `8.2 x 7.2` | house key and repayment envelope beside home photo |
-| h8 | `household_overdue_bill` | `1116, 893` | `66.7, 94.9` | `8.2 x 6.6` | red overdue stamp on bill near table edge/power area |
+| h5 | `ai_course_deadline` | `1088, 212` | `65.1, 22.5` | `4.6 x 6.2` | physical hourglass/timer beside laptop keyboard |
+| h6 | `side_hustle_bookmark` | `1547, 291` | `92.5, 30.9` | `4.2 x 7.6` | colored bookmark ribbon in book stack |
+| h7 | `mortgage_debit_notice` | `1254, 800` | `75.0, 85.0` | `7.2 x 7.8` | house key over repayment envelope and home photo |
+| h8 | `household_overdue_bill` | `1268, 889` | `75.8, 94.5` | `7.2 x 5.8` | red overdue stamp on bill near table edge/power area |
 
 ## Decoy Zones
 

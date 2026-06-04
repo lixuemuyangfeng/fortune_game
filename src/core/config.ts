@@ -377,12 +377,12 @@ export const gameConfig: GameConfig = {
       hotspots: [
         { id: "h1", evidenceId: "cropped_profit_screenshot", x: 40.4, y: 37.7, hitX: 40.4, hitY: 37.7, hitWidth: 5.2, hitHeight: 7.4, radius: 7, label: "手机里的收益红线", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
         { id: "h2", evidenceId: "unsent_reply_draft", x: 9.2, y: 72.6, hitX: 9.2, hitY: 72.6, hitWidth: 7.8, hitHeight: 8.6, radius: 7, label: "沙发扶手草稿本", found: false, renderMode: "embedded", revealText: "祝福写了一半就停了", animationKind: "chat" },
-        { id: "h3", evidenceId: "group_invite_popup", x: 53.0, y: 15.9, hitX: 53.0, hitY: 15.9, hitWidth: 8.0, hitHeight: 8.0, radius: 7, label: "小屏上的进群弹窗", found: false, renderMode: "embedded", revealText: "高光后面接着进群按钮", animationKind: "chat" },
+        { id: "h3", evidenceId: "group_invite_popup", x: 54.4, y: 19.4, hitX: 54.4, hitY: 19.4, hitWidth: 7.4, hitHeight: 7.2, radius: 7, label: "小屏上的进群弹窗", found: false, renderMode: "embedded", revealText: "高光后面接着进群按钮", animationKind: "chat" },
         { id: "h4", evidenceId: "pinned_review_comment", x: 73.1, y: 16.0, hitX: 73.1, hitY: 16.0, hitWidth: 9.0, hitHeight: 8.5, radius: 7, label: "电脑置顶评论行", found: false, renderMode: "embedded", revealText: "复盘入口被顶到最上面", animationKind: "chat" },
-        { id: "h5", evidenceId: "ai_course_deadline", x: 70.8, y: 26.2, hitX: 70.8, hitY: 26.2, hitWidth: 5.2, hitHeight: 7.2, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
-        { id: "h6", evidenceId: "side_hustle_bookmark", x: 88.5, y: 35.1, hitX: 88.5, hitY: 35.1, hitWidth: 5.2, hitHeight: 9.2, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
-        { id: "h7", evidenceId: "mortgage_debit_notice", x: 67.3, y: 76.9, hitX: 67.3, hitY: 76.9, hitWidth: 8.2, hitHeight: 7.2, radius: 7, label: "照片旁还款钥匙", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
-        { id: "h8", evidenceId: "household_overdue_bill", x: 66.7, y: 94.9, hitX: 66.7, hitY: 94.9, hitWidth: 8.2, hitHeight: 6.6, radius: 7, label: "桌沿逾期红章", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
+        { id: "h5", evidenceId: "ai_course_deadline", x: 65.1, y: 22.5, hitX: 65.1, hitY: 22.5, hitWidth: 4.6, hitHeight: 6.2, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
+        { id: "h6", evidenceId: "side_hustle_bookmark", x: 92.5, y: 30.9, hitX: 92.5, hitY: 30.9, hitWidth: 4.2, hitHeight: 7.6, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 75.0, y: 85.0, hitX: 75.0, hitY: 85.0, hitWidth: 7.2, hitHeight: 7.8, radius: 7, label: "照片旁还款钥匙", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
+        { id: "h8", evidenceId: "household_overdue_bill", x: 75.8, y: 94.5, hitX: 75.8, hitY: 94.5, hitWidth: 7.2, hitHeight: 5.8, radius: 7, label: "桌沿逾期红章", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
       ]
     }
   ]
