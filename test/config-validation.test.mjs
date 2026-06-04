@@ -128,6 +128,11 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(agentsSource, /Product Iron Rules/, "AGENTS.md documents product iron rules");
   assert.match(agentsSource, /N \+ 1/, "AGENTS.md requires one character state per clue progress");
   assert.match(agentsSource, /Characters must be independent scene units/, "AGENTS.md forbids background-crop character animation");
+  assert.match(agentsSource, /Clue difficulty must come from context, not illegibility/, "AGENTS.md requires clear objects with delayed meaning");
+  assert.match(agentsSource, /Digital behavior must stay on digital or clearly drafted surfaces/, "AGENTS.md blocks paper-card substitutes for digital behavior");
+  assert.match(agentsSource, /Do not overload one object with multiple true clues/, "AGENTS.md blocks stacking multiple clues on one object");
+  assert.match(agentsSource, /Use same-category decoys, not random clutter/, "AGENTS.md requires category-matched decoys");
+  assert.match(agentsSource, /Hotspots must be calibrated from the final raster/, "AGENTS.md requires source-pixel hotspot calibration");
   assert.match(phaserSpecSource, /视觉铁律/, "Phaser spec documents visual iron rules");
   assert.match(phaserSpecSource, /Phaser 版本描述为“更像游戏”/, "Phaser spec blocks engine-only game-feel claims");
   assert.match(phaserSpecSource, /progress-0.*progress-N/s, "Phaser spec defines progress-linked character states for all levels");
