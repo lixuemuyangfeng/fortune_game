@@ -14,7 +14,8 @@ const characterStates = [
   "progress-5",
   "progress-6",
   "progress-7",
-  "progress-8"
+  "progress-8",
+  "progress-9"
 ] as const;
 type CharacterState = (typeof characterStates)[number];
 
@@ -32,8 +33,8 @@ export interface SocialSceneData {
 export class SocialScene extends Phaser.Scene {
   private socialData!: SocialSceneData;
 
-  constructor() {
-    super("SocialScene");
+  constructor(sceneKey = "SocialScene") {
+    super(sceneKey);
   }
 
   create(data: SocialSceneData): void {
@@ -55,7 +56,7 @@ export class SocialScene extends Phaser.Scene {
   }
 
   private addBackground(): void {
-    const backgroundKey = `social-background-${this.getCharacterState()}`;
+    const backgroundKey = `${this.getTexturePrefix()}-background-${this.getCharacterState()}`;
     if (!this.textures.exists(backgroundKey)) return;
     const image = this.add.image(worldWidth / 2, worldHeight / 2, backgroundKey);
     const scale = Math.max(worldWidth / image.width, worldHeight / image.height);
@@ -82,7 +83,7 @@ export class SocialScene extends Phaser.Scene {
     panel.fillRoundedRect(468, 70, 430, 128, 10);
     panel.strokeRoundedRect(468, 70, 430, 128, 10);
 
-    this.add.text(494, 92, "凌晨刷到第一条", {
+    this.add.text(494, 92, this.getIntroKicker(), {
       color: "#f3c45b",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "22px",
@@ -94,7 +95,7 @@ export class SocialScene extends Phaser.Scene {
       fontSize: "38px",
       fontStyle: "bold"
     }).setDepth(36);
-    this.add.text(494, 172, "开始后，把高光里没拍进去的成本找出来。", {
+    this.add.text(494, 172, this.getIntroHelpText(), {
       color: "#dce8dc",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "18px"
@@ -184,6 +185,7 @@ export class SocialScene extends Phaser.Scene {
     else if (hotspot.evidenceId === "side_hustle_bookmark") this.addBookmarkEffect(rect);
     else if (hotspot.evidenceId === "mortgage_debit_notice") this.addMortgageEffect(rect);
     else if (hotspot.evidenceId === "household_overdue_bill") this.addBillEffect(rect);
+    else this.addAnimationKindEffect(hotspot, rect);
   }
 
   private addProfitEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -342,6 +344,183 @@ export class SocialScene extends Phaser.Scene {
     this.tweens.add({ targets: [paper, stamp], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
   }
 
+  private addAnimationKindEffect(hotspot: SceneHotspot, rect: { x: number; y: number; width: number; height: number }): void {
+    if (hotspot.animationKind === "kline") {
+      this.addDemoRowsEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "paper") {
+      this.addSummaryEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "note") {
+      this.addDeadlineEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "alert") {
+      this.addLegacyTokenEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "contract") {
+      this.addApprovalChainEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "receipt") {
+      this.addStampQueueEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "chat") {
+      this.addTabStripEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "news") {
+      this.addClippingEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "phone") {
+      this.addPhoneBuzzEffect(rect);
+      return;
+    }
+    this.addGenericHitEffect(rect);
+  }
+
+  private addDemoRowsEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const frame = this.add.graphics().setDepth(52);
+    frame.lineStyle(2.5, 0xf3c45b, 0.78);
+    frame.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.34, rect.width * 0.84, rect.height * 0.68, 6);
+
+    const rows: Phaser.GameObjects.Graphics[] = [];
+    for (let index = 0; index < 4; index += 1) {
+      const row = this.add.graphics().setDepth(53);
+      row.lineStyle(3, index % 2 === 0 ? 0x87c779 : 0xfff0b8, 0.72);
+      row.beginPath();
+      row.moveTo(rect.x - rect.width * 0.28, rect.y - rect.height * 0.18 + index * rect.height * 0.12);
+      row.lineTo(rect.x + rect.width * 0.28, rect.y - rect.height * 0.18 + index * rect.height * 0.12);
+      row.strokePath();
+      rows.push(row);
+      this.tweens.add({ targets: row, alpha: 0.14, x: 6, duration: 140, delay: index * 55, yoyo: true, repeat: 2, ease: "Sine.inOut" });
+    }
+    this.tweens.add({ targets: [frame, ...rows], alpha: 0, duration: 260, delay: 680, ease: "Cubic.out" });
+  }
+
+  private addSummaryEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const page = this.add.graphics().setDepth(52);
+    page.lineStyle(2.5, 0xf3c45b, 0.78);
+    page.strokeRoundedRect(rect.x - rect.width * 0.38, rect.y - rect.height * 0.34, rect.width * 0.76, rect.height * 0.68, 5);
+
+    const check = this.add.graphics().setDepth(53);
+    check.lineStyle(4, 0x87c779, 0.82);
+    check.beginPath();
+    check.moveTo(rect.x - rect.width * 0.18, rect.y + rect.height * 0.02);
+    check.lineTo(rect.x - rect.width * 0.04, rect.y + rect.height * 0.15);
+    check.lineTo(rect.x + rect.width * 0.24, rect.y - rect.height * 0.16);
+    check.strokePath();
+
+    const erase = this.add.graphics().setDepth(54);
+    erase.lineStyle(3, 0xd35a36, 0.74);
+    erase.beginPath();
+    erase.moveTo(rect.x - rect.width * 0.28, rect.y - rect.height * 0.12);
+    erase.lineTo(rect.x + rect.width * 0.2, rect.y - rect.height * 0.12);
+    erase.strokePath();
+
+    this.tweens.add({ targets: check, alpha: 0.16, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [page, check, erase], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addLegacyTokenEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const token = this.add.graphics().setDepth(52);
+    token.lineStyle(3, 0xf3c45b, 0.8);
+    token.strokeRoundedRect(rect.x - rect.width * 0.24, rect.y - rect.height * 0.34, rect.width * 0.48, rect.height * 0.68, 5);
+    token.lineStyle(2, 0xd35a36, 0.72);
+    token.strokeCircle(rect.x, rect.y, Math.min(rect.width, rect.height) * 0.15);
+
+    const spark = this.add.graphics().setDepth(53);
+    spark.lineStyle(3, 0xfff0b8, 0.78);
+    spark.beginPath();
+    spark.moveTo(rect.x - rect.width * 0.3, rect.y - rect.height * 0.08);
+    spark.lineTo(rect.x - rect.width * 0.14, rect.y - rect.height * 0.2);
+    spark.moveTo(rect.x + rect.width * 0.18, rect.y + rect.height * 0.2);
+    spark.lineTo(rect.x + rect.width * 0.32, rect.y + rect.height * 0.08);
+    spark.strokePath();
+
+    this.tweens.add({ targets: token, x: 3, duration: 80, yoyo: true, repeat: 5, ease: "Stepped" });
+    this.tweens.add({ targets: [token, spark], alpha: 0, duration: 260, delay: 560, ease: "Cubic.out" });
+  }
+
+  private addApprovalChainEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const chain = this.add.graphics().setDepth(52);
+    chain.lineStyle(3, 0xf3c45b, 0.78);
+    chain.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.32, rect.width * 0.84, rect.height * 0.64, 5);
+    chain.lineStyle(2.5, 0xd35a36, 0.82);
+    chain.strokeCircle(rect.x - rect.width * 0.18, rect.y - rect.height * 0.04, 7);
+    chain.strokeCircle(rect.x + rect.width * 0.08, rect.y + rect.height * 0.1, 7);
+    chain.beginPath();
+    chain.moveTo(rect.x - rect.width * 0.1, rect.y - rect.height * 0.02);
+    chain.lineTo(rect.x + rect.width * 0.01, rect.y + rect.height * 0.06);
+    chain.strokePath();
+
+    this.tweens.add({ targets: chain, alpha: 0.18, scaleX: 1.04, scaleY: 1.04, duration: 180, yoyo: true, repeat: 2, ease: "Sine.inOut" });
+    this.tweens.add({ targets: chain, alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addStampQueueEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const stack = this.add.graphics().setDepth(52);
+    stack.lineStyle(2.5, 0xf3c45b, 0.78);
+    for (let index = 0; index < 3; index += 1) {
+      stack.strokeRoundedRect(
+        rect.x - rect.width * 0.35 + index * 4,
+        rect.y - rect.height * 0.28 + index * 4,
+        rect.width * 0.7,
+        rect.height * 0.44,
+        4
+      );
+    }
+    const stamp = this.add.graphics().setDepth(53);
+    stamp.lineStyle(3, 0xd35a36, 0.8);
+    stamp.strokeCircle(rect.x + rect.width * 0.18, rect.y + rect.height * 0.12, 12);
+    this.tweens.add({ targets: stamp, angle: -8, scaleX: 1.12, scaleY: 1.12, duration: 130, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [stack, stamp], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addTabStripEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const tabs: Phaser.GameObjects.Graphics[] = [];
+    for (let index = 0; index < 5; index += 1) {
+      const tab = this.add.graphics().setDepth(52 + index);
+      tab.lineStyle(2, index === 4 ? 0xd35a36 : 0xf3c45b, 0.76);
+      tab.strokeRoundedRect(rect.x - rect.width * 0.44 + index * rect.width * 0.17, rect.y - rect.height * 0.28, rect.width * 0.18, rect.height * 0.5, 4);
+      tabs.push(tab);
+      this.tweens.add({ targets: tab, y: index % 2 === 0 ? -4 : 4, alpha: 0.2, duration: 120, delay: index * 45, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    }
+    this.tweens.add({ targets: tabs, alpha: 0, duration: 260, delay: 640, ease: "Cubic.out" });
+  }
+
+  private addClippingEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const clip = this.add.graphics().setDepth(52);
+    clip.lineStyle(3, 0xf3c45b, 0.78);
+    clip.strokeRoundedRect(rect.x - rect.width * 0.38, rect.y - rect.height * 0.3, rect.width * 0.76, rect.height * 0.6, 4);
+    clip.lineStyle(3, 0xd35a36, 0.8);
+    clip.beginPath();
+    clip.moveTo(rect.x - rect.width * 0.26, rect.y - rect.height * 0.08);
+    clip.lineTo(rect.x + rect.width * 0.24, rect.y - rect.height * 0.08);
+    clip.strokePath();
+
+    this.tweens.add({ targets: clip, angle: 2, alpha: 0.16, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: clip, alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addPhoneBuzzEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const phone = this.add.graphics().setDepth(52);
+    phone.lineStyle(3, 0xf3c45b, 0.8);
+    phone.strokeRoundedRect(rect.x - rect.width * 0.26, rect.y - rect.height * 0.38, rect.width * 0.52, rect.height * 0.76, 7);
+    const ring = this.add.graphics().setDepth(53);
+    ring.lineStyle(2, 0xd35a36, 0.72);
+    ring.strokeCircle(rect.x + rect.width * 0.16, rect.y - rect.height * 0.2, 7);
+
+    this.tweens.add({ targets: phone, x: 4, duration: 70, yoyo: true, repeat: 6, ease: "Stepped" });
+    this.tweens.add({ targets: ring, alpha: 0.12, scaleX: 1.6, scaleY: 1.6, duration: 520, ease: "Cubic.out" });
+    this.tweens.add({ targets: [phone, ring], alpha: 0, duration: 240, delay: 620, ease: "Cubic.out" });
+  }
+
   private addDecoyEffect(rect: { x: number; y: number; width: number; height: number }): void {
     const centerX = rect.x + rect.width * Phaser.Math.FloatBetween(-0.08, 0.08);
     const centerY = rect.y + rect.height * Phaser.Math.FloatBetween(-0.08, 0.08);
@@ -360,6 +539,22 @@ export class SocialScene extends Phaser.Scene {
     this.tweens.add({ targets: tick, alpha: 0, duration: 260, delay: 130, ease: "Cubic.out" });
   }
 
+  private addGenericHitEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const frame = this.add.graphics().setDepth(52);
+    frame.lineStyle(3, 0xf3c45b, 0.78);
+    frame.strokeRoundedRect(rect.x - rect.width * 0.42, rect.y - rect.height * 0.36, rect.width * 0.84, rect.height * 0.72, 6);
+
+    const scan = this.add.graphics().setDepth(53);
+    scan.lineStyle(4, 0xfff0b8, 0.78);
+    scan.beginPath();
+    scan.moveTo(rect.x - rect.width * 0.28, rect.y);
+    scan.lineTo(rect.x + rect.width * 0.28, rect.y);
+    scan.strokePath();
+
+    this.tweens.add({ targets: scan, alpha: 0.12, y: -6, duration: 160, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [frame, scan], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
   private addCompletionState(): void {
     const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
     if (!progress.complete) return;
@@ -370,13 +565,13 @@ export class SocialScene extends Phaser.Scene {
     panel.lineStyle(1.5, 0xf3c45b, 0.42);
     panel.fillRoundedRect(882, 514, 210, 54, 8);
     panel.strokeRoundedRect(882, 514, 210, 54, 8);
-    this.add.text(900, 526, "高光拆帧", {
+    this.add.text(900, 526, this.getCompletionKicker(), {
       color: "#f3c45b",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "11px",
       fontStyle: "bold"
     }).setDepth(59);
-    this.add.text(900, 542, "比较心已降噪", {
+    this.add.text(900, 542, this.getCompletionLabel(), {
       color: "#fff7df",
       fontFamily: '"PingFang SC", "Microsoft YaHei", sans-serif',
       fontSize: "18px",
@@ -387,6 +582,30 @@ export class SocialScene extends Phaser.Scene {
   private getCharacterState(): CharacterState {
     const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
     return `progress-${Math.min(progress.foundCount, characterStates.length - 1)}` as CharacterState;
+  }
+
+  private getTexturePrefix(): "social" | "ai-launch" {
+    return this.socialData.scene.id === "ai_launch" ? "ai-launch" : "social";
+  }
+
+  private getIntroHelpText(): string {
+    if (this.socialData.scene.id === "ai_launch") return "开始后，把发布会和课程里真正放大恐慌的东西找出来。";
+    return "开始后，把高光里没拍进去的成本找出来。";
+  }
+
+  private getIntroKicker(): string {
+    if (this.socialData.scene.id === "ai_launch") return "发布会自动连播";
+    return "凌晨刷到第一条";
+  }
+
+  private getCompletionKicker(): string {
+    if (this.socialData.scene.id === "ai_launch") return "恐慌降噪";
+    return "高光拆帧";
+  }
+
+  private getCompletionLabel(): string {
+    if (this.socialData.scene.id === "ai_launch") return "替代恐慌已降噪";
+    return "比较心已降噪";
   }
 
   private getHotspotPoint(hotspot: SceneHotspot): { x: number; y: number } {
@@ -412,5 +631,11 @@ export class SocialScene extends Phaser.Scene {
       width: (decoy.hitWidth / 100) * worldWidth,
       height: (decoy.hitHeight / 100) * worldHeight
     };
+  }
+}
+
+export class AiLaunchScene extends SocialScene {
+  constructor() {
+    super("AiLaunchScene");
   }
 }

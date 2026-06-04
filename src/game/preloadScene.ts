@@ -16,6 +16,9 @@ export class PreloadScene extends Phaser.Scene {
     for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"]) {
       this.load.image(`social-background-${state}`, `/assets/game/social/states/social-${state}.png`);
     }
+    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"]) {
+      this.load.image(`ai-launch-background-${state}`, `/assets/game/ai-launch/states/ai-launch-${state}.png`);
+    }
     this.load.image("rooftop-cooling-furnace", "/assets/game/rooftop/machines/cooling-furnace.png");
     [
       ["h1", "/assets/game/rooftop/clues/folded-receipt.png"],
@@ -48,7 +51,9 @@ export class PreloadScene extends Phaser.Scene {
           ? "ConvenienceScene"
           : activeSceneKey === "social"
             ? "SocialScene"
-            : "OfficeScene";
+            : activeSceneKey === "ai_launch"
+              ? "AiLaunchScene"
+              : "OfficeScene";
     this.scene.start(sceneName, this.registry.get("sceneData"));
   }
 }

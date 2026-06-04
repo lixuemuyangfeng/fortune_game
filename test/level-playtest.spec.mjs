@@ -13,6 +13,17 @@ const socialHotspots = [
   "照片旁还款钥匙",
   "桌沿逾期红章"
 ];
+const aiLaunchHotspots = [
+  "发布会演示表格",
+  "待人工处理清单",
+  "课程付款倒计时",
+  "旧系统令牌",
+  "审批人脉笔记",
+  "人工盖章表单",
+  "连播标签页",
+  "替代新闻剪报",
+  "未接老板消息"
+];
 
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
@@ -165,6 +176,34 @@ test.describe("phaser level flow", () => {
     await page.screenshot({ path: "artifacts/playtest-social-complete.png", fullPage: true });
   });
 
+  test("player can enter and complete the AI launch panic Phaser level", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+
+    await page.getByLabel("本机临时选关").selectOption("ai_launch");
+    await expect(page.getByRole("heading", { name: "AI 发布会公开处刑" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-ai-launch-intro.png", fullPage: true });
+    await page.getByRole("button", { name: "开始降噪" }).click();
+    await expect(page.getByLabel("可点击线索")).toBeVisible();
+
+    for (const [index, hotspot] of aiLaunchHotspots.entries()) {
+      await page.getByRole("button", { name: hotspot }).click();
+      await expect(page.getByText("已找到")).toBeVisible();
+      if (index === 4) {
+        await page.waitForTimeout(700);
+        await page.screenshot({ path: "artifacts/playtest-ai-launch-mid-progress.png", fullPage: true });
+      }
+    }
+
+    await expect(page.getByText("替代恐慌已降噪").first()).toBeVisible();
+    await expect(page.getByText("证据袋已封口").first()).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-ai-launch-complete.png", fullPage: true });
+  });
+
   test("mobile first screen keeps the Phaser stage and controls usable", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("http://localhost:5173/");
@@ -182,5 +221,12 @@ test.describe("phaser level flow", () => {
     await expect(page.getByRole("button", { name: "开始拆帧" })).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-social-mobile-intro.png", fullPage: true });
+
+    await page.getByLabel("本机临时选关").selectOption("ai_launch");
+    await expect(page.getByRole("heading", { name: "AI 发布会公开处刑" })).toBeVisible();
+    await expect(page.locator("#phaser-game canvas")).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始降噪" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-ai-launch-mobile-intro.png", fullPage: true });
   });
 });

@@ -273,6 +273,78 @@ export const gameConfig: GameConfig = {
       emotion: "breakdown",
       theme: "gold",
       counterText: "别人的高光不替你交今晚的账单。"
+    },
+    polished_ai_demo_rows: {
+      id: "polished_ai_demo_rows",
+      title: "太干净的演示数据",
+      detail: "发布会里的客户、表格和流程都顺得像刚洗过，真实公司没有这么听话。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "演示环境越干净，越不能直接拿来吓自己。"
+    },
+    manual_review_sheet: {
+      id: "manual_review_sheet",
+      title: "待人工处理清单",
+      detail: "屏幕上都在讲自动化，桌上的清单还写着待处理，说明流程没有一起升级。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "工具能生成结果，流程还是会把人叫回来确认。"
+    },
+    panic_course_checkout: {
+      id: "panic_course_checkout",
+      title: "恐慌课结账倒计时",
+      detail: "倒计时贴在付款旁边，像是在说不买课就来不及活下去。",
+      emotion: "fantasy",
+      theme: "ai",
+      counterText: "学习可以，别把恐慌当付款理由。"
+    },
+    legacy_ie_token: {
+      id: "legacy_ie_token",
+      title: "旧系统 USB 令牌",
+      detail: "现代发布会讲自动化，桌上旧令牌还在提醒他：系统先要求兼容 IE。",
+      emotion: "pretend",
+      theme: "ai",
+      counterText: "能替代 PPT，不等于能替代祖传审批系统。"
+    },
+    approval_chain_notebook: {
+      id: "approval_chain_notebook",
+      title: "预算审批人脉图",
+      detail: "笔记里圈着谁能批预算、谁只会已读不回，AI 还没学会催这个。",
+      emotion: "stubborn",
+      theme: "ai",
+      counterText: "真正卡人的，常常不是写不出，而是批不下。"
+    },
+    manual_stamp_queue: {
+      id: "manual_stamp_queue",
+      title: "人工盖章队列",
+      detail: "表单摞在印章旁边，说明流程还在用最原始的方式排队。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "自动化很强，盖章窗口仍然午休。"
+    },
+    seventeen_tabs_fatigue: {
+      id: "seventeen_tabs_fatigue",
+      title: "连播到发麻的标签页",
+      detail: "一排发布会、测评和转型攻略堆在一起，恐慌先把睡眠替代了。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "看十七个视频，不等于多一份判断。"
+    },
+    job_replacement_clip: {
+      id: "job_replacement_clip",
+      title: "被剪下来的替代新闻",
+      detail: "剪报只留下最吓人的标题，没留下行业、岗位和前提条件。",
+      emotion: "envy",
+      theme: "ai",
+      counterText: "被裁出来的标题，最会裁掉上下文。"
+    },
+    boss_followup_unanswered: {
+      id: "boss_followup_unanswered",
+      title: "未接的老板追问",
+      detail: "手机亮着未接消息，AI 会写初稿，但邢总还是会找真人追责。",
+      emotion: "breakdown",
+      theme: "ai",
+      counterText: "它能生成回复，不能替你接邢总的电话。"
     }
   },
   scenes: [
@@ -383,6 +455,54 @@ export const gameConfig: GameConfig = {
         { id: "h6", evidenceId: "side_hustle_bookmark", x: 92.5, y: 30.9, hitX: 92.5, hitY: 30.9, hitWidth: 4.2, hitHeight: 7.6, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
         { id: "h7", evidenceId: "mortgage_debit_notice", x: 75.0, y: 85.0, hitX: 75.0, hitY: 85.0, hitWidth: 7.2, hitHeight: 7.8, radius: 7, label: "照片旁还款钥匙", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
         { id: "h8", evidenceId: "household_overdue_bill", x: 75.8, y: 94.5, hitX: 75.8, hitY: 94.5, hitWidth: 7.2, hitHeight: 5.8, radius: 7, label: "桌沿逾期红章", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
+      ]
+    },
+    {
+      id: "ai_launch",
+      name: "AI 发布会公开处刑",
+      theme: "ai",
+      description: "凌晨两点，周启明把发布会、课程广告和旧系统工单一起看完，恐慌比泡面先凉。",
+      backgroundImage: "/assets/game/ai-launch/states/ai-launch-progress-0.png",
+      hint: "先别把自己下架",
+      enemyName: "替代恐慌体",
+      enemyDescription: "它把变化包装成末日，把学习包装成救命稻草，再把救命稻草做成限时付款。",
+      machineName: "恐慌降噪器",
+      machineEmbedded: true,
+      completeText: "能用它写初稿，不代表要把自己判出局。先把吓人的部分降噪。",
+      decoys: [
+        { id: "normal-video-card", x: 47.0, y: 19.2, hitWidth: 7.0, hitHeight: 7.6, label: "普通视频卡片" },
+        { id: "normal-browser-tabs", x: 55.2, y: 11.2, hitWidth: 9.0, hitHeight: 4.6, label: "普通浏览器标签" },
+        { id: "regular-meeting-paper", x: 58.4, y: 52.8, hitWidth: 7.6, hitHeight: 7.0, label: "普通会议纸" },
+        { id: "plain-sticky-note", x: 68.4, y: 33.8, hitWidth: 5.8, hitHeight: 6.2, label: "普通便签" },
+        { id: "desk-hourglass", x: 74.2, y: 42.6, hitWidth: 4.2, hitHeight: 8.4, label: "普通沙漏" },
+        { id: "adapter-cable", x: 80.0, y: 77.6, hitWidth: 9.0, hitHeight: 8.8, label: "普通线缆" },
+        { id: "usb-drive-decoy", x: 84.3, y: 70.8, hitWidth: 4.6, hitHeight: 5.6, label: "普通 U 盘" },
+        { id: "normal-notebook", x: 31.8, y: 78.8, hitWidth: 10.0, hitHeight: 9.8, label: "普通笔记本" },
+        { id: "book-stack", x: 88.0, y: 31.4, hitWidth: 8.2, hitHeight: 13.0, label: "普通书堆" },
+        { id: "coffee-mug", x: 64.8, y: 67.3, hitWidth: 5.0, hitHeight: 6.2, label: "咖啡杯" },
+        { id: "ramen-bowl", x: 42.0, y: 83.6, hitWidth: 8.8, hitHeight: 8.2, label: "泡面碗" },
+        { id: "family-photo", x: 18.8, y: 19.6, hitWidth: 6.2, hitHeight: 7.4, label: "家庭相框" },
+        { id: "printer-paper", x: 92.0, y: 55.2, hitWidth: 7.8, hitHeight: 10.0, label: "打印纸" },
+        { id: "loose-receipts", x: 53.0, y: 84.2, hitWidth: 8.8, hitHeight: 7.2, label: "普通小票" },
+        { id: "remote-control", x: 25.0, y: 88.0, hitWidth: 7.2, hitHeight: 5.4, label: "遥控器" },
+        { id: "charger-brick", x: 91.4, y: 82.4, hitWidth: 5.8, hitHeight: 7.6, label: "充电头" },
+        { id: "blank-envelope", x: 70.8, y: 86.0, hitWidth: 8.0, hitHeight: 7.2, label: "普通信封" },
+        { id: "ordinary-phone-card", x: 38.6, y: 54.8, hitWidth: 5.4, hitHeight: 7.8, label: "普通手机消息" },
+        { id: "keyboard-corner", x: 63.2, y: 47.8, hitWidth: 10.0, hitHeight: 6.0, label: "键盘边角" },
+        { id: "pen-cup", x: 77.2, y: 24.4, hitWidth: 5.4, hitHeight: 9.4, label: "笔筒" },
+        { id: "normal-clipping", x: 30.4, y: 60.2, hitWidth: 7.8, hitHeight: 6.8, label: "普通剪报" },
+        { id: "router-light", x: 86.4, y: 48.8, hitWidth: 7.8, hitHeight: 6.8, label: "路由器灯" }
+      ],
+      hotspots: [
+        { id: "h1", evidenceId: "polished_ai_demo_rows", x: 78.0, y: 18.8, hitX: 78.0, hitY: 18.8, hitWidth: 17.0, hitHeight: 18.0, radius: 7, label: "发布会演示表格", found: false, renderMode: "embedded", revealText: "演示数据干净得不像真实公司", animationKind: "kline" },
+        { id: "h2", evidenceId: "manual_review_sheet", x: 61.0, y: 69.2, hitX: 61.0, hitY: 69.2, hitWidth: 8.8, hitHeight: 9.6, radius: 7, label: "待人工处理清单", found: false, renderMode: "embedded", revealText: "自动化旁边还压着待处理", animationKind: "paper" },
+        { id: "h3", evidenceId: "panic_course_checkout", x: 87.0, y: 44.2, hitX: 87.0, hitY: 44.2, hitWidth: 10.6, hitHeight: 15.4, radius: 7, label: "课程付款倒计时", found: false, renderMode: "embedded", revealText: "恐慌被做成限时付款", animationKind: "note" },
+        { id: "h4", evidenceId: "legacy_ie_token", x: 28.0, y: 82.0, hitX: 28.0, hitY: 82.0, hitWidth: 8.0, hitHeight: 7.0, radius: 7, label: "旧系统令牌", found: false, renderMode: "embedded", revealText: "兼容模式还在要求真人值班", animationKind: "alert" },
+        { id: "h5", evidenceId: "approval_chain_notebook", x: 52.8, y: 60.8, hitX: 52.8, hitY: 60.8, hitWidth: 14.0, hitHeight: 13.0, radius: 7, label: "审批人脉笔记", found: false, renderMode: "embedded", revealText: "谁能批预算还写在纸上", animationKind: "contract" },
+        { id: "h6", evidenceId: "manual_stamp_queue", x: 68.7, y: 77.4, hitX: 68.7, hitY: 77.4, hitWidth: 6.6, hitHeight: 7.4, radius: 7, label: "人工盖章表单", found: false, renderMode: "embedded", revealText: "自动化绕不开盖章窗口", animationKind: "receipt" },
+        { id: "h7", evidenceId: "seventeen_tabs_fatigue", x: 72.6, y: 4.8, hitX: 72.6, hitY: 4.8, hitWidth: 25.0, hitHeight: 5.8, radius: 7, label: "连播标签页", found: false, renderMode: "embedded", revealText: "发布会连播先替代了睡眠", animationKind: "chat" },
+        { id: "h8", evidenceId: "job_replacement_clip", x: 41.7, y: 83.0, hitX: 41.7, hitY: 83.0, hitWidth: 20.0, hitHeight: 13.0, radius: 7, label: "替代新闻剪报", found: false, renderMode: "embedded", revealText: "标题留下恐慌，剪掉上下文", animationKind: "news" },
+        { id: "h9", evidenceId: "boss_followup_unanswered", x: 8.5, y: 76.0, hitX: 8.5, hitY: 76.0, hitWidth: 11.0, hitHeight: 17.0, radius: 7, label: "未接老板消息", found: false, renderMode: "embedded", revealText: "AI 写初稿，邢总找真人", animationKind: "phone" }
       ]
     }
   ]

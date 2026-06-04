@@ -46,7 +46,7 @@ function fileHash(path) {
 test("all playable levels meet narrative and interaction content requirements", () => {
   const knownEvidenceIds = evidenceIds();
 
-  for (const sceneId of ["office", "rooftop", "convenience", "social"]) {
+  for (const sceneId of ["office", "rooftop", "convenience", "social", "ai_launch"]) {
     const block = sceneBlock(sceneId);
     const hotspots = hotspotObjects(block);
 
@@ -107,6 +107,17 @@ test("all playable levels meet narrative and interaction content requirements", 
         animationKinds,
         ["phone", "chat", "chat", "chat", "note", "note", "contract", "paper"],
         "social hotspots have explicit click feedback animations"
+      );
+    }
+    if (sceneId === "ai_launch") {
+      assert.ok(hotspots.length > hotspotObjects(sceneBlock("social")).length, "ai launch increases clue count after the social level");
+      assert.match(block, /decoys: \[/, "ai launch has config-level decoy zones");
+      assert.ok([...block.matchAll(/\{ id: "[a-z-]+", x: [0-9.]+, y: [0-9.]+, hitWidth: [0-9.]+, hitHeight: [0-9.]+, label: "[^"]+" \}/g)].length >= 20, "ai launch has at least twenty decoys");
+      const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
+      assert.deepEqual(
+        animationKinds,
+        ["kline", "paper", "note", "alert", "contract", "receipt", "chat", "news", "phone"],
+        "ai launch hotspots have explicit click feedback animations"
       );
     }
 
@@ -170,16 +181,31 @@ test("game scene design iron rules are documented and obvious failed placeholder
       `social ${state} raster state exists`
     );
   }
+  for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"]) {
+    assert.ok(
+      existsSync(join(root, "public/assets/game/ai-launch/states", `ai-launch-${state}.png`)),
+      `ai launch ${state} raster state exists`
+    );
+  }
   const socialStateHashes = new Set(
     ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"].map((state) =>
       fileHash(join(root, "public/assets/game/social/states", `social-${state}.png`))
     )
   );
   assert.equal(socialStateHashes.size, 9, "social progress rasters are distinct state images");
+  if (existsSync(join(root, "public/assets/game/ai-launch/states", "ai-launch-progress-0.png"))) {
+    const aiLaunchStateHashes = new Set(
+      ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"].map((state) =>
+        fileHash(join(root, "public/assets/game/ai-launch/states", `ai-launch-${state}.png`))
+      )
+    );
+    assert.equal(aiLaunchStateHashes.size, 10, "ai launch progress rasters are distinct state images");
+  }
   assert.match(taskStateSource, /foreground Zhou Qiming character object/, "task state records the foreground character object");
   assert.doesNotMatch(runtimeSources, /已归还/, "runtime does not use semantically detached chat feedback");
   assert.doesNotMatch(runtimeSources, /喝水/, "runtime does not claim actions that are not visually represented");
   assert.doesNotMatch(runtimeSources, /addCharacterState|fillCircle\(x/, "runtime does not draw patchwork character overlays");
   assert.doesNotMatch(runtimeSources, /scene-character|char-head|char-body/, "runtime does not keep CSS-built character fallbacks");
   assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /scene\.decoys/, "social scene consumes config-level decoy zones");
+  assert.match(readFileSync(join(root, "src/game/scenes/socialScene.ts"), "utf8"), /ai_launch/, "ai launch scene uses the same decoy-aware scene path");
 });

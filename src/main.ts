@@ -20,6 +20,7 @@ const officeSceneId = "office";
 const rooftopSceneId = "rooftop";
 const convenienceSceneId = "convenience";
 const socialSceneId = "social";
+const aiLaunchSceneId = "ai_launch";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -385,8 +386,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, socialSceneId));
     return;
   }
+  if (scene.id === socialSceneId) {
+    toast = "发布会还在自动连播，恐慌降噪器开始预热。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, aiLaunchSceneId));
+    return;
+  }
 
-  toast = "高光这波先拆完了。下一站还在接线，先别拿别人的可发布版本审判自己。";
+  toast = "恐慌这波先降噪了。下一站还在接线，先别拿发布会样片审判自己。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -505,6 +514,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "别急着比较，先看清每张高光没拍进去的部分。",
       introNarrative: "他只是想睡前刷十分钟，屏幕已经把收益、房子和副业一起推过来。",
       completeNarrative: "收益图、进群邀请、课程截止、月供和没发出去的祝福都拆开了。"
+    };
+  }
+  if (sceneId === aiLaunchSceneId) {
+    return {
+      place: "周启明家里",
+      time: "周四 02:00",
+      goal: "找出 9 个恐慌放大器",
+      goalDetail: "把发布会、课程、旧系统和审批流程里真正吓人的部分分开。",
+      completeGoal: "替代恐慌已降噪",
+      startAction: "开始降噪",
+      continueAction: "继续降噪",
+      startToast: "别急着报名转型，先把恐慌是从哪里来的找出来。",
+      introNarrative: "发布会很顺，课程很急，桌上的旧系统和审批单一点也不配合。",
+      completeNarrative: "演示、课程、旧令牌、盖章队列和老板追问都被拆开了。AI 可以用，恐慌不用买。"
     };
   }
 
