@@ -212,11 +212,11 @@ export const gameConfig: GameConfig = {
     },
     cropped_profit_screenshot: {
       id: "cropped_profit_screenshot",
-      title: "没露本金的收益图",
-      detail: "手机里只露涨幅和红线，本金、持仓时间和亏损区间都被裁掉。",
+      title: "只截涨幅的收益图",
+      detail: "手机里只截了上涨那一段，买入本金、持仓时间和回撤区间都不在画面里。",
       emotion: "envy",
       theme: "ai",
-      counterText: "收益图只晒结果，不替你承担本金。"
+      counterText: "只看涨幅截图，很容易把本金忘掉。"
     },
     group_invite_popup: {
       id: "group_invite_popup",
@@ -228,11 +228,11 @@ export const gameConfig: GameConfig = {
     },
     pinned_review_comment: {
       id: "pinned_review_comment",
-      title: "置顶复盘评论",
-      detail: "电脑评论区最上面那条被钉住，像把围观顺手改成补课。",
+      title: "高赞补课评论",
+      detail: "电脑评论区最醒目的那条把围观的人导向补课，像是给焦虑顺手开了下一扇门。",
       emotion: "pretend",
       theme: "ai",
-      counterText: "置顶的位置，不代表它更接近真相。"
+      counterText: "高赞的位置，不代表它更接近真相。"
     },
     mortgage_debit_notice: {
       id: "mortgage_debit_notice",
@@ -244,11 +244,11 @@ export const gameConfig: GameConfig = {
     },
     ai_course_deadline: {
       id: "ai_course_deadline",
-      title: "裁掉日期的课程截止",
-      detail: "电脑把今晚 23:59 放到最醒目，日期和退款条件藏在边缘。",
+      title: "课程截止便签",
+      detail: "黄色便签只写了课程截止，像是在提醒他再不报名就会落后。",
       emotion: "fantasy",
       theme: "ai",
-      counterText: "倒计时是真的，机会未必是真的。"
+      counterText: "截止日期是真的，机会未必是真的。"
     },
     side_hustle_bookmark: {
       id: "side_hustle_bookmark",
@@ -260,8 +260,8 @@ export const gameConfig: GameConfig = {
     },
     unsent_reply_draft: {
       id: "unsent_reply_draft",
-      title: "没发出去的祝福",
-      detail: "草稿本上只写了一半恭喜，笔帽盖上了，祝福没有真的发出去。",
+      title: "写坏的祝福草稿",
+      detail: "草稿本上把恭喜写了又划，真正露出来的是比较后的别扭。",
       emotion: "stubborn",
       theme: "ai",
       counterText: "看见羡慕，比假装大方更有用。"
@@ -606,8 +606,8 @@ export const gameConfig: GameConfig = {
         { id: "shelf-books", x: 41.3, y: 12.1, hitWidth: 11.8, hitHeight: 16.0, label: "左侧书架" },
         { id: "tablet-cards", x: 52.6, y: 30.6, hitWidth: 9.8, hitHeight: 8.4, label: "普通消息卡片" },
         { id: "pen-cup", x: 62.2, y: 24.5, hitWidth: 6.0, hitHeight: 11.0, label: "笔筒" },
-        { id: "course-sticky", x: 71.8, y: 45.8, hitWidth: 8.6, hitHeight: 7.4, label: "普通课程便签" },
-        { id: "desk-mug", x: 74.9, y: 48.5, hitWidth: 7.4, hitHeight: 8.0, label: "桌面杯子" },
+        { id: "course-sticky", x: 82.0, y: 42.5, hitWidth: 8.6, hitHeight: 7.4, label: "普通课程便签" },
+        { id: "desk-mug", x: 80.0, y: 52.0, hitWidth: 7.4, hitHeight: 8.0, label: "桌面杯子" },
         { id: "snack-bag", x: 38.9, y: 84.0, hitWidth: 12.0, hitHeight: 12.0, label: "零食包装" },
         { id: "remote-control", x: 52.6, y: 95.6, hitWidth: 9.2, hitHeight: 5.6, label: "遥控器" },
         { id: "ashtray", x: 58.9, y: 87.7, hitWidth: 9.0, hitHeight: 8.0, label: "烟灰缸" },
@@ -623,13 +623,13 @@ export const gameConfig: GameConfig = {
         { id: "blank-envelopes", x: 76.0, y: 67.1, hitWidth: 10.5, hitHeight: 10.0, label: "普通信封" }
       ],
       hotspots: [
-        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 40.4, y: 37.7, hitX: 40.4, hitY: 37.7, hitWidth: 5.2, hitHeight: 7.4, radius: 7, label: "手机里的收益红线", found: false, renderMode: "embedded", revealText: "红线露出来，本金被手挡住", animationKind: "phone" },
-        { id: "h2", evidenceId: "unsent_reply_draft", x: 9.2, y: 72.6, hitX: 9.2, hitY: 72.6, hitWidth: 7.8, hitHeight: 8.6, radius: 7, label: "沙发扶手草稿本", found: false, renderMode: "embedded", revealText: "祝福写了一半就停了", animationKind: "chat" },
+        { id: "h1", evidenceId: "cropped_profit_screenshot", x: 40.4, y: 37.7, hitX: 40.4, hitY: 37.7, hitWidth: 5.2, hitHeight: 7.4, radius: 7, label: "只截涨幅的手机图", found: false, renderMode: "embedded", revealText: "红线露出来，本金和时间被裁掉", animationKind: "phone" },
+        { id: "h2", evidenceId: "unsent_reply_draft", x: 9.2, y: 72.6, hitX: 9.2, hitY: 72.6, hitWidth: 7.8, hitHeight: 8.6, radius: 7, label: "写坏的祝福草稿", found: false, renderMode: "embedded", revealText: "恭喜两个字在本子上别扭了一圈", animationKind: "chat" },
         { id: "h3", evidenceId: "group_invite_popup", x: 54.4, y: 19.4, hitX: 54.4, hitY: 19.4, hitWidth: 7.4, hitHeight: 7.2, radius: 7, label: "小屏上的进群弹窗", found: false, renderMode: "embedded", revealText: "高光后面接着进群按钮", animationKind: "chat" },
-        { id: "h4", evidenceId: "pinned_review_comment", x: 73.1, y: 16.0, hitX: 73.1, hitY: 16.0, hitWidth: 9.0, hitHeight: 8.5, radius: 7, label: "电脑置顶评论行", found: false, renderMode: "embedded", revealText: "复盘入口被顶到最上面", animationKind: "chat" },
-        { id: "h5", evidenceId: "ai_course_deadline", x: 65.1, y: 22.5, hitX: 65.1, hitY: 22.5, hitWidth: 4.6, hitHeight: 6.2, radius: 7, label: "键盘边沙漏", found: false, renderMode: "embedded", revealText: "倒计时藏在键盘旁边", animationKind: "note" },
+        { id: "h4", evidenceId: "pinned_review_comment", x: 73.1, y: 16.0, hitX: 73.1, hitY: 16.0, hitWidth: 9.0, hitHeight: 8.5, radius: 7, label: "高赞补课评论行", found: false, renderMode: "embedded", revealText: "围观被顺手导向补课", animationKind: "chat" },
+        { id: "h5", evidenceId: "ai_course_deadline", x: 71.8, y: 45.8, hitX: 71.8, hitY: 45.8, hitWidth: 8.6, hitHeight: 7.4, radius: 7, label: "课程截止便签", found: false, renderMode: "embedded", revealText: "截止日期贴在桌面最顺手的位置", animationKind: "note" },
         { id: "h6", evidenceId: "side_hustle_bookmark", x: 92.5, y: 30.9, hitX: 92.5, hitY: 30.9, hitWidth: 4.2, hitHeight: 7.6, radius: 7, label: "书堆里的彩色书签", found: false, renderMode: "embedded", revealText: "副业课混在一排书签里", animationKind: "note" },
-        { id: "h7", evidenceId: "mortgage_debit_notice", x: 75.0, y: 85.0, hitX: 75.0, hitY: 85.0, hitWidth: 7.2, hitHeight: 7.8, radius: 7, label: "照片旁还款钥匙", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
+        { id: "h7", evidenceId: "mortgage_debit_notice", x: 72.0, y: 71.0, hitX: 72.0, hitY: 71.0, hitWidth: 8.0, hitHeight: 6.0, radius: 7, label: "新房照旁还款单", found: false, renderMode: "embedded", revealText: "房子照片旁边是下月扣款", animationKind: "contract" },
         { id: "h8", evidenceId: "household_overdue_bill", x: 75.8, y: 94.5, hitX: 75.8, hitY: 94.5, hitWidth: 7.2, hitHeight: 5.8, radius: 7, label: "桌沿逾期红章", found: false, renderMode: "embedded", revealText: "电费角落被线缆压着", animationKind: "paper" }
       ]
     },

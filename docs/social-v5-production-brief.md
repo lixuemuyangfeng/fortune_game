@@ -42,13 +42,13 @@ Total: 8 clues, harder than the third level's 7 clues.
 
 At least 6 clues must be object/relationship driven rather than pure text. Hotspots must land on subparts, not whole cards.
 
-1. `cropped_profit_screenshot`: Zhou's single handheld phone shows a red chart, while thumb/screen crop hides principal and account context. This is the only clue on that phone.
-2. `unsent_reply_draft`: an open draft notebook or memo pad on the sofa arm/table shows a half-written congratulation and a capped pen.
+1. `cropped_profit_screenshot`: Zhou's single handheld phone shows only a cropped-up red chart segment, while principal, holding time, and drawdown context are outside the crop. This is the only clue on that phone.
+2. `unsent_reply_draft`: an open notebook or memo pad on the sofa arm/table shows an awkward handwritten blessing draft with crossed or stalled words. Do not describe it as a digital message unless the art actually shows a chat input.
 3. `group_invite_popup`: a separate small device/tablet shows a group invite modal with avatar row and join button shape.
-4. `pinned_review_comment`: laptop/tablet comment interface shows a visually pinned/highlighted top comment row.
-5. `ai_course_deadline`: hourglass/timer beside the laptop keyboard carries the urgency more than the screen text.
+4. `pinned_review_comment`: laptop/tablet comment interface shows a high-like-count/top course-comment row that turns passive viewing into a paid-learning funnel.
+5. `ai_course_deadline`: a yellow course-deadline sticky note on the desk carries the urgency. Do not rely on an hourglass alone to imply a deadline.
 6. `side_hustle_bookmark`: one colored bookmark ribbon sticks out from a course book/tablet stack among many ordinary tabs.
-7. `mortgage_debit_notice`: a house key tooth crosses a small repayment envelope corner near family/home photos and harmless receipts.
+7. `mortgage_debit_notice`: a bank repayment notice sits beside the home photo. The marker belongs on the notice text/body, not on the key or photo center.
 8. `household_overdue_bill`: a red-stamped utility bill corner is partly trapped under cable near the power strip and ordinary plugs.
 
 ## Required Decoys

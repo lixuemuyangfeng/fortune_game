@@ -10,15 +10,17 @@ Runtime stage: `1280 x 720`, no center crop expected because the source is 16:9.
 
 Fourth-level difficulty rule: this level must be harder than the 7-clue convenience level and must not collapse into "click every text block". V5 adds an extra semantic rule: each clue object must be visually clear as a real object/interface, but its evidence meaning should require context. Do not stack multiple true clues on one phone.
 
+2026-06-05 semantic repair: user review found several labels were too explanation-dependent. The level now treats the handwritten notebook as a visible awkward blessing draft, the laptop comment as a high-like-count course/comment funnel, the deadline as the yellow course-deadline sticky note, and the repayment clue as the bank notice/photo relation rather than the key itself.
+
 | Hotspot | Evidence | Source center px | Runtime % | Hit size % | Visual anchor |
 | --- | --- | ---: | ---: | ---: | --- |
-| h1 | `cropped_profit_screenshot` | `675, 355` | `40.4, 37.7` | `5.2 x 7.4` | one handheld phone with cropped red profit chart; this is the only phone clue |
-| h2 | `unsent_reply_draft` | `154, 683` | `9.2, 72.6` | `7.8 x 8.6` | open draft notebook on sofa arm, half-written congratulation and capped pen |
+| h1 | `cropped_profit_screenshot` | `675, 355` | `40.4, 37.7` | `5.2 x 7.4` | one handheld phone with a cropped-up red chart; this is the only phone clue and it must read as "only this segment is shown", not "guaranteed all-red profit" |
+| h2 | `unsent_reply_draft` | `154, 683` | `9.2, 72.6` | `7.8 x 8.6` | open notebook with crossed/awkward handwritten blessing draft; do not describe it as a sent-message UI |
 | h3 | `group_invite_popup` | `910, 183` | `54.4, 19.4` | `7.4 x 7.2` | independent small device, centered on the invite modal/join button area |
-| h4 | `pinned_review_comment` | `1222, 151` | `73.1, 16.0` | `9.0 x 8.5` | laptop/tablet comment interface with a visually pinned top row |
-| h5 | `ai_course_deadline` | `1088, 212` | `65.1, 22.5` | `4.6 x 6.2` | physical hourglass/timer beside laptop keyboard |
+| h4 | `pinned_review_comment` | `1222, 151` | `73.1, 16.0` | `9.0 x 8.5` | laptop/tablet comment interface with a high-like-count/top course-comment row |
+| h5 | `ai_course_deadline` | `1200, 431` | `71.8, 45.8` | `8.6 x 7.4` | yellow sticky note on the desk that explicitly reads as a course deadline |
 | h6 | `side_hustle_bookmark` | `1547, 291` | `92.5, 30.9` | `4.2 x 7.6` | colored bookmark ribbon in book stack |
-| h7 | `mortgage_debit_notice` | `1254, 800` | `75.0, 85.0` | `7.2 x 7.8` | house key over repayment envelope and home photo |
+| h7 | `mortgage_debit_notice` | `1204, 668` | `72.0, 71.0` | `8.0 x 6.0` | bank repayment notice text area above the home photo; found marker should not sit on the key or the photo center |
 | h8 | `household_overdue_bill` | `1268, 889` | `75.8, 94.5` | `7.2 x 5.8` | red overdue stamp on bill near table edge/power area |
 
 ## Decoy Zones
@@ -31,8 +33,8 @@ Fourth-level difficulty rule: this level must be harder than the 7-clue convenie
 | `shelf-books` | `41.3, 12.1` | `11.8 x 16.0` | left shelf books |
 | `tablet-cards` | `52.6, 30.6` | `9.8 x 8.4` | harmless notification cards |
 | `pen-cup` | `62.2, 24.5` | `6.0 x 11.0` | pen cup |
-| `course-sticky` | `71.8, 45.8` | `8.6 x 7.4` | ordinary course sticky |
-| `desk-mug` | `74.9, 48.5` | `7.4 x 8.0` | desk mug |
+| `course-sticky` | `82.0, 42.5` | `8.6 x 7.4` | ordinary course sticky |
+| `desk-mug` | `80.0, 52.0` | `7.4 x 8.0` | desk mug |
 | `snack-bag` | `38.9, 84.0` | `12.0 x 12.0` | snack package |
 | `remote-control` | `52.6, 95.6` | `9.2 x 5.6` | remote control |
 | `ashtray` | `58.9, 87.7` | `9.0 x 8.0` | ashtray |
