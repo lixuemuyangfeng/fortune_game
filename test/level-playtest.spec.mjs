@@ -14,12 +14,12 @@ const socialHotspots = [
   "桌沿逾期红章"
 ];
 const aiLaunchHotspots = [
-  "发布会演示表格",
-  "待人工处理清单",
-  "课程付款倒计时",
+  "只跑样例的满分屏",
+  "待人工复核清单",
+  "平板结账倒计时",
   "旧系统令牌",
-  "审批人脉笔记",
-  "人工盖章表单",
+  "人情审批流程图",
+  "红章兜底流程",
   "连播标签页",
   "替代新闻剪报",
   "未接老板消息"
@@ -59,7 +59,7 @@ const lateLevelDecoyChecks = [
     progress: "0/9",
     nextProgress: "1/9",
     decoys: ["普通视频卡片", "普通浏览器标签", "普通手机消息", "普通便签", "普通剪报"],
-    firstHotspot: "发布会演示表格"
+    firstHotspot: "只跑样例的满分屏"
   },
   {
     sceneId: "meeting",
@@ -80,6 +80,13 @@ const lateLevelDecoyChecks = [
     firstHotspot: "碎键盘行情芯"
   }
 ];
+
+async function revealNextHint(page, hotspotName) {
+  await page.getByRole("button", { name: "给个提示" }).click();
+  await expect(page.getByRole("button", { name: hotspotName })).toHaveClass(/is-hinted/);
+  await page.getByRole("button", { name: hotspotName }).click();
+  await expect(page.getByText("已找到")).toBeVisible();
+}
 
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
@@ -258,6 +265,29 @@ test.describe("phaser level flow", () => {
     await expect(page.getByText("证据袋已封口").first()).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-ai-launch-complete.png", fullPage: true });
+  });
+
+  test("hint budget is scoped per level through the ninth AI launch clue", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+
+    await page.getByLabel("本机临时选关").selectOption("social");
+    await page.getByRole("button", { name: "开始拆帧" }).click();
+    await expect(page.getByLabel("可点击线索")).toBeVisible();
+    for (const hotspot of socialHotspots) {
+      await revealNextHint(page, hotspot);
+    }
+
+    await page.getByLabel("本机临时选关").selectOption("ai_launch");
+    await page.getByRole("button", { name: "开始降噪" }).click();
+    await expect(page.getByLabel("可点击线索")).toBeVisible();
+    for (const hotspot of aiLaunchHotspots) {
+      await revealNextHint(page, hotspot);
+    }
+
+    await expect(page.getByText("替代恐慌已降噪").first()).toBeVisible();
   });
 
   test("player can enter and complete the meeting blame-shift Phaser level", async ({ page }) => {

@@ -23,7 +23,7 @@ export interface AdPlacementDecision {
 
 export interface GameBackend {
   getLevelProgress(state: PlayerState, sceneId: string): LevelProgressSnapshot | undefined;
-  getAdPlacement(placement: AdPlacementId, state: PlayerState): AdPlacementDecision;
+  getAdPlacement(placement: AdPlacementId, state: PlayerState, scopeId?: string): AdPlacementDecision;
 }
 
 const placementLimits: Record<AdPlacementId, { dailyLimit: number; rewardMultiplier: number }> = {
@@ -53,9 +53,10 @@ export class LocalGameBackend implements GameBackend {
     };
   }
 
-  getAdPlacement(placement: AdPlacementId, state: PlayerState): AdPlacementDecision {
+  getAdPlacement(placement: AdPlacementId, state: PlayerState, scopeId?: string): AdPlacementDecision {
     const rule = placementLimits[placement];
-    const used = state.adViews[placement] ?? 0;
+    const adViewKey = scopeId ? `${placement}:${scopeId}` : placement;
+    const used = state.adViews[adViewKey] ?? 0;
     const remainingToday = Math.max(0, rule.dailyLimit - used);
 
     return {

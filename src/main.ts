@@ -344,7 +344,7 @@ async function rewardHint(): Promise<void> {
     return;
   }
 
-  const placement = backend.getAdPlacement("hint", state);
+  const placement = backend.getAdPlacement("hint", state, scene.id);
   if (!placement.available) {
     toast = placement.reason ?? "今天这个提示位先冷却一下。";
     render();
@@ -354,7 +354,7 @@ async function rewardHint(): Promise<void> {
   const ad = await platform.showRewardedAd("hint");
   if (!ad.completed) return;
 
-  state = recordAdView(state, "hint");
+  state = recordAdView(state, `hint:${scene.id}`);
   saveState();
   toast = "红圈借你一秒，噪声自己露头。";
   const next = scene.hotspots.find((hotspot) => !sceneState.foundHotspotIds.includes(hotspot.id));

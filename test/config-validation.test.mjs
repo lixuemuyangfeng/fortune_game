@@ -11,6 +11,8 @@ const phaserSpecSource = readFileSync(join(root, "docs/phaser3-requirements-spec
 const artDirectionSource = readFileSync(join(root, "docs/art-direction.md"), "utf8");
 const imageReviewSource = readFileSync(join(root, "docs/image-review-optimize-loop.md"), "utf8");
 const taskStateSource = readFileSync(join(root, "TASK_STATE.md"), "utf8");
+const backendSource = readFileSync(join(root, "src/core/backend.ts"), "utf8");
+const mainSource = readFileSync(join(root, "src/main.ts"), "utf8");
 
 function sceneBlock(sceneId) {
   const idIndex = configSource.indexOf(`id: "${sceneId}"`);
@@ -225,6 +227,8 @@ test("game scene design iron rules are documented and obvious failed placeholder
 
   assert.match(agentsSource, /Product Iron Rules/, "AGENTS.md documents product iron rules");
   assert.match(agentsSource, /N \+ 1/, "AGENTS.md requires one character state per clue progress");
+  assert.match(agentsSource, /Hash-distinct state files are not character states/, "AGENTS.md blocks hash-only character state validation");
+  assert.match(agentsSource, /progress-0.*readable protagonist emotion/s, "AGENTS.md requires readable initial character emotion");
   assert.match(agentsSource, /Characters must be independent scene units/, "AGENTS.md forbids background-crop character animation");
   assert.match(agentsSource, /Clue difficulty must come from context, not illegibility/, "AGENTS.md requires clear objects with delayed meaning");
   assert.match(agentsSource, /Digital behavior must stay on digital or clearly drafted surfaces/, "AGENTS.md blocks paper-card substitutes for digital behavior");
@@ -243,6 +247,9 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(imageReviewSource, /Review Gates/, "Image review loop includes review gates");
   assert.match(imageReviewSource, /Hotspot Calibration/, "Image review loop includes source-pixel hotspot calibration");
   assert.match(imageReviewSource, /Required Loop/, "Image review loop defines the repeat-until-pass process");
+  assert.match(backendSource, /scopeId\?: string/, "hint ad placement can be scoped per scene");
+  assert.match(mainSource, /getAdPlacement\("hint", state, scene\.id\)/, "hint availability is checked per current scene");
+  assert.match(mainSource, /recordAdView\(state, `hint:\$\{scene\.id\}`\)/, "hint views are recorded per current scene");
   assert.ok(existsSync(join(root, "scripts/create-image-review.mjs")), "image review generator script exists");
   for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
     assert.ok(

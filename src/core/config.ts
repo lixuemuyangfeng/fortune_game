@@ -276,24 +276,24 @@ export const gameConfig: GameConfig = {
     },
     polished_ai_demo_rows: {
       id: "polished_ai_demo_rows",
-      title: "太干净的演示数据",
-      detail: "发布会里的客户、表格和流程都顺得像刚洗过，真实公司没有这么听话。",
+      title: "只跑样例的满分屏",
+      detail: "演示屏每一格都是 100%，问题是它只证明样例顺，不证明真实流程也顺。",
       emotion: "pretend",
       theme: "ai",
-      counterText: "演示环境越干净，越不能直接拿来吓自己。"
+      counterText: "满分样例不是上线证明。"
     },
     manual_review_sheet: {
       id: "manual_review_sheet",
-      title: "待人工处理清单",
-      detail: "屏幕上都在讲自动化，桌上的清单还写着待处理，说明流程没有一起升级。",
+      title: "待人工复核清单",
+      detail: "AI 生成完以后，清单还要一项项复核，真正拖慢人的不是模型，是没人敢直接放行。",
       emotion: "stubborn",
       theme: "ai",
-      counterText: "工具能生成结果，流程还是会把人叫回来确认。"
+      counterText: "工具能生成结果，流程还会把人叫回来确认。"
     },
     panic_course_checkout: {
       id: "panic_course_checkout",
-      title: "恐慌课结账倒计时",
-      detail: "倒计时贴在付款旁边，像是在说不买课就来不及活下去。",
+      title: "平板结账倒计时",
+      detail: "桌面小屏把付款按钮和 23:59 摆在一起，先让人觉得来不及，再让人掏钱。",
       emotion: "fantasy",
       theme: "ai",
       counterText: "学习可以，别把恐慌当付款理由。"
@@ -308,19 +308,19 @@ export const gameConfig: GameConfig = {
     },
     approval_chain_notebook: {
       id: "approval_chain_notebook",
-      title: "预算审批人脉图",
-      detail: "笔记里圈着谁能批预算、谁只会已读不回，AI 还没学会催这个。",
+      title: "人情审批流程图",
+      detail: "AI 能生成方案，预算和上线仍要找谁点头；这张手画关系图说明卡点不在模型。",
       emotion: "stubborn",
       theme: "ai",
       counterText: "真正卡人的，常常不是写不出，而是批不下。"
     },
     manual_stamp_queue: {
       id: "manual_stamp_queue",
-      title: "人工盖章队列",
-      detail: "表单摞在印章旁边，说明流程还在用最原始的方式排队。",
+      title: "红章兜底流程",
+      detail: "自动化讲得再顺，表单最后还要等那枚已受理红章，责任才算有人接住。",
       emotion: "breakdown",
       theme: "ai",
-      counterText: "自动化很强，盖章窗口仍然午休。"
+      counterText: "自动化很强，兜底流程仍然要人盖章。"
     },
     seventeen_tabs_fatigue: {
       id: "seventeen_tabs_fatigue",
@@ -670,12 +670,12 @@ export const gameConfig: GameConfig = {
         { id: "router-light", x: 94.0, y: 48.8, hitWidth: 7.8, hitHeight: 6.8, label: "路由器灯" }
       ],
       hotspots: [
-        { id: "h1", evidenceId: "polished_ai_demo_rows", x: 78.0, y: 18.8, hitX: 78.0, hitY: 18.8, hitWidth: 17.0, hitHeight: 18.0, radius: 7, label: "发布会演示表格", found: false, renderMode: "embedded", revealText: "演示数据干净得不像真实公司", animationKind: "kline" },
-        { id: "h2", evidenceId: "manual_review_sheet", x: 65.0, y: 73.0, hitX: 65.0, hitY: 73.0, hitWidth: 9.0, hitHeight: 8.0, radius: 7, label: "待人工处理清单", found: false, renderMode: "embedded", revealText: "自动化旁边还压着待处理", animationKind: "paper" },
-        { id: "h3", evidenceId: "panic_course_checkout", x: 88.0, y: 58.0, hitX: 88.0, hitY: 58.0, hitWidth: 11.0, hitHeight: 14.0, radius: 7, label: "课程付款倒计时", found: false, renderMode: "embedded", revealText: "恐慌被做成限时付款", animationKind: "note" },
+        { id: "h1", evidenceId: "polished_ai_demo_rows", x: 78.0, y: 18.8, hitX: 78.0, hitY: 18.8, hitWidth: 17.0, hitHeight: 18.0, radius: 7, label: "只跑样例的满分屏", found: false, renderMode: "embedded", revealText: "满分样例不等于真实上线", animationKind: "kline" },
+        { id: "h2", evidenceId: "manual_review_sheet", x: 72.0, y: 66.0, hitX: 72.0, hitY: 66.0, hitWidth: 9.0, hitHeight: 7.0, radius: 7, label: "待人工复核清单", found: false, renderMode: "embedded", revealText: "AI 输出后还要人一项项复核", animationKind: "paper" },
+        { id: "h3", evidenceId: "panic_course_checkout", x: 88.0, y: 58.0, hitX: 88.0, hitY: 58.0, hitWidth: 11.0, hitHeight: 14.0, radius: 7, label: "平板结账倒计时", found: false, renderMode: "embedded", revealText: "恐慌被做成限时付款", animationKind: "note" },
         { id: "h4", evidenceId: "legacy_ie_token", x: 28.0, y: 82.0, hitX: 28.0, hitY: 82.0, hitWidth: 8.0, hitHeight: 7.0, radius: 7, label: "旧系统令牌", found: false, renderMode: "embedded", revealText: "兼容模式还在要求真人值班", animationKind: "alert" },
-        { id: "h5", evidenceId: "approval_chain_notebook", x: 53.0, y: 61.2, hitX: 53.0, hitY: 61.2, hitWidth: 11.0, hitHeight: 10.0, radius: 7, label: "审批人脉笔记", found: false, renderMode: "embedded", revealText: "谁能批预算还写在纸上", animationKind: "contract" },
-        { id: "h6", evidenceId: "manual_stamp_queue", x: 69.0, y: 77.5, hitX: 69.0, hitY: 77.5, hitWidth: 5.5, hitHeight: 6.2, radius: 7, label: "人工盖章表单", found: false, renderMode: "embedded", revealText: "自动化绕不开盖章窗口", animationKind: "receipt" },
+        { id: "h5", evidenceId: "approval_chain_notebook", x: 53.0, y: 61.2, hitX: 53.0, hitY: 61.2, hitWidth: 11.0, hitHeight: 10.0, radius: 7, label: "人情审批流程图", found: false, renderMode: "embedded", revealText: "卡点不是模型，是谁点头", animationKind: "contract" },
+        { id: "h6", evidenceId: "manual_stamp_queue", x: 69.0, y: 77.5, hitX: 69.0, hitY: 77.5, hitWidth: 5.5, hitHeight: 6.2, radius: 7, label: "红章兜底流程", found: false, renderMode: "embedded", revealText: "自动化最后还等这枚章", animationKind: "receipt" },
         { id: "h7", evidenceId: "seventeen_tabs_fatigue", x: 72.6, y: 4.8, hitX: 72.6, hitY: 4.8, hitWidth: 25.0, hitHeight: 5.8, radius: 7, label: "连播标签页", found: false, renderMode: "embedded", revealText: "发布会连播先替代了睡眠", animationKind: "chat" },
         { id: "h8", evidenceId: "job_replacement_clip", x: 41.7, y: 83.0, hitX: 41.7, hitY: 83.0, hitWidth: 20.0, hitHeight: 13.0, radius: 7, label: "替代新闻剪报", found: false, renderMode: "embedded", revealText: "标题留下恐慌，剪掉上下文", animationKind: "news" },
         { id: "h9", evidenceId: "boss_followup_unanswered", x: 8.5, y: 76.0, hitX: 8.5, hitY: 76.0, hitWidth: 11.0, hitHeight: 17.0, radius: 7, label: "未接老板消息", found: false, renderMode: "embedded", revealText: "AI 写初稿，邢总找真人", animationKind: "phone" }
