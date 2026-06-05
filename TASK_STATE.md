@@ -171,6 +171,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Seventh level QA finding resolved: Playwright caught overlap between `连环差一点票卷` and `止损停牌`. h3/h9 were narrowed and separated in both config and `docs/nest-hotspot-calibration.md`.
 - Seventh level QA risk: `nest-progress-1..12` are mechanically derived local-state rasters, not true generated posture/expression redraws. Treat the final level as playable WIP, not final production character-state art.
 - Late-level difficulty guard added: Playwright now verifies levels 5-7 do not advance progress when the player clicks selected same-scene decoys. This locks in the rule that late levels need plausible non-answer objects, not "click every readable/interesting label" gameplay.
+- Hotspot quality guard added: config validation now rejects any scene decoy whose center sits inside a true hotspot. Existing late-level decoy centers were retuned so ordinary objects are still plausible nearby clutter without being swallowed by answer zones.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -245,3 +246,4 @@ Second-level optimization plan:
 - After adding and self-reworking the sixth `meeting` level on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-meeting-intro.png`, `artifacts/playtest-meeting-mid-progress.png`, `artifacts/playtest-meeting-complete.png`, and `artifacts/playtest-meeting-mobile-intro.png`.
 - After adding and self-reworking the seventh `nest` final level on 2026-06-04, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright captured `artifacts/playtest-nest-intro.png`, `artifacts/playtest-nest-mid-progress.png`, `artifacts/playtest-nest-complete.png`, and `artifacts/playtest-nest-mobile-intro.png`.
 - After adding late-level decoy regression coverage on 2026-06-05, `npm test`, `npm run build`, and `npm run test:e2e` passed. The new Playwright check covers `ai_launch`, `meeting`, and `nest` and asserts decoy clicks stay at 0 progress before a true clue advances the meter.
+- After adding decoy-center hotspot validation on 2026-06-05, `npm test`, `npm run build`, and `npm run test:e2e` passed. The validation guards against decoy centers being covered by real clue hit zones.

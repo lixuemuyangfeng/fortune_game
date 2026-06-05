@@ -35,6 +35,58 @@ function hotspotObjects(block) {
   return [...block.matchAll(/\{ id: "h\d+"[^}]+ \}/g)].map((match) => match[0]);
 }
 
+function arrayBody(block, key) {
+  const keyStart = block.indexOf(`${key}: [`);
+  if (keyStart === -1) return "";
+
+  const arrayStart = block.indexOf("[", keyStart);
+  let depth = 0;
+  for (let index = arrayStart; index < block.length; index++) {
+    if (block[index] === "[") depth += 1;
+    if (block[index] === "]") depth -= 1;
+    if (depth === 0) return block.slice(arrayStart + 1, index);
+  }
+
+  return "";
+}
+
+function configObjects(block, key) {
+  return [...arrayBody(block, key).matchAll(/\{([^{}]*)\}/g)].map((match) => {
+    const raw = match[1];
+    const item = {};
+
+    for (const field of ["id", "label"]) {
+      const value = raw.match(new RegExp(`${field}: "([^"]+)"`))?.[1];
+      if (value) item[field] = value;
+    }
+
+    for (const field of ["x", "y", "hitX", "hitY", "hitWidth", "hitHeight", "radius"]) {
+      const value = raw.match(new RegExp(`${field}: ([0-9.]+)`))?.[1];
+      if (value) item[field] = Number(value);
+    }
+
+    return item;
+  });
+}
+
+function hitRect(item) {
+  const x = item.hitX ?? item.x;
+  const y = item.hitY ?? item.y;
+  const width = item.hitWidth ?? Math.max(7, item.radius * 2);
+  const height = item.hitHeight ?? Math.max(7, item.radius * 2);
+
+  return {
+    left: x - width / 2,
+    right: x + width / 2,
+    top: y - height / 2,
+    bottom: y + height / 2
+  };
+}
+
+function rectContainsPoint(rect, x, y) {
+  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
 function assetPaths(block) {
   return [...block.matchAll(/"(\/assets\/[^"]+)"/g)].map((match) => match[1]);
 }
@@ -60,6 +112,19 @@ test("all playable levels meet narrative and interaction content requirements", 
     assert.ok(hotspots.length >= 5, `${sceneId} has at least five hotspots`);
     if (sceneId === "rooftop") {
       assert.ok(hotspots.length > hotspotObjects(sceneBlock("office")).length, "rooftop increases clue count after the office level");
+    }
+
+    const decoys = configObjects(block, "decoys");
+    if (decoys.length > 0) {
+      const parsedHotspots = configObjects(block, "hotspots");
+      for (const decoy of decoys) {
+        const coveringHotspot = parsedHotspots.find((hotspot) => rectContainsPoint(hitRect(hotspot), decoy.x, decoy.y));
+        assert.equal(
+          coveringHotspot,
+          undefined,
+          `${sceneId} decoy "${decoy.label}" center must not sit inside true hotspot "${coveringHotspot?.label}"`
+        );
+      }
     }
 
     for (const hotspot of hotspots) {
