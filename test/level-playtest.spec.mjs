@@ -51,6 +51,36 @@ const nestHotspots = [
   "流程封签"
 ];
 
+const lateLevelDecoyChecks = [
+  {
+    sceneId: "ai_launch",
+    heading: "AI 发布会公开处刑",
+    startAction: "开始降噪",
+    progress: "0/9",
+    nextProgress: "1/9",
+    decoys: ["普通视频卡片", "普通浏览器标签", "普通手机消息", "普通便签", "普通剪报"],
+    firstHotspot: "发布会演示表格"
+  },
+  {
+    sceneId: "meeting",
+    heading: "邢总画饼复盘会",
+    startAction: "开始切割",
+    progress: "0/10",
+    nextProgress: "1/10",
+    decoys: ["普通标题区", "普通笔记本电脑", "黑色咖啡杯", "普通文件夹", "普通桌牌"],
+    firstHotspot: "空着的资源协同格"
+  },
+  {
+    sceneId: "nest",
+    heading: "暴富噪声母巢",
+    startAction: "开始粉碎",
+    progress: "0/12",
+    nextProgress: "1/12",
+    decoys: ["旧书架", "机器状态图标", "红色镜片", "银色玩具车", "普通便签堆"],
+    firstHotspot: "碎键盘行情芯"
+  }
+];
+
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -288,6 +318,31 @@ test.describe("phaser level flow", () => {
     await expect(page.getByText("证据袋已封口").first()).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-nest-complete.png", fullPage: true });
+  });
+
+  test("late levels require true clues and do not progress on visual decoys", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+
+    for (const check of lateLevelDecoyChecks) {
+      await page.evaluate(() => localStorage.clear());
+      await page.reload();
+      await page.getByLabel("本机临时选关").selectOption(check.sceneId);
+      await expect(page.getByRole("heading", { name: check.heading })).toBeVisible();
+      await page.getByRole("button", { name: check.startAction }).click();
+      await expect(page.getByLabel("可点击线索")).toBeVisible();
+      await expect(page.getByText(check.progress).first()).toBeVisible();
+
+      for (const decoy of check.decoys) {
+        await page.getByRole("button", { name: decoy }).click();
+        await expect(page.getByText(check.progress).first()).toBeVisible();
+        await expect(page.getByText("已找到")).toHaveCount(0);
+      }
+
+      await page.getByRole("button", { name: check.firstHotspot }).click();
+      await expect(page.getByText(check.nextProgress).first()).toBeVisible();
+      await expect(page.getByText("已找到")).toBeVisible();
+    }
   });
 
   test("mobile first screen keeps the Phaser stage and controls usable", async ({ page }) => {
