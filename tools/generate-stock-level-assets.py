@@ -39,7 +39,11 @@ def kline(draw, x, y, points, color=(232, 76, 62), width=4):
 
 
 def paper(draw, x, y, w, h, title, body, fill=(226, 218, 188), angle_label=None):
+    draw_round(draw, (x + 7, y + 8, x + w + 7, y + h + 8), (0, 0, 0, 24), radius=7)
+    draw_round(draw, (x + 2, y + 3, x + w + 2, y + h + 3), (48, 38, 26, 18), radius=7)
     draw_round(draw, (x, y, x + w, y + h), fill, outline=(107, 98, 68), width=2, radius=7)
+    for offset in range(0, h, 9):
+        draw.line((x + 10, y + offset, x + w - 10, y + offset + 3), fill=(255, 255, 255, 5), width=1)
     draw_text(draw, (x + 14, y + 10), title, 18, fill=(45, 50, 40), index=1)
     draw.line((x + 14, y + 38, x + w - 14, y + 38), fill=(150, 80, 65), width=2)
     draw_text(draw, (x + 14, y + 48), body, 14, fill=(55, 57, 48))
@@ -49,6 +53,7 @@ def paper(draw, x, y, w, h, title, body, fill=(226, 218, 188), angle_label=None)
 
 
 def phone(draw, x, y, w, h, title, change, line_color=(230, 61, 54)):
+    draw_round(draw, (x + 8, y + 10, x + w + 8, y + h + 10), (0, 0, 0, 32), radius=17)
     draw_round(draw, (x, y, x + w, y + h), (18, 24, 25), outline=(40, 48, 48), width=3, radius=17)
     draw_round(draw, (x + 8, y + 12, x + w - 8, y + h - 14), (226, 230, 218), radius=10)
     draw_text(draw, (x + 17, y + 22), title, 15, fill=(35, 42, 38), index=1)
@@ -57,6 +62,7 @@ def phone(draw, x, y, w, h, title, change, line_color=(230, 61, 54)):
 
 
 def monitor(draw, x, y, w, h):
+    draw_round(draw, (x + 12, y + 14, x + w + 12, y + h + 14), (0, 0, 0, 40), radius=12)
     draw_round(draw, (x, y, x + w, y + h), (17, 27, 27), outline=(73, 84, 78), width=4, radius=12)
     draw_round(draw, (x + 14, y + 18, x + w - 14, y + h - 22), (230, 232, 224), radius=7)
     draw_text(draw, (x + 32, y + 32), "2026 年以来涨幅榜", 24, fill=(24, 34, 31), index=1)
@@ -84,8 +90,16 @@ def add_scene_objects(base):
     img = Image.alpha_composite(img, wash)
     draw = ImageDraw.Draw(img)
 
-    # Dark desk extension and stock-monitor cluster.
-    draw.polygon([(540, 135), (1265, 110), (1265, 705), (440, 710)], fill=(32, 25, 20, 185))
+    # Extend the existing table with soft shadow instead of a flat pasted panel.
+    desk_shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    shadow_draw = ImageDraw.Draw(desk_shadow)
+    shadow_draw.polygon([(528, 130), (1268, 105), (1268, 708), (430, 710)], fill=(22, 17, 13, 92))
+    shadow_draw.ellipse((405, 390, 1258, 830), fill=(18, 13, 9, 70))
+    desk_shadow = desk_shadow.filter(ImageFilter.GaussianBlur(10))
+    img = Image.alpha_composite(img, desk_shadow)
+    draw = ImageDraw.Draw(img)
+    draw.polygon([(548, 155), (1248, 130), (1248, 690), (462, 695)], fill=(35, 27, 21, 46))
+    draw.line((552, 158, 1244, 132), fill=(94, 72, 49, 80), width=2)
     monitor(draw, 640, 105, 425, 290)
     phone(draw, 430, 355, 112, 188, "热榜推送", "+20cm", line_color=(230, 70, 62))
     phone(draw, 176, 563, 118, 170, "券商弹窗", "融资买入", line_color=(221, 55, 50))
@@ -114,13 +128,24 @@ def add_scene_objects(base):
         (608, 621, "普通账单"), (914, 631, "咖啡渍"), (1146, 332, "空白贴纸"), (1172, 487, "遥控器"),
         (386, 661, "书签"), (828, 318, "普通表格"), (460, 189, "窗边相框"), (1154, 112, "旧书脊"),
     ]:
+        draw_round(draw, (x + 4, y + 5, x + 86, y + 41), (0, 0, 0, 16), width=1, radius=5)
         draw_round(draw, (x, y, x + 82, y + 36), (196, 189, 161, 150), outline=(92, 84, 62), width=1, radius=5)
         draw_text(draw, (x + 9, y + 8), text, 13, fill=(50, 48, 39))
 
     # Cigarette smoke / fatigue marks near the protagonist.
     draw.arc((250, 225, 315, 275), 190, 330, fill=(210, 218, 206, 95), width=2)
     draw.arc((286, 199, 344, 248), 180, 330, fill=(210, 218, 206, 72), width=2)
-    return img
+    vignette = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    vignette_draw = ImageDraw.Draw(vignette)
+    vignette_draw.rectangle((0, 0, W, H), outline=(0, 0, 0, 0))
+    vignette_draw.ellipse((-160, -130, W + 160, H + 145), fill=(0, 0, 0, 0), outline=(0, 0, 0, 0))
+    edge = Image.new("L", (W, H), 0)
+    edge_draw = ImageDraw.Draw(edge)
+    edge_draw.rectangle((0, 0, W, H), fill=115)
+    edge_draw.ellipse((-120, -90, W + 120, H + 100), fill=0)
+    edge = edge.filter(ImageFilter.GaussianBlur(42))
+    vignette.putalpha(edge)
+    return Image.alpha_composite(img, vignette)
 
 
 def add_expression_state(img, progress):

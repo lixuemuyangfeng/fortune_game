@@ -185,6 +185,7 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Eighth level progress: added playable `stock` / `暴涨榜深夜场` with 13 clues, increasing difficulty after the 12-clue mother-nest level. The level uses the user's stock涨幅榜 direction as temptation material while framing it as in-game追涨噪声, not financial advice.
 - Eighth level hint fix: raised the scene-scoped hint budget from 12 to 20 and added Playwright coverage that completes all 13 stock clues through hints, including the final clue.
 - Eighth level QA risk: built-in image generation failed with server errors during this pass, so the first stock artwork is a local redraw/composite based on the existing night-room raster. It is playable and tested, but still too card/text-heavy for final production art and should be replaced by a formal same-camera generated scene or targeted inpaint pass.
+- Eighth level local art repair: after user challenged the WIP stop point, the stock asset generator was revised to remove the hardest pasted panel feel, add softer desk shadows, paper texture, and scene wash, then all `stock-progress-0..13` rasters were regenerated. This improves the playable pass but still does not replace a formal full-scene image generation/inpaint pass.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -264,3 +265,4 @@ Second-level optimization plan:
 - After recalibrating AI-launch h2/h3/h5/h6 on 2026-06-05, `npm test`, `npm run build`, and `npm run test:e2e` passed. The source overlay check now places the course checkout clue on the right tablet timer/payment card instead of the pen cup.
 - After adding social microexpression overlays and the semantic validation hook on 2026-06-08, `npm run semantic:check`, `npm test`, focused social Playwright, `npm run build`, and the full `npm run test:e2e` suite were rerun before commit.
 - After adding the eighth stock heatlist level on 2026-06-08, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright verified all 13 stock clues can be revealed through the hint flow and captured `artifacts/playtest-stock-intro.png`, `artifacts/playtest-stock-mid-progress.png`, and `artifacts/playtest-stock-complete.png`.
+- After the stock local art repair on 2026-06-08, `npm test` and focused stock Playwright passed again.
