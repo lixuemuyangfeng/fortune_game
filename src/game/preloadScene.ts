@@ -32,6 +32,10 @@ export class PreloadScene extends Phaser.Scene {
     }
     if (activeSceneKey === "nest") {
       this.preloadStateBackgrounds("nest", 12, (state) => `/assets/game/nest/states/nest-${state}.png`);
+      return;
+    }
+    if (activeSceneKey === "stock") {
+      this.preloadStateBackgrounds("stock", 13, (state) => `/assets/game/stock/states/stock-${state}.png`);
     }
   }
 
@@ -97,7 +101,9 @@ export class PreloadScene extends Phaser.Scene {
                 ? "MeetingScene"
                 : activeSceneKey === "nest"
                   ? "NestScene"
-                  : "OfficeScene";
+                  : activeSceneKey === "stock"
+                    ? "StockScene"
+                    : "OfficeScene";
     this.scene.start(sceneName, this.registry.get("sceneData"));
   }
 }

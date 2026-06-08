@@ -182,6 +182,9 @@ The second level is now wired as a playable Phaser flow and has been rebuilt wit
 - Semantic validation hook added: `scripts/validate-level-semantics.mjs`, `npm run semantic:check`, `docs/semantic-validation.md`, and `npm test` integration now enforce the clue reasoning chain, increasing clue count, late-level decoy density, placeholder-copy bans, and warnings for same-object overuse.
 - Phaser preload stability fix: `PreloadScene` now loads only the active scene's assets instead of queueing all seven levels on every state update. This prevents rapid level progression from aborting large image requests and leaving the social canvas with only markers over a blank wash.
 - Visual QA hook added: Playwright now samples the Phaser canvas during the fourth-level mid and complete states and fails if the canvas looks like a blank background instead of a real scene image.
+- Eighth level progress: added playable `stock` / `暴涨榜深夜场` with 13 clues, increasing difficulty after the 12-clue mother-nest level. The level uses the user's stock涨幅榜 direction as temptation material while framing it as in-game追涨噪声, not financial advice.
+- Eighth level hint fix: raised the scene-scoped hint budget from 12 to 20 and added Playwright coverage that completes all 13 stock clues through hints, including the final clue.
+- Eighth level QA risk: built-in image generation failed with server errors during this pass, so the first stock artwork is a local redraw/composite based on the existing night-room raster. It is playable and tested, but still too card/text-heavy for final production art and should be replaced by a formal same-camera generated scene or targeted inpaint pass.
 - Remaining QA risk: final user visual approval is still needed, but the runtime no longer relies on placeholder SVG/vector-generated rooftop assets.
 
 Second-level optimization plan:
@@ -260,3 +263,4 @@ Second-level optimization plan:
 - After adding decoy-center hotspot validation on 2026-06-05, `npm test`, `npm run build`, and `npm run test:e2e` passed. The validation guards against decoy centers being covered by real clue hit zones.
 - After recalibrating AI-launch h2/h3/h5/h6 on 2026-06-05, `npm test`, `npm run build`, and `npm run test:e2e` passed. The source overlay check now places the course checkout clue on the right tablet timer/payment card instead of the pen cup.
 - After adding social microexpression overlays and the semantic validation hook on 2026-06-08, `npm run semantic:check`, `npm test`, focused social Playwright, `npm run build`, and the full `npm run test:e2e` suite were rerun before commit.
+- After adding the eighth stock heatlist level on 2026-06-08, `npm test`, `npm run build`, and `npm run test:e2e` passed. Playwright verified all 13 stock clues can be revealed through the hint flow and captured `artifacts/playtest-stock-intro.png`, `artifacts/playtest-stock-mid-progress.png`, and `artifacts/playtest-stock-complete.png`.

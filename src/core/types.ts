@@ -1,6 +1,6 @@
 export type EmotionId = "envy" | "stubborn" | "breakdown" | "fantasy" | "pretend";
 
-export type ThemeId = "gold" | "ai" | "lottery";
+export type ThemeId = "gold" | "ai" | "lottery" | "stock";
 
 export interface HotspotEvidence {
   id: string;

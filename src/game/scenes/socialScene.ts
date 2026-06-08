@@ -604,10 +604,11 @@ export class SocialScene extends Phaser.Scene {
     return `progress-${Math.min(progress.foundCount, characterStates.length - 1)}` as CharacterState;
   }
 
-  private getTexturePrefix(): "social" | "ai-launch" | "meeting" | "nest" {
+  private getTexturePrefix(): "social" | "ai-launch" | "meeting" | "nest" | "stock" {
     if (this.socialData.scene.id === "ai_launch") return "ai-launch";
     if (this.socialData.scene.id === "meeting") return "meeting";
     if (this.socialData.scene.id === "nest") return "nest";
+    if (this.socialData.scene.id === "stock") return "stock";
     return "social";
   }
 
@@ -615,6 +616,7 @@ export class SocialScene extends Phaser.Scene {
     if (this.socialData.scene.id === "nest") return "开始后，把六类污染源和六枚反击标签从母巢里分出来。";
     if (this.socialData.scene.id === "meeting") return "开始后，把机会话术背后缺掉的资源和责任转移找出来。";
     if (this.socialData.scene.id === "ai_launch") return "开始后，把发布会和课程里真正放大恐慌的东西找出来。";
+    if (this.socialData.scene.id === "stock") return "开始后，把暴涨榜旁边的追涨诱因和风险折角分出来。";
     return "开始后，把高光里没拍进去的成本找出来。";
   }
 
@@ -622,6 +624,7 @@ export class SocialScene extends Phaser.Scene {
     if (this.socialData.scene.id === "nest") return "地下室已接线";
     if (this.socialData.scene.id === "meeting") return "复盘会刚散场";
     if (this.socialData.scene.id === "ai_launch") return "发布会自动连播";
+    if (this.socialData.scene.id === "stock") return "热榜深夜亮起";
     return "凌晨刷到第一条";
   }
 
@@ -629,6 +632,7 @@ export class SocialScene extends Phaser.Scene {
     if (this.socialData.scene.id === "nest") return "母巢粉碎";
     if (this.socialData.scene.id === "meeting") return "责任切割";
     if (this.socialData.scene.id === "ai_launch") return "恐慌降噪";
+    if (this.socialData.scene.id === "stock") return "热榜冷却";
     return "高光拆帧";
   }
 
@@ -636,6 +640,7 @@ export class SocialScene extends Phaser.Scene {
     if (this.socialData.scene.id === "nest") return "噪声已挂牌";
     if (this.socialData.scene.id === "meeting") return "画饼锅已切开";
     if (this.socialData.scene.id === "ai_launch") return "替代恐慌已降噪";
+    if (this.socialData.scene.id === "stock") return "追涨冲动已降温";
     return "比较心已降噪";
   }
 
@@ -680,5 +685,11 @@ export class MeetingScene extends SocialScene {
 export class NestScene extends SocialScene {
   constructor() {
     super("NestScene");
+  }
+}
+
+export class StockScene extends SocialScene {
+  constructor() {
+    super("StockScene");
   }
 }

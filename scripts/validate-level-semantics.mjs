@@ -4,9 +4,9 @@ import { join } from "node:path";
 const root = new URL("..", import.meta.url).pathname;
 const configSource = readFileSync(join(root, "src/core/config.ts"), "utf8");
 
-const sceneOrder = ["office", "rooftop", "convenience", "social", "ai_launch", "meeting", "nest"];
+const sceneOrder = ["office", "rooftop", "convenience", "social", "ai_launch", "meeting", "nest", "stock"];
 const concreteAnchorPattern =
-  /(手机|屏|表格|清单|平板|令牌|流程图|红章|标签页|剪报|消息|小票|合同|告示|票|合影|付款码|立牌|草稿|评论|便签|便利贴|书签|还款单|红章|图|纸|单|本|表|页|日历|激光笔|文件|锁盒|白板|键盘|收据|管阀|牌|盾|价签|封签|照片|钥匙|信封|账单|通知|票卷|碎片|计时器|曲线|角落|弹窗|走势|交流群|快讯|提醒|邀请|新闻|协同格|剪刀差|申请|画框|刮刮泪)/;
+  /(手机|屏|表格|清单|平板|令牌|流程图|红章|标签页|剪报|消息|小票|合同|告示|票|合影|付款码|立牌|草稿|评论|便签|便利贴|书签|还款单|红章|图|纸|单|本|表|页|日历|激光笔|文件|锁盒|白板|键盘|收据|管阀|牌|盾|价签|封签|照片|钥匙|信封|账单|通知|票卷|碎片|计时器|曲线|角落|弹窗|走势|交流群|快讯|提醒|邀请|新闻|协同格|剪刀差|申请|画框|刮刮泪|榜|行|卡|贴|折角|荧光|涨停|热榜|龙虎榜|融资|满仓)/;
 const implementationLeakPattern = /(Phaser|占位|placeholder|TODO|临时半|脚本生成)/i;
 const tooAbstractTitlePattern = /^(数据|人脉|队列|关系|流程|诱因|问题|风险|机会|恐慌|焦虑)$/;
 

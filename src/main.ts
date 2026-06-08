@@ -23,6 +23,7 @@ const socialSceneId = "social";
 const aiLaunchSceneId = "ai_launch";
 const meetingSceneId = "meeting";
 const nestSceneId = "nest";
+const stockSceneId = "stock";
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
@@ -412,8 +413,16 @@ function showNextScenePlaceholder(): void {
     setState(setCurrentScene(state, nestSceneId));
     return;
   }
+  if (scene.id === nestSceneId) {
+    toast = "热榜又亮了，深夜追涨冷却器开始接线。";
+    nextScenePlaceholderActive = false;
+    hintedHotspotId = "";
+    clearFoundPulse();
+    setState(setCurrentScene(state, stockSceneId));
+    return;
+  }
 
-  toast = "母巢已经拆完。暴富幻想所正式开张，只是不保证发财。";
+  toast = "热榜也冷下来了。暴富幻想所正式开张，只是不保证发财。";
   nextScenePlaceholderActive = true;
   render();
 }
@@ -574,6 +583,20 @@ function getSceneMeta(sceneId: string): {
       startToast: "别急着被它们轮流打，先给这些噪声分类。",
       introNarrative: "办公室、天台、便利站、家里、发布会和会议室的残片，都被接进了同一台机器。",
       completeNarrative: "踏空、接盘、差一点、高光、恐慌和甩锅都拆成了残骸。以前它们轮流打你，现在轮到你给它们挂牌。"
+    };
+  }
+  if (sceneId === stockSceneId) {
+    return {
+      place: "周启明家里",
+      time: "周五 00:40",
+      goal: "找出 13 个追涨陷阱",
+      goalDetail: "把暴涨榜、热榜推送、融资按钮和卖房加仓草算拆开。",
+      completeGoal: "热榜已冷却",
+      startAction: "开始降温",
+      continueAction: "继续降温",
+      startToast: "先别看涨幅下单，把这张榜单旁边的诱因都找出来。",
+      introNarrative: "他已经拆完母巢，结果一张暴涨榜又把几只票推到眼前。",
+      completeNarrative: "榜首、截图、涨停贴、融资弹窗、群卡、龙虎榜和风险折角都装进袋里。涨得多不是买入理由。"
     };
   }
 

@@ -4,7 +4,7 @@ import { PreloadScene } from "./preloadScene";
 import { OfficeScene, type OfficeSceneData } from "./scenes/officeScene";
 import { RooftopScene, type RooftopSceneData } from "./scenes/rooftopScene";
 import { ConvenienceScene, type ConvenienceSceneData } from "./scenes/convenienceScene";
-import { AiLaunchScene, MeetingScene, NestScene, SocialScene, type SocialSceneData } from "./scenes/socialScene";
+import { AiLaunchScene, MeetingScene, NestScene, SocialScene, StockScene, type SocialSceneData } from "./scenes/socialScene";
 
 export type InvestigationGameData = OfficeSceneData | RooftopSceneData | ConvenienceSceneData | SocialSceneData;
 
@@ -38,6 +38,7 @@ export function createInvestigationGame(parent: HTMLElement, data: Investigation
   game.scene.add("AiLaunchScene", AiLaunchScene, false);
   game.scene.add("MeetingScene", MeetingScene, false);
   game.scene.add("NestScene", NestScene, false);
+  game.scene.add("StockScene", StockScene, false);
   game.scene.start("BootScene");
   return game;
 }

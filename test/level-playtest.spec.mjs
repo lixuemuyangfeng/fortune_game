@@ -50,6 +50,21 @@ const nestHotspots = [
   "恐慌价签",
   "流程封签"
 ];
+const stockHotspots = [
+  "榜首荧光行",
+  "700%截图卡",
+  "三倍截图便签",
+  "五倍便签",
+  "涨停通知卡",
+  "20cm涨停贴",
+  "融资买入手机",
+  "模拟盘满仓图",
+  "荐股群邀请卡",
+  "龙虎榜剪报",
+  "卖房加仓草算",
+  "风险揭示折角",
+  "热榜推送手机"
+];
 
 const lateLevelDecoyChecks = [
   {
@@ -381,6 +396,42 @@ test.describe("phaser level flow", () => {
     await expect(page.getByText("证据袋已封口").first()).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-nest-complete.png", fullPage: true });
+  });
+
+  test("player can enter and complete the stock heatlist Phaser level through the final hint", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("http://localhost:5173/");
+    await page.evaluate(() => localStorage.clear());
+    await page.reload();
+
+    await page.getByLabel("本机临时选关").selectOption("stock");
+    await expect(page.getByRole("heading", { name: "暴涨榜深夜场" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await expectCanvasHasSceneImage(page);
+    await page.screenshot({ path: "artifacts/playtest-stock-intro.png", fullPage: true });
+    await page.getByRole("button", { name: "开始降温" }).click();
+    await expect(page.getByText("0/13").first()).toBeVisible();
+
+    for (const decoy of ["水电费便签", "旧书脊", "普通走势线"]) {
+      await page.getByRole("button", { name: decoy }).click();
+      await expect(page.getByText("0/13").first()).toBeVisible();
+    }
+
+    for (const [index, hotspot] of stockHotspots.entries()) {
+      await revealNextHint(page, hotspot);
+      await expect(page.getByText(`${index + 1}/13`).first()).toBeVisible();
+      if (index === 5) {
+        await page.waitForTimeout(700);
+        await expectCanvasHasSceneImage(page);
+        await page.screenshot({ path: "artifacts/playtest-stock-mid-progress.png", fullPage: true });
+      }
+    }
+
+    await expect(page.getByText("热榜已冷却").first()).toBeVisible();
+    await expect(page.getByText("证据袋已封口").first()).toBeVisible();
+    await page.waitForTimeout(700);
+    await expectCanvasHasSceneImage(page);
+    await page.screenshot({ path: "artifacts/playtest-stock-complete.png", fullPage: true });
   });
 
   test("late levels require true clues and do not progress on visual decoys", async ({ page }) => {

@@ -521,6 +521,110 @@ export const gameConfig: GameConfig = {
       emotion: "stubborn",
       theme: "ai",
       counterText: "没有资源的机会叫甩锅。"
+    },
+    stock_top_row_highlight: {
+      id: "stock_top_row_highlight",
+      title: "榜首荧光行",
+      detail: "涨幅榜第一行被反复画亮，只剩下夸张涨幅，没剩下买入时点和波动过程。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "榜首不是入口。"
+    },
+    stock_seven_hundred_card: {
+      id: "stock_seven_hundred_card",
+      title: "700%截图卡",
+      detail: "天孚通信的涨幅截图被单独摆在手边，像是在催你把过去两年的线当成今天的路。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "过去涨幅不会倒车来接你。"
+    },
+    stock_three_bagger_note: {
+      id: "stock_three_bagger_note",
+      title: "三倍截图便签",
+      detail: "新易盛截图只写超 1000%，没有写从哪个低点算，也没有写中间回撤。",
+      emotion: "fantasy",
+      theme: "stock",
+      counterText: "只看终点会忘了路。"
+    },
+    stock_five_times_sticky: {
+      id: "stock_five_times_sticky",
+      title: "五倍便签",
+      detail: "利通电子年内超 5 倍被贴在杯边，越像顺手提醒，越容易变成顺手下单。",
+      emotion: "fantasy",
+      theme: "stock",
+      counterText: "五倍不是今天的保证书。"
+    },
+    stock_limit_up_notice: {
+      id: "stock_limit_up_notice",
+      title: "涨停通知卡",
+      detail: "巨能股份 30% 涨停被做成通知卡，最亮的是涨停两个字，不是你能不能买进去。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "涨停不是邀请函。"
+    },
+    stock_twenty_cm_card: {
+      id: "stock_twenty_cm_card",
+      title: "20cm涨停贴",
+      detail: "中望软件 20cm 字样被圈了好几遍，波动风险却被挤到角落。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "涨得快，摔得也快。"
+    },
+    stock_broker_margin_phone: {
+      id: "stock_broker_margin_phone",
+      title: "融资买入手机",
+      detail: "券商弹窗把融资按钮摆在 K 线下面，像是只差一点钱就能追上。",
+      emotion: "stubborn",
+      theme: "stock",
+      counterText: "借来的仓位先放大风险。"
+    },
+    stock_simulation_full_position: {
+      id: "stock_simulation_full_position",
+      title: "模拟盘满仓图",
+      detail: "模拟盘收益图只显示满仓收益，没有显示真实资金亏损时的手抖。",
+      emotion: "pretend",
+      theme: "stock",
+      counterText: "模拟盘不会替你还钱。"
+    },
+    stock_recommend_group_card: {
+      id: "stock_recommend_group_card",
+      title: "荐股群邀请卡",
+      detail: "邀请卡把几只暴涨票放在一起，暗示进去就能提前知道下一只。",
+      emotion: "pretend",
+      theme: "stock",
+      counterText: "群聊不是研究能力。"
+    },
+    stock_dragon_tiger_clip: {
+      id: "stock_dragon_tiger_clip",
+      title: "龙虎榜剪报",
+      detail: "剪报上机构和游资席位被圈出来，像是散户只要跟上就能分一口。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "席位不是你的安全带。"
+    },
+    stock_sell_house_sheet: {
+      id: "stock_sell_house_sheet",
+      title: "卖房加仓草算纸",
+      detail: "草算纸把首付、违约金和可追涨资金写在一起，已经越过了普通投资边界。",
+      emotion: "breakdown",
+      theme: "stock",
+      counterText: "拿生活费追热点，先输生活。"
+    },
+    stock_risk_disclosure_corner: {
+      id: "stock_risk_disclosure_corner",
+      title: "风险揭示折角",
+      detail: "风险揭示书被压在桌角，真正该先看的那一页总是最不起眼。",
+      emotion: "stubborn",
+      theme: "stock",
+      counterText: "被压住的才是重点。"
+    },
+    stock_heat_push_phone: {
+      id: "stock_heat_push_phone",
+      title: "热榜推送手机",
+      detail: "手机反复推送 20cm 和涨停，负责把几只票的热度伪装成机会。",
+      emotion: "envy",
+      theme: "stock",
+      counterText: "推送负责热，不负责你盈亏。"
     }
   },
   scenes: [
@@ -789,6 +893,63 @@ export const gameConfig: GameConfig = {
         { id: "h10", evidenceId: "tag_publishable_version", x: 69.2, y: 73.2, hitX: 69.2, hitY: 73.2, hitWidth: 10.0, hitHeight: 17.0, radius: 7, label: "可发布画框", found: false, renderMode: "embedded", revealText: "画框只夹住最好看的角", animationKind: "photo" },
         { id: "h11", evidenceId: "tag_panic_sellers_profit", x: 4.7, y: 35.6, hitX: 4.7, hitY: 35.6, hitWidth: 9.0, hitHeight: 14.0, radius: 7, label: "恐慌价签", found: false, renderMode: "embedded", revealText: "吓人的人先把价签挂好了", animationKind: "note" },
         { id: "h12", evidenceId: "tag_no_resource_blame", x: 91.5, y: 27.0, hitX: 91.5, hitY: 27.0, hitWidth: 12.0, hitHeight: 18.0, radius: 7, label: "流程封签", found: false, renderMode: "embedded", revealText: "锁阀先把锅挡回流程", animationKind: "contract" }
+      ]
+    },
+    {
+      id: "stock",
+      name: "暴涨榜深夜场",
+      theme: "stock",
+      description: "周启明本来已经拆掉母巢，深夜又被一张 2026 暴涨榜拽回屏幕前。",
+      backgroundImage: "/assets/game/stock/states/stock-progress-0.png",
+      hint: "先别把榜单当路标",
+      enemyName: "追涨热榜体",
+      enemyDescription: "它把已经涨很多的名字摆成入口，把过去的收益伪装成今天的机会。",
+      machineName: "热榜冷却器",
+      machineEmbedded: true,
+      completeText: "涨得多只能说明它涨过，不说明现在轮到你。榜单收起来，仓位先活下来。",
+      decoys: [
+        { id: "water-bill", x: 5.8, y: 56.8, hitWidth: 7.0, hitHeight: 5.2, label: "水电费便签" },
+        { id: "old-delivery", x: 8.8, y: 87.0, hitWidth: 8.4, hitHeight: 5.0, label: "旧快递单" },
+        { id: "plain-note", x: 25.0, y: 89.0, hitWidth: 8.0, hitHeight: 5.5, label: "普通便签" },
+        { id: "window-frame", x: 39.0, y: 28.0, hitWidth: 7.0, hitHeight: 6.0, label: "窗边相框" },
+        { id: "shopping-receipt", x: 43.0, y: 88.4, hitWidth: 8.0, hitHeight: 5.0, label: "购物小票" },
+        { id: "plain-bill", x: 51.0, y: 88.6, hitWidth: 8.0, hitHeight: 5.0, label: "普通账单" },
+        { id: "normal-table", x: 68.0, y: 45.0, hitWidth: 7.0, hitHeight: 7.0, label: "普通表格" },
+        { id: "coffee-mark", x: 76.0, y: 88.0, hitWidth: 6.0, hitHeight: 6.0, label: "咖啡渍" },
+        { id: "blank-sticker", x: 93.5, y: 48.8, hitWidth: 8.0, hitHeight: 5.0, label: "空白贴纸" },
+        { id: "remote", x: 93.6, y: 70.0, hitWidth: 6.0, hitHeight: 5.0, label: "遥控器" },
+        { id: "old-books", x: 92.8, y: 18.0, hitWidth: 8.0, hitHeight: 8.0, label: "旧书脊" },
+        { id: "plant", x: 21.0, y: 10.0, hitWidth: 7.0, hitHeight: 9.0, label: "窗台绿植" },
+        { id: "family-photo", x: 3.8, y: 20.0, hitWidth: 7.0, hitHeight: 9.0, label: "家庭相框" },
+        { id: "snack-bag", x: 41.0, y: 78.0, hitWidth: 9.0, hitHeight: 8.0, label: "零食袋" },
+        { id: "ashtray", x: 58.8, y: 74.0, hitWidth: 4.0, hitHeight: 4.8, label: "烟灰缸" },
+        { id: "book-stack", x: 96.0, y: 30.0, hitWidth: 7.0, hitHeight: 10.0, label: "右侧书堆" },
+        { id: "ordinary-screen-row", x: 61.0, y: 38.0, hitWidth: 13.0, hitHeight: 6.0, label: "普通榜单行" },
+        { id: "ordinary-percent-row", x: 75.0, y: 38.0, hitWidth: 9.0, hitHeight: 6.0, label: "普通百分比" },
+        { id: "monitor-frame", x: 66.8, y: 31.0, hitWidth: 33.0, hitHeight: 37.0, label: "显示器边框" },
+        { id: "desk-shadow", x: 72.0, y: 72.0, hitWidth: 20.0, hitHeight: 16.0, label: "桌面阴影" },
+        { id: "pen", x: 45.0, y: 57.0, hitWidth: 5.0, hitHeight: 3.8, label: "普通笔" },
+        { id: "book-mark", x: 33.5, y: 94.0, hitWidth: 6.0, hitHeight: 4.8, label: "书签" },
+        { id: "plain-card", x: 71.5, y: 57.0, hitWidth: 6.0, hitHeight: 4.8, label: "普通卡片" },
+        { id: "normal-line-chart", x: 42.8, y: 48.0, hitWidth: 6.0, hitHeight: 6.0, label: "普通走势线" },
+        { id: "charging-cable", x: 94.0, y: 80.0, hitWidth: 5.0, hitHeight: 5.0, label: "普通线缆" },
+        { id: "mug", x: 74.2, y: 53.8, hitWidth: 4.8, hitHeight: 5.2, label: "杯子" },
+        { id: "plain-envelope", x: 95.0, y: 60.0, hitWidth: 6.0, hitHeight: 5.0, label: "普通信封" }
+      ],
+      hotspots: [
+        { id: "h1", evidenceId: "stock_top_row_highlight", x: 79.1, y: 26.5, hitX: 79.1, hitY: 26.5, hitWidth: 9.0, hitHeight: 5.2, radius: 7, label: "榜首荧光行", found: false, renderMode: "embedded", revealText: "被画亮的是涨过，不是入口", animationKind: "kline" },
+        { id: "h2", evidenceId: "stock_seven_hundred_card", x: 29.2, y: 50.7, hitX: 29.2, hitY: 50.7, hitWidth: 10.2, hitHeight: 12.2, radius: 7, label: "700%截图卡", found: false, renderMode: "embedded", revealText: "两年累计被剪成今晚冲动", animationKind: "photo" },
+        { id: "h3", evidenceId: "stock_three_bagger_note", x: 32.2, y: 75.8, hitX: 32.2, hitY: 75.8, hitWidth: 11.2, hitHeight: 11.8, radius: 7, label: "三倍截图便签", found: false, renderMode: "embedded", revealText: "终点截图没有路上的坑", animationKind: "note" },
+        { id: "h4", evidenceId: "stock_five_times_sticky", x: 12.2, y: 75.0, hitX: 12.2, hitY: 75.0, hitWidth: 12.5, hitHeight: 16.0, radius: 7, label: "五倍便签", found: false, renderMode: "embedded", revealText: "五倍字样贴得离手太近", animationKind: "note" },
+        { id: "h5", evidenceId: "stock_limit_up_notice", x: 65.5, y: 66.2, hitX: 65.5, hitY: 66.2, hitWidth: 11.8, hitHeight: 13.5, radius: 7, label: "涨停通知卡", found: false, renderMode: "embedded", revealText: "涨停不是邀请函", animationKind: "alert" },
+        { id: "h6", evidenceId: "stock_twenty_cm_card", x: 90.0, y: 32.0, hitX: 90.0, hitY: 32.0, hitWidth: 10.2, hitHeight: 13.0, radius: 7, label: "20cm涨停贴", found: false, renderMode: "embedded", revealText: "20cm 不是安全距离", animationKind: "sign" },
+        { id: "h7", evidenceId: "stock_broker_margin_phone", x: 18.2, y: 86.2, hitX: 18.2, hitY: 86.2, hitWidth: 8.8, hitHeight: 26.0, radius: 7, label: "融资买入手机", found: false, renderMode: "embedded", revealText: "融资按钮先放大风险", animationKind: "phone" },
+        { id: "h8", evidenceId: "stock_simulation_full_position", x: 63.8, y: 84.2, hitX: 63.8, hitY: 84.2, hitWidth: 13.4, hitHeight: 13.2, radius: 7, label: "模拟盘满仓图", found: false, renderMode: "embedded", revealText: "模拟收益不承担真实回撤", animationKind: "kline" },
+        { id: "h9", evidenceId: "stock_recommend_group_card", x: 45.8, y: 35.6, hitX: 45.8, hitY: 35.6, hitWidth: 7.0, hitHeight: 10.0, radius: 7, label: "荐股群邀请卡", found: false, renderMode: "embedded", revealText: "群聊不是研究能力", animationKind: "chat" },
+        { id: "h10", evidenceId: "stock_dragon_tiger_clip", x: 50.4, y: 68.2, hitX: 50.4, hitY: 68.2, hitWidth: 13.0, hitHeight: 14.6, radius: 7, label: "龙虎榜剪报", found: false, renderMode: "embedded", revealText: "席位不是你的安全带", animationKind: "news" },
+        { id: "h11", evidenceId: "stock_sell_house_sheet", x: 81.0, y: 66.5, hitX: 81.0, hitY: 66.5, hitWidth: 14.2, hitHeight: 15.2, radius: 7, label: "卖房加仓草算纸", found: false, renderMode: "embedded", revealText: "追热点不能动生活底线", animationKind: "contract" },
+        { id: "h12", evidenceId: "stock_risk_disclosure_corner", x: 86.0, y: 85.2, hitX: 86.0, hitY: 85.2, hitWidth: 15.2, hitHeight: 15.0, radius: 7, label: "风险揭示折角", found: false, renderMode: "embedded", revealText: "被压住的才该先看", animationKind: "paper" },
+        { id: "h13", evidenceId: "stock_heat_push_phone", x: 37.8, y: 59.0, hitX: 37.8, hitY: 59.0, hitWidth: 8.0, hitHeight: 26.0, radius: 7, label: "热榜推送手机", found: false, renderMode: "embedded", revealText: "推送负责热，不负责盈亏", animationKind: "phone" }
       ]
     }
   ]
