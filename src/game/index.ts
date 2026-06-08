@@ -29,7 +29,7 @@ export function createInvestigationGame(parent: HTMLElement, data: Investigation
   const game = new Phaser.Game(config);
   game.registry.set("sceneData", data);
   game.registry.set("activeSceneKey", data.scene.id);
-  game.scene.add("BootScene", BootScene, true);
+  game.scene.add("BootScene", BootScene, false);
   game.scene.add("PreloadScene", PreloadScene, false);
   game.scene.add("OfficeScene", OfficeScene, false);
   game.scene.add("RooftopScene", RooftopScene, false);
@@ -38,6 +38,7 @@ export function createInvestigationGame(parent: HTMLElement, data: Investigation
   game.scene.add("AiLaunchScene", AiLaunchScene, false);
   game.scene.add("MeetingScene", MeetingScene, false);
   game.scene.add("NestScene", NestScene, false);
+  game.scene.start("BootScene");
   return game;
 }
 

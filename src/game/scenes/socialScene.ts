@@ -46,6 +46,7 @@ export class SocialScene extends Phaser.Scene {
 
     this.addBackground();
     this.addStoreWash();
+    this.addSocialExpressionOverlay();
     this.addIntroCopy();
 
     if (data.challengeActive && !getOfficeProgress(data.scene, data.foundHotspotIds).complete) {
@@ -59,11 +60,20 @@ export class SocialScene extends Phaser.Scene {
   }
 
   private addBackground(): void {
-    const backgroundKey = `${this.getTexturePrefix()}-background-${this.getCharacterState()}`;
-    if (!this.textures.exists(backgroundKey)) return;
+    const backgroundKey = this.getBackgroundTextureKey();
+    if (!backgroundKey) return;
     const image = this.add.image(worldWidth / 2, worldHeight / 2, backgroundKey);
     const scale = Math.max(worldWidth / image.width, worldHeight / image.height);
     image.setScale(scale).setDepth(0);
+  }
+
+  private getBackgroundTextureKey(): string | undefined {
+    if (this.socialData.scene.id === "social" && this.textures.exists("social-background-progress-0")) {
+      return "social-background-progress-0";
+    }
+    const backgroundKey = `${this.getTexturePrefix()}-background-${this.getCharacterState()}`;
+    if (this.textures.exists(backgroundKey)) return backgroundKey;
+    return undefined;
   }
 
   private addStoreWash(): void {
@@ -75,6 +85,13 @@ export class SocialScene extends Phaser.Scene {
     const vignette = this.add.graphics().setDepth(3);
     vignette.fillGradientStyle(0x06120f, 0x06120f, 0x06120f, 0x06120f, 0.48, 0.08, 0.08, 0.5);
     vignette.fillRect(0, 0, worldWidth, worldHeight);
+  }
+
+  private addSocialExpressionOverlay(): void {
+    if (this.socialData.scene.id !== "social") return;
+    const expressionKey = `social-expression-${this.getCharacterState()}`;
+    if (!this.textures.exists(expressionKey)) return;
+    this.add.image(worldWidth / 2, worldHeight / 2, expressionKey).setDepth(4).setAlpha(0.94);
   }
 
   private addIntroCopy(): void {

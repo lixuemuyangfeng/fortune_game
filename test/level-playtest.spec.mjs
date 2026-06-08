@@ -88,6 +88,37 @@ async function revealNextHint(page, hotspotName) {
   await expect(page.getByText("已找到")).toBeVisible();
 }
 
+async function expectCanvasHasSceneImage(page) {
+  const stats = await page.locator("canvas").evaluate((canvas) => {
+    const context = canvas.getContext("2d");
+    if (!context) return { variedSamples: 0, sampled: 0, luminanceRange: 0 };
+    const width = canvas.width;
+    const height = canvas.height;
+    const stepX = Math.max(1, Math.floor(width / 80));
+    const stepY = Math.max(1, Math.floor(height / 45));
+    let sampled = 0;
+    let variedSamples = 0;
+    let minLuminance = 255;
+    let maxLuminance = 0;
+    for (let y = 0; y < height; y += stepY) {
+      for (let x = 0; x < width; x += stepX) {
+        const [red, green, blue] = context.getImageData(x, y, 1, 1).data;
+        const luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+        minLuminance = Math.min(minLuminance, luminance);
+        maxLuminance = Math.max(maxLuminance, luminance);
+        sampled += 1;
+        if (Math.abs(red - 16) + Math.abs(green - 25) + Math.abs(blue - 21) > 26) {
+          variedSamples += 1;
+        }
+      }
+    }
+    return { variedSamples, sampled, luminanceRange: maxLuminance - minLuminance };
+  });
+  expect(stats.sampled).toBeGreaterThan(1000);
+  expect(stats.variedSamples).toBeGreaterThan(stats.sampled * 0.35);
+  expect(stats.luminanceRange).toBeGreaterThan(60);
+}
+
 test.describe("phaser level flow", () => {
   test("local dev scene picker can jump to a fixed level", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -229,6 +260,7 @@ test.describe("phaser level flow", () => {
       await expect(page.getByText("已找到")).toBeVisible();
       if (index === 3) {
         await page.waitForTimeout(700);
+        await expectCanvasHasSceneImage(page);
         await page.screenshot({ path: "artifacts/playtest-social-mid-progress.png", fullPage: true });
       }
     }
@@ -236,6 +268,7 @@ test.describe("phaser level flow", () => {
     await expect(page.getByText("比较心已降噪").first()).toBeVisible();
     await expect(page.getByText("证据袋已封口").first()).toBeVisible();
     await page.waitForTimeout(700);
+    await expectCanvasHasSceneImage(page);
     await page.screenshot({ path: "artifacts/playtest-social-complete.png", fullPage: true });
   });
 

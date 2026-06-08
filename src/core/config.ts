@@ -340,7 +340,7 @@ export const gameConfig: GameConfig = {
     },
     boss_followup_unanswered: {
       id: "boss_followup_unanswered",
-      title: "未接的老板追问",
+      title: "老板追问消息",
       detail: "手机亮着未接消息，AI 会写初稿，但邢总还是会找真人追责。",
       emotion: "breakdown",
       theme: "ai",

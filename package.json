@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "test": "node --test test/config-validation.test.mjs",
+    "test": "npm run semantic:check && node --test test/config-validation.test.mjs",
     "test:e2e": "playwright test test/level-playtest.spec.mjs",
+    "semantic:check": "node scripts/validate-level-semantics.mjs",
     "art:review": "node scripts/create-image-review.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview --host 0.0.0.0",

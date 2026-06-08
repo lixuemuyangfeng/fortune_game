@@ -5,26 +5,49 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   preload(): void {
+    const activeSceneKey = this.registry.get("activeSceneKey") as string | undefined;
+    if (!activeSceneKey || activeSceneKey === "office") {
+      this.preloadOffice();
+      return;
+    }
+    if (activeSceneKey === "rooftop") {
+      this.preloadRooftop();
+      return;
+    }
+    if (activeSceneKey === "convenience") {
+      this.preloadStateBackgrounds("convenience", 7, (state) => `/assets/game/convenience/states/convenience-${state}.png`);
+      return;
+    }
+    if (activeSceneKey === "social") {
+      this.preloadSocial();
+      return;
+    }
+    if (activeSceneKey === "ai_launch") {
+      this.preloadStateBackgrounds("ai-launch", 9, (state) => `/assets/game/ai-launch/states/ai-launch-${state}.png`);
+      return;
+    }
+    if (activeSceneKey === "meeting") {
+      this.preloadStateBackgrounds("meeting", 10, (state) => `/assets/game/meeting/states/meeting-${state}.png`);
+      return;
+    }
+    if (activeSceneKey === "nest") {
+      this.preloadStateBackgrounds("nest", 12, (state) => `/assets/game/nest/states/nest-${state}.png`);
+    }
+  }
+
+  private preloadOffice(): void {
     this.load.image("office-background", "/assets/game/office/office-background-clean.png");
     this.load.image("office-foreground", "/assets/game/office/office-foreground-occluders.png");
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"]) {
-      this.load.image(`rooftop-background-${state}`, `/assets/game/rooftop/states/rooftop-v9-${state}.png`);
+    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
+      this.load.spritesheet(`zhou-${state}`, `/assets/game/office/characters/zhou-${state}-sheet.png`, {
+        frameWidth: 720,
+        frameHeight: 820
+      });
     }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7"]) {
-      this.load.image(`convenience-background-${state}`, `/assets/game/convenience/states/convenience-${state}.png`);
-    }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"]) {
-      this.load.image(`social-background-${state}`, `/assets/game/social/states/social-${state}.png`);
-    }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"]) {
-      this.load.image(`ai-launch-background-${state}`, `/assets/game/ai-launch/states/ai-launch-${state}.png`);
-    }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9", "progress-10"]) {
-      this.load.image(`meeting-background-${state}`, `/assets/game/meeting/states/meeting-${state}.png`);
-    }
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9", "progress-10", "progress-11", "progress-12"]) {
-      this.load.image(`nest-background-${state}`, `/assets/game/nest/states/nest-${state}.png`);
-    }
+  }
+
+  private preloadRooftop(): void {
+    this.preloadStateBackgrounds("rooftop", 6, (state) => `/assets/game/rooftop/states/rooftop-v9-${state}.png`);
     this.load.image("rooftop-cooling-furnace", "/assets/game/rooftop/machines/cooling-furnace.png");
     [
       ["h1", "/assets/game/rooftop/clues/folded-receipt.png"],
@@ -34,18 +57,29 @@ export class PreloadScene extends Phaser.Scene {
       ["h5", "/assets/game/rooftop/clues/warning-sign.png"],
       ["h6", "/assets/game/rooftop/clues/leverage-paper.png"]
     ].forEach(([id, path]) => this.load.image(`rooftop-clue-${id}`, path));
-    for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
-      this.load.spritesheet(`zhou-${state}`, `/assets/game/office/characters/zhou-${state}-sheet.png`, {
-        frameWidth: 720,
-        frameHeight: 820
-      });
-    }
     for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6"]) {
       this.load.spritesheet(`trader-${state}`, `/assets/game/rooftop/characters/trader-${state}-sheet.png`, {
         frameWidth: 720,
         frameHeight: 820
       });
     }
+  }
+
+  private preloadSocial(): void {
+    this.load.image("social-background-progress-0", "/assets/game/social/states/social-progress-0.png");
+    for (const state of this.getStates(8)) {
+      this.load.image(`social-expression-${state}`, `/assets/game/social/expressions/social-expression-${state}.png`);
+    }
+  }
+
+  private preloadStateBackgrounds(prefix: string, maxProgress: number, pathForState: (state: string) => string): void {
+    for (const state of this.getStates(maxProgress)) {
+      this.load.image(`${prefix}-background-${state}`, pathForState(state));
+    }
+  }
+
+  private getStates(maxProgress: number): string[] {
+    return Array.from({ length: maxProgress + 1 }, (_, index) => `progress-${index}`);
   }
 
   create(): void {

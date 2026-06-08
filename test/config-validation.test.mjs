@@ -10,9 +10,11 @@ const agentsSource = readFileSync(join(root, "AGENTS.md"), "utf8");
 const phaserSpecSource = readFileSync(join(root, "docs/phaser3-requirements-spec.md"), "utf8");
 const artDirectionSource = readFileSync(join(root, "docs/art-direction.md"), "utf8");
 const imageReviewSource = readFileSync(join(root, "docs/image-review-optimize-loop.md"), "utf8");
+const semanticValidationSource = readFileSync(join(root, "docs/semantic-validation.md"), "utf8");
 const taskStateSource = readFileSync(join(root, "TASK_STATE.md"), "utf8");
 const backendSource = readFileSync(join(root, "src/core/backend.ts"), "utf8");
 const mainSource = readFileSync(join(root, "src/main.ts"), "utf8");
+const packageSource = readFileSync(join(root, "package.json"), "utf8");
 
 function sceneBlock(sceneId) {
   const idIndex = configSource.indexOf(`id: "${sceneId}"`);
@@ -247,6 +249,9 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(imageReviewSource, /Review Gates/, "Image review loop includes review gates");
   assert.match(imageReviewSource, /Hotspot Calibration/, "Image review loop includes source-pixel hotspot calibration");
   assert.match(imageReviewSource, /Required Loop/, "Image review loop defines the repeat-until-pass process");
+  assert.match(semanticValidationSource, /visible object -> nearby context -> why this creates the urge/, "semantic validation documents the clue reasoning chain");
+  assert.match(packageSource, /semantic:check/, "package scripts expose semantic validation");
+  assert.ok(existsSync(join(root, "scripts/validate-level-semantics.mjs")), "semantic validation script exists");
   assert.match(backendSource, /scopeId\?: string/, "hint ad placement can be scoped per scene");
   assert.match(mainSource, /getAdPlacement\("hint", state, scene\.id\)/, "hint availability is checked per current scene");
   assert.match(mainSource, /recordAdView\(state, `hint:\$\{scene\.id\}`\)/, "hint views are recorded per current scene");
@@ -274,6 +279,10 @@ test("game scene design iron rules are documented and obvious failed placeholder
       existsSync(join(root, "public/assets/game/social/states", `social-${state}.png`)),
       `social ${state} raster state exists`
     );
+    assert.ok(
+      existsSync(join(root, "public/assets/game/social/expressions", `social-expression-${state}.png`)),
+      `social ${state} expression overlay exists`
+    );
   }
   for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"]) {
     assert.ok(
@@ -299,6 +308,12 @@ test("game scene design iron rules are documented and obvious failed placeholder
     )
   );
   assert.equal(socialStateHashes.size, 9, "social progress rasters are distinct state images");
+  const socialExpressionHashes = new Set(
+    ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8"].map((state) =>
+      fileHash(join(root, "public/assets/game/social/expressions", `social-expression-${state}.png`))
+    )
+  );
+  assert.equal(socialExpressionHashes.size, 9, "social expression overlays are distinct state images");
   if (existsSync(join(root, "public/assets/game/ai-launch/states", "ai-launch-progress-0.png"))) {
     const aiLaunchStateHashes = new Set(
       ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5", "progress-6", "progress-7", "progress-8", "progress-9"].map((state) =>

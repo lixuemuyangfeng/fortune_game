@@ -36,6 +36,7 @@ These rules are stricter than ordinary implementation preferences. Any gameplay,
 - No generic web-dashboard UI inside the level. Keep first-level UI as a game scene with a compact mission panel, evidence board, and completion ritual; do not introduce resource cards, step dashboards, rankings, facility upgrades, or SaaS-style metrics.
 - Visual QA is mandatory after frontend or game-scene changes. Run the relevant Playwright flow, inspect screenshots manually, and reject the change if it introduces unexplained overlays, unreadable text, occlusion, or a visual that feels like a placeholder.
 - Image review is a production gate, not a note. Before accepting or shipping any generated or edited level image, run the loop in `docs/image-review-optimize-loop.md`, fill the review artifact with actual pass/fail observations, inspect desktop and mobile Playwright screenshots, and keep iterating until all low-level issues are gone.
+- Semantic validation is a required hook. Before handing off clue or level-copy changes, run `npm run semantic:check` or `npm test`; the validator in `scripts/validate-level-semantics.mjs` must pass, and any warning about same-object overuse must be reviewed against the level theme.
 
 ## Level Image Production Constitution
 
