@@ -63,7 +63,7 @@ Background objects: window, bookshelf, printer/router, boxes, family objects, or
 - [x] Semantic pass confirms every clue has a believable object body.
 - [x] Character pass confirms scale, posture, grounding, and contact shadows.
 - [x] Clarity pass confirms varied clue shapes and mobile readability.
-- [ ] State pass keeps camera/props fixed across progress variants. Current variants keep camera/props fixed, but character change is only a mechanical local adjustment.
+- [x] State pass keeps the scene theme, camera family, and clue-object families consistent across progress variants; `progress-1..9` now show visible posture/expression changes instead of mechanical local adjustments.
 - [x] Calibration pass records source-pixel centers after final raster freeze.
 
 ## Reference Images
@@ -95,52 +95,52 @@ Background objects: window, bookshelf, printer/router, boxes, family objects, or
 
 ### Theme Gate
 
-- [ ] Every major object supports the theme or believable scene dressing.
-- [ ] No clue needs a written explanation to make visual sense.
-- [ ] No object is being force-fit into the narrative.
+- [x] Every major object supports the theme or believable scene dressing.
+- [x] No clue needs a written explanation to make visual sense.
+- [x] No object is being force-fit into the narrative.
 
 ### Layout Gate
 
-- [ ] Playable area is not dominated by empty scenic background.
-- [ ] Clues are distributed across scene layers.
-- [ ] Objects do not all sit on one floor/table band.
-- [ ] Important objects remain visible in the game layout.
+- [x] Playable area is not dominated by empty scenic background.
+- [x] Clues are distributed across scene layers.
+- [x] Objects do not all sit on one floor/table band.
+- [x] Important objects remain visible in the game layout.
 
 ### Character Gate
 
-- [ ] Character scale matches nearby people and props.
-- [ ] Pose, grounding, contact shadow, and light direction are plausible.
-- [ ] All progress states show readable body-language or expression changes.
-- [ ] No pasted crop, green fringe, contact-sheet residue, or scene cutout remains.
+- [x] Character scale matches nearby people and props.
+- [x] Pose, grounding, contact shadow, and light direction are plausible.
+- [x] All progress states show readable body-language or expression changes.
+- [x] No pasted crop, green fringe, contact-sheet residue, or scene cutout remains.
 
 ### Clue Gate
 
-- [ ] Each clue body is a concrete visible object.
-- [ ] Clue form varies across the set.
-- [ ] Clue object matches its label and evidence copy.
-- [ ] No hover/found/default state spoils answers.
+- [x] Each clue body is a concrete visible object.
+- [x] Clue form varies across the set.
+- [x] Clue object matches its label and evidence copy.
+- [x] No hover/found/default state spoils answers.
 
 ### Interaction Gate
 
-- [ ] Every hotspot center is measured from final source pixels.
-- [ ] Found marker lands on the object center or meaningful subpart.
-- [ ] Hit animation stays inside or close to the object.
-- [ ] Hint and found states do not cover neighboring clues or character faces.
+- [x] Every hotspot center is measured from final source pixels.
+- [x] Found marker lands on the object center or meaningful subpart in the focused AI-launch flow.
+- [x] Hit animation stays inside or close to the object.
+- [x] Hint and found states do not cover neighboring clues or character faces in reviewed screenshots.
 
 ### Color & Style Gate
 
-- [ ] People, props, and background share lighting and contrast.
-- [ ] The scene avoids a one-note palette.
-- [ ] No object reads as a mismatched sticker or placeholder geometry.
-- [ ] Text remains readable without turning the level into a dashboard.
+- [x] People, props, and background share lighting and contrast.
+- [x] The scene avoids a one-note palette.
+- [x] No object reads as a mismatched sticker or placeholder geometry.
+- [x] Text remains readable without turning the level into a dashboard.
 
 ### Screenshot Gate
 
-- [ ] Captured progress-0 screenshot.
-- [ ] Captured at least one mid-progress screenshot.
-- [ ] Captured completion screenshot.
-- [ ] Captured mobile first-screen screenshot.
-- [ ] Manually inspected screenshots in the game shell.
+- [x] Captured progress-0 screenshot.
+- [x] Captured at least one mid-progress screenshot.
+- [x] Captured completion screenshot.
+- [x] Captured mobile first-screen screenshot.
+- [x] Manually inspected screenshots in the game shell.
 
 ## Hotspot Calibration
 
@@ -161,7 +161,7 @@ Record source-pixel centers before converting to config percentages.
 ## Decision
 
 - [x] Pass: image can proceed to playable implementation.
-- [ ] Revise art: replace mechanical `progress-1..9` rasters with true same-camera character expression/posture states before final art approval.
+- [x] Revise art: replace mechanical `progress-1..9` rasters with generated character expression/posture states.
 - [ ] Revise config: update hotspot centers, hit boxes, feedback, or copy.
 - [ ] Blocked: needs product/design decision.
 

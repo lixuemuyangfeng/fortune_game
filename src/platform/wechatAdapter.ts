@@ -17,8 +17,27 @@ export class WechatAdapter implements PlatformAdapter {
   }
 
   async share(payload: SharePayload): Promise<ShareResult> {
+    wx.showShareMenu?.({ withShareTicket: true, menus: ["shareAppMessage", "shareTimeline"] });
     wx.shareAppMessage({ title: payload.title, imageUrl: payload.image, query: new URLSearchParams(payload.query).toString() });
     return { shared: true };
+  }
+
+  getSocialContext() {
+    const options = wx.getLaunchOptionsSync?.() ?? {};
+    const query = options.query ?? {};
+    return {
+      fromShare: Boolean(query.inviter || query.groupId || options.shareTicket),
+      shareTicket: options.shareTicket,
+      inviterId: query.inviter,
+      groupId: query.groupId,
+      sceneId: query.scene,
+      reward: isShareReward(query.reward) ? query.reward : undefined,
+      assistKey: query.assist ?? `${query.inviter ?? options.shareTicket ?? "wechat"}:${query.scene ?? "unknown"}:${query.reward ?? "none"}`
+    };
+  }
+
+  async openLeaderboard(scope: "friend" | "province"): Promise<void> {
+    wx.getOpenDataContext?.().postMessage({ type: "openLeaderboard", scope });
   }
 
   getLaunchOptions() {
@@ -29,4 +48,8 @@ export class WechatAdapter implements PlatformAdapter {
   reportEvent(name: string, params: Record<string, unknown>): void {
     wx.reportEvent?.(name, params);
   }
+}
+
+function isShareReward(value: string | undefined): value is "hint" | "revive" | "clear" {
+  return value === "hint" || value === "revive" || value === "clear";
 }

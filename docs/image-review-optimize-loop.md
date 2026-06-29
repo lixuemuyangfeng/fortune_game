@@ -200,6 +200,15 @@ Run these gates in order. If any gate fails, fix the image or config before movi
    - Inspect screenshots manually in the game shell, not only the raw generated image.
    - Reject if text is cut, clues are hidden by UI, found markers drift, or the image looks coherent only outside the game layout.
 
+8. Runtime Visual QA Gate
+   - Run `npm run visual:qa -- <sceneId>` after any raster, hotspot, animation, or scene-rendering change.
+   - Inspect every generated `artifacts/visual-qa/<sceneId>/board-*.jpg`; there must be one board for every configured hotspot, and each board shows before crop, hit crop, settled crop, and a full-scene overlay with the hotspot rectangle.
+   - Fill `artifacts/visual-qa/<sceneId>/verdict.json` with `status: "pass"` or `status: "block"` plus concrete evidence sentences. This is required both for the scene-level checks and for every individual hotspot `record.checks` entry.
+   - Each hotspot must be reviewed as its own object-relation, not as part of a general scene impression. The required per-hotspot checks cover center alignment, semantic readability, single-object specificity, pasted-artifacts, perspective/lighting/scale, feedback size, and found-marker occlusion.
+   - A valid sentence must cite what is visible in the board or crop, such as "the green hit pulse is centered on the phone screen, not on the adjacent receipt". Generic conclusions such as "ok", "passed", "looks fine", or "看过" are not acceptable evidence.
+   - Run `npm run visual:gate -- <sceneId>`. The gate must fail if any status is `block`, if verdict text is empty/generic, if screenshots are missing, or if any bound asset/config/source file changed after the verdict was generated.
+   - Do not hand off a level while this gate fails. Passing `npm test`, `npm run build`, or Playwright gameplay flow is not enough.
+
 ## Hotspot Calibration
 
 Generated images cannot reliably encode exact pixel centers. The reliable workflow is:
@@ -228,7 +237,12 @@ For each new or revised level image:
 3. Run `npm run art:review -- <sceneId>` to create a review checklist.
 4. Fill the checklist with pass/fail notes and source-pixel centers.
 5. Update config and calibration docs.
-6. Run Playwright and inspect screenshots manually.
-7. Fix every failed item, then repeat from step 2 or step 4 depending on whether art or only coordinates changed.
+6. Run `npm run art:gate` before calling the art final. This is separate from `npm test`: semantic correctness and passing gameplay tests do not prove visual production readiness.
+7. Run `npm run visual:qa -- <sceneId>`, inspect the boards/crops, and fill `verdict.json` with visible evidence.
+8. Run `npm run visual:gate -- <sceneId>` and keep it passing after any subsequent asset, config, or scene-code edit.
+9. Run Playwright and inspect screenshots manually.
+10. Fix every failed item, then repeat from step 2 or step 4 depending on whether art or only coordinates changed.
 
 The loop stops only when there are no remaining low-level issues: semantic mismatch, bad scale, pasted edges, sparse layout, unreadable clue, off-center hotspot, oversized feedback, UI clipping, or implementation-facing copy.
+
+If image generation is unavailable, do not replace this loop with script-composited or locally drawn final art. Mark the affected level brief as reset-required/WIP, keep gameplay logic testable, and leave `npm run art:gate` failing until a real integrated raster or layer set replaces the WIP assets.

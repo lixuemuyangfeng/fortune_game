@@ -2,7 +2,7 @@
 
 Scene: `ai_launch`
 
-Status: first raster frozen and calibrated from `ai-launch-progress-0.png`. Runtime QA found h2/h3/h5/h6 semantic drift; those hotspot centers have been recalibrated against the source raster and rechecked with the source overlay. Latest pass also separated h2 `待人工复核清单` from h6 `红章兜底流程`.
+Status: V2 progress-state set integrated. The base raster remains calibrated from `ai-launch-progress-0.png`; runtime QA found h2/h3/h5/h6 semantic drift and those centers were recalibrated. The latest pass replaces the previous mechanical `progress-1..9` state rasters with generated posture/expression variants and rechecks the focused AI-launch flow.
 
 ## Source Image
 
@@ -38,6 +38,7 @@ hitY = sourceY / 720 * 100
 - [x] Completion screenshot confirms no large markers or panels occlude the scene: `artifacts/playtest-ai-launch-complete.png`.
 - [x] Mobile screenshot confirms objects remain identifiable: `artifacts/playtest-ai-launch-mobile-intro.png`.
 - [x] Decoy-click check confirms ordinary papers, tabs, cables, mugs, and receipts do not advance progress.
+- [x] State contact sheet confirms visible posture/expression progression: `artifacts/ai_launch-state-contact-sheet.jpg`.
 
 ## QA Notes
 
@@ -46,4 +47,4 @@ hitY = sourceY / 720 * 100
 - User review on 2026-06-05 found hint/marker semantics still weak around the notebook/table-paper cluster. Source overlay QA confirmed h3 was incorrectly sitting on the pen cup; h2 was too close to the notebook; h5 was too broad; h6 was close but benefited from tightening. Recalibrated h2/h3/h5/h6 and moved the `打印纸` decoy center outside h3.
 - Follow-up review on 2026-06-05 found the `待处理清单` marker still reading as if it belonged to the stamp. Reframed h2 as `待人工复核清单`, h6 as `红章兜底流程`, and moved h2 to source center `922,475`, the upper form/title area. The source overlay `artifacts/ai-launch-hotspot-overlay-latest.png` confirms h2 and h6 are now separate visual centers.
 - Same pass reframed weak AI semantics: `太干净的演示数据` became `只跑样例的满分屏`, `预算审批人脉图` became `人情审批流程图`, and the course timer became a `平板结账倒计时`.
-- Remaining art risk: `progress-1..9` are mechanically derived local-state rasters, not true generated expression/posture redraws. They are acceptable as a playable WIP but should be replaced by real same-camera character-state variants before final art approval.
+- 2026-06-09 state repair: `progress-1..9` were replaced with generated same-theme posture/expression variants. The focused AI-launch Playwright flow passed and the mid/complete screenshots were manually inspected for character state, marker placement, and clue-object continuity.

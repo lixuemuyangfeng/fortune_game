@@ -21,7 +21,7 @@ Generated: 2026-06-04
 - [x] Camera and main action area are fixed before generation.
 - [x] Foreground, midground, and background all have roles.
 - [x] There is enough believable object density to hide clues.
-- [ ] Main/proxy character has a planned visible state for each progress step.
+- [x] Main/proxy character has a planned visible state for each progress step.
 - [x] Each clue is a concrete object with a reason to exist in the scene.
 - [x] UI copy is player-facing and contains no implementation language.
 
@@ -38,7 +38,7 @@ Midground: Zhou operating the crusher, cracked keyboard, market paper, mother-ne
 Background: AI course screen/timer, shelves, cable tags, folder chutes, lock tags.
 People and actions: Zhou is focused and operating the dismantling process, not being passively attacked.
 Required clue objects: six source relics and six counter-tags from the campaign finale.
-Character/proxy state: playable WIP uses same-scene progress rasters; final pass needs true posture/expression redraws.
+Character/proxy state: V2 runtime uses a clean background plus independent Zhou state composites from progress-0 through progress-12.
 Lighting/color: dark green/gold basement industrial light with coherent metal/paper/glass materials.
 Mobile readability: object clusters remain visible in intro; search is primarily desktop/landscape.
 Forbidden: large answer labels, red boxes, numbers, baked markers, all-paper clues, pasted character.
@@ -63,7 +63,7 @@ Background objects: laptop/timer, shelves, hanging tags, folder chutes.
 - [x] Semantic pass confirms every clue has a believable object body.
 - [x] Character pass confirms scale, posture, grounding, and contact shadows.
 - [x] Clarity pass confirms varied clue shapes and mobile readability.
-- [ ] State pass keeps camera/props fixed across progress variants.
+- [x] State pass keeps camera/props fixed across progress variants.
 - [x] Calibration pass records source-pixel centers after final raster freeze.
 
 ## Reference Images
@@ -147,18 +147,18 @@ Record source-pixel centers before converting to config percentages.
 
 | ID | Label | Evidence | Config center | Config box | Animation | Source center | Review note |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `h1` | 碎键盘行情芯 | `nest_office_noise_core` | 52.8, 43.0 | 14.0 x 18.0 | kline | 676, 310 | Keyboard/chart entering grinder. |
-| `h2` | 半焦金店小票 | `nest_gold_receipt_heat` | 10.0, 68.2 | 14.0 x 16.0 | receipt | 128, 491 | Burned receipt cluster. |
-| `h3` | 连环差一点票卷 | `nest_lottery_near_miss_roll` | 37.4, 67.8 | 9.0 x 13.0 | ticket | 479, 488 | Narrowed after h9 overlap. |
-| `h4` | 高光滤镜碎片 | `nest_social_filter_shard` | 57.4, 73.7 | 16.0 x 18.0 | photo | 735, 531 | Lens/photo relation. |
-| `h5` | 恐慌课程计时器 | `nest_ai_panic_meter` | 18.0, 35.4 | 18.0 x 18.0 | alert | 230, 255 | Timer/screen cluster. |
-| `h6` | 甩锅管阀 | `nest_meeting_blame_pipe` | 78.0, 41.6 | 22.0 x 22.0 | contract | 998, 300 | Folder-to-pipe relation. |
-| `h7` | 不上车金属牌 | `tag_not_every_car` | 87.4, 81.2 | 14.0 x 16.0 | sign | 1119, 585 | Car/ramp tag. |
-| `h8` | 裂盾策略牌 | `tag_stubborn_not_strategy` | 31.4, 91.0 | 12.0 x 12.0 | goldLine | 402, 655 | Shield tag. |
-| `h9` | 止损停牌 | `tag_near_miss_not_next` | 43.0, 76.8 | 7.0 x 8.0 | scratch | 550, 553 | Stop token; narrowed after h3 overlap. |
-| `h10` | 可发布画框 | `tag_publishable_version` | 69.2, 73.2 | 10.0 x 17.0 | photo | 886, 527 | Film-frame tag. |
-| `h11` | 恐慌价签 | `tag_panic_sellers_profit` | 4.7, 35.6 | 9.0 x 14.0 | note | 60, 256 | Left cable warning tag. |
-| `h12` | 流程封签 | `tag_no_resource_blame` | 91.5, 27.0 | 12.0 x 18.0 | contract | 1171, 194 | Lock/valve tag. |
+| `h1` | 碎键盘行情芯 | `nest_office_noise_core` | 56.8, 48.7 | 7.5 x 12.0 | kline | 727, 351 | Market mini-screen/chart paper; moved off Zhou's body. |
+| `h2` | 半焦金店小票 | `nest_gold_receipt_heat` | 12.0, 67.9 | 14.0 x 15.0 | receipt | 154, 489 | Burned receipt cluster. |
+| `h3` | 连环差一点票卷 | `nest_lottery_near_miss_roll` | 31.6, 71.4 | 10.0 x 14.0 | ticket | 404, 514 | Ticket roll body; separated from h9. |
+| `h4` | 高光滤镜碎片 | `nest_social_filter_shard` | 49.2, 72.9 | 7.0 x 14.0 | photo | 630, 525 | Lens/photo shard near Zhou's feet. |
+| `h5` | 恐慌课程计时器 | `nest_ai_panic_meter` | 17.6, 31.9 | 18.0 x 17.0 | alert | 225, 230 | Timer/screen cluster. |
+| `h6` | 甩锅管阀 | `nest_meeting_blame_pipe` | 78.1, 46.7 | 20.0 x 20.0 | contract | 1000, 336 | Folder-to-pipe relation. |
+| `h7` | 不上车金属牌 | `tag_not_every_car` | 87.1, 84.3 | 13.0 x 14.0 | sign | 1115, 607 | Car/ramp tag. |
+| `h8` | 裂盾策略牌 | `tag_stubborn_not_strategy` | 27.0, 85.7 | 11.0 x 12.0 | goldLine | 346, 617 | Shield tag. |
+| `h9` | 止损停牌 | `tag_near_miss_not_next` | 40.6, 82.5 | 8.0 x 9.0 | scratch | 520, 594 | Stop token; no longer overlaps h3. |
+| `h10` | 可发布画框 | `tag_publishable_version` | 58.7, 72.5 | 7.0 x 14.0 | photo | 751, 522 | Film-frame tag; separated from h4. |
+| `h11` | 恐慌价签 | `tag_panic_sellers_profit` | 12.6, 44.0 | 4.5 x 8.0 | note | 161, 317 | Left cable hanging price tag. |
+| `h12` | 流程封签 | `tag_no_resource_blame` | 90.6, 36.5 | 7.5 x 12.0 | contract | 1160, 263 | Process seal/lock on right pipe row. |
 
 ## Decision
 
@@ -171,4 +171,4 @@ Record source-pixel centers before converting to config percentages.
 
 - The first generated candidate had too many readable labels. It was rejected before integration. The accepted candidate uses more icon/object-based evidence.
 - Playwright initially found h3/h9 overlap around the lottery ticket roll and stop tag. h3 was narrowed to the ticket-roll body and h9 was narrowed/moved to the stop token before the final e2e pass.
-- Remaining risk: progress states are mechanically derived same-scene rasters rather than true posture/expression variants. Do not call these final production character states.
+- 2026-06-15 V2 update: replaced the old same-scene state set with clean-background plus independent Zhou state composites, recalibrated h1/h11/h12, regenerated `artifacts/visual-qa/nest`, and passed `npm run visual:gate -- nest` with screenshot-backed per-hotspot evidence.

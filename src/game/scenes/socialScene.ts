@@ -18,9 +18,19 @@ const characterStates = [
   "progress-9",
   "progress-10",
   "progress-11",
-  "progress-12"
+  "progress-12",
+  "progress-13"
 ] as const;
 type CharacterState = (typeof characterStates)[number];
+
+interface RenderedSceneState {
+  backgroundKey?: string;
+  expressionKey?: string;
+  foundCount: number;
+  challengeActive: boolean;
+}
+
+const renderedSceneStates = new Map<string, RenderedSceneState>();
 
 export interface SocialSceneData {
   scene: InvestigationScene;
@@ -35,6 +45,7 @@ export interface SocialSceneData {
 
 export class SocialScene extends Phaser.Scene {
   private socialData!: SocialSceneData;
+  private previousRenderedState?: RenderedSceneState;
 
   constructor(sceneKey = "SocialScene") {
     super(sceneKey);
@@ -42,6 +53,7 @@ export class SocialScene extends Phaser.Scene {
 
   create(data: SocialSceneData): void {
     this.socialData = data;
+    this.previousRenderedState = renderedSceneStates.get(data.scene.id);
     this.cameras.main.setBackgroundColor("#101915");
 
     this.addBackground();
@@ -57,14 +69,25 @@ export class SocialScene extends Phaser.Scene {
     this.addHintMarker();
     this.addRecentHitEffect();
     this.addCompletionState();
+    this.rememberRenderedState();
   }
 
   private addBackground(): void {
     const backgroundKey = this.getBackgroundTextureKey();
     if (!backgroundKey) return;
-    const image = this.add.image(worldWidth / 2, worldHeight / 2, backgroundKey);
+    const image = this.addScaledSceneImage(backgroundKey, 0);
+    if (this.shouldAnimateProgressReveal(backgroundKey)) {
+      image.setAlpha(0.72);
+      this.tweens.add({ targets: image, alpha: 1, duration: 300, ease: "Cubic.out" });
+    }
+  }
+
+  private addScaledSceneImage(textureKey: string, depth: number): Phaser.GameObjects.Image {
+    const image = this.add.image(worldWidth / 2, worldHeight / 2, textureKey);
     const scale = Math.max(worldWidth / image.width, worldHeight / image.height);
     image.setScale(scale).setDepth(0);
+    image.setDepth(depth);
+    return image;
   }
 
   private getBackgroundTextureKey(): string | undefined {
@@ -76,6 +99,14 @@ export class SocialScene extends Phaser.Scene {
     return undefined;
   }
 
+  private shouldAnimateProgressReveal(nextKey?: string): boolean {
+    const previous = this.previousRenderedState;
+    if (!previous || !nextKey || previous.backgroundKey === nextKey) return false;
+    if (!this.socialData.challengeActive || !previous.challengeActive) return false;
+    const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
+    return previous.foundCount !== progress.foundCount;
+  }
+
   private addStoreWash(): void {
     const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
     const tint = progress.complete ? 0xf3c45b : this.socialData.challengeActive ? 0x26361f : 0x06120f;
@@ -85,13 +116,45 @@ export class SocialScene extends Phaser.Scene {
     const vignette = this.add.graphics().setDepth(3);
     vignette.fillGradientStyle(0x06120f, 0x06120f, 0x06120f, 0x06120f, 0.48, 0.08, 0.08, 0.5);
     vignette.fillRect(0, 0, worldWidth, worldHeight);
+
+    if (this.shouldAnimateProgressReveal(this.getBackgroundTextureKey())) {
+      const reveal = this.add.rectangle(worldWidth / 2, worldHeight / 2, worldWidth, worldHeight, 0x06120f, 0.26).setDepth(6);
+      this.tweens.add({
+        targets: reveal,
+        alpha: 0,
+        duration: 260,
+        ease: "Cubic.out",
+        onComplete: () => reveal.destroy()
+      });
+    }
   }
 
   private addSocialExpressionOverlay(): void {
     if (this.socialData.scene.id !== "social") return;
     const expressionKey = `social-expression-${this.getCharacterState()}`;
     if (!this.textures.exists(expressionKey)) return;
-    this.add.image(worldWidth / 2, worldHeight / 2, expressionKey).setDepth(4).setAlpha(0.94);
+    const current = this.add.image(worldWidth / 2, worldHeight / 2, expressionKey).setDepth(4).setAlpha(0.94);
+    const previousKey = this.previousRenderedState?.expressionKey;
+    if (this.shouldAnimateExpressionTransition(previousKey, expressionKey)) {
+      current.setAlpha(0.18);
+      const previous = this.add.image(worldWidth / 2, worldHeight / 2, previousKey).setDepth(5).setAlpha(0.94);
+      this.tweens.add({ targets: current, alpha: 0.94, duration: 300, ease: "Cubic.out" });
+      this.tweens.add({
+        targets: previous,
+        alpha: 0,
+        duration: 390,
+        ease: "Cubic.out",
+        onComplete: () => previous.destroy()
+      });
+    }
+  }
+
+  private shouldAnimateExpressionTransition(previousKey: string | undefined, nextKey: string): previousKey is string {
+    if (!previousKey || previousKey === nextKey || !this.textures.exists(previousKey)) return false;
+    const previous = this.previousRenderedState;
+    if (!previous) return false;
+    const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
+    return this.socialData.challengeActive && previous.challengeActive && previous.foundCount !== progress.foundCount;
   }
 
   private addIntroCopy(): void {
@@ -185,6 +248,14 @@ export class SocialScene extends Phaser.Scene {
     if (!hotspot) return;
     const rect = this.getHotspotRect(hotspot);
     const hint = this.add.graphics().setDepth(44);
+    if (this.socialData.scene.id === "stock") {
+      hint.lineStyle(3, 0xf3c45b, 0.82);
+      hint.strokeRoundedRect(rect.x - rect.width * 0.44, rect.y - rect.height * 0.34, rect.width * 0.88, rect.height * 0.68, 8);
+      hint.fillStyle(0xf3c45b, 0.72);
+      hint.fillCircle(rect.x + rect.width * 0.31, rect.y - rect.height * 0.22, 3.5);
+      this.tweens.add({ targets: hint, alpha: 0.34, duration: 500, yoyo: true, repeat: 5, ease: "Sine.inOut" });
+      return;
+    }
     hint.lineStyle(6, 0xf3c45b, 0.95);
     hint.strokeRoundedRect(rect.x - rect.width / 2, rect.y - rect.height / 2, rect.width, rect.height, 16);
     hint.lineStyle(2, 0xfff7df, 0.75);
@@ -196,7 +267,11 @@ export class SocialScene extends Phaser.Scene {
     const hotspot = this.socialData.scene.hotspots.find((item) => item.id === this.socialData.justFoundHotspotId);
     if (!hotspot) return;
 
-    const rect = this.getHotspotRect(hotspot);
+    const rect = this.getFeedbackRect(this.getHotspotRect(hotspot));
+    if (this.socialData.scene.id === "stock") {
+      this.addCompactStockHitEffect(rect);
+      return;
+    }
     if (hotspot.evidenceId === "cropped_profit_screenshot") this.addProfitEffect(rect);
     else if (hotspot.evidenceId === "unsent_reply_draft") this.addDraftEffect(rect);
     else if (hotspot.evidenceId === "group_invite_popup") this.addInviteEffect(rect);
@@ -329,6 +404,34 @@ export class SocialScene extends Phaser.Scene {
     this.tweens.add({ targets: [input, cursor, unsent], alpha: 0, duration: 220, delay: 620, ease: "Cubic.out" });
   }
 
+  private addCompactStockHitEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const ringRadius = Math.max(7, Math.min(rect.width, rect.height) * 0.16);
+    const centerX = rect.x;
+    const centerY = rect.y;
+    const ring = this.add.graphics().setDepth(52);
+    ring.lineStyle(2.5, 0xf3c45b, 0.82);
+    ring.strokeCircle(centerX, centerY, ringRadius);
+
+    const tick = this.add.graphics().setDepth(53);
+    tick.lineStyle(2.5, 0x87c779, 0.86);
+    tick.beginPath();
+    tick.moveTo(centerX - ringRadius * 0.42, centerY);
+    tick.lineTo(centerX - ringRadius * 0.1, centerY + ringRadius * 0.34);
+    tick.lineTo(centerX + ringRadius * 0.48, centerY - ringRadius * 0.4);
+    tick.strokePath();
+
+    const underline = this.add.graphics().setDepth(52);
+    underline.lineStyle(2, 0xfff0b8, 0.52);
+    underline.beginPath();
+    underline.moveTo(rect.x - rect.width * 0.2, rect.y + rect.height * 0.26);
+    underline.lineTo(rect.x + rect.width * 0.2, rect.y + rect.height * 0.26);
+    underline.strokePath();
+
+    this.tweens.add({ targets: ring, alpha: 0.18, scaleX: 1.35, scaleY: 1.35, duration: 440, ease: "Cubic.out" });
+    this.tweens.add({ targets: tick, alpha: 0, y: -3, duration: 460, delay: 160, ease: "Cubic.out" });
+    this.tweens.add({ targets: [ring, underline], alpha: 0, duration: 260, delay: 540, ease: "Cubic.out" });
+  }
+
   private addBookmarkEffect(rect: { x: number; y: number; width: number; height: number }): void {
     const tab = this.add.graphics().setDepth(52);
     tab.lineStyle(3, 0xf3c45b, 0.78);
@@ -377,6 +480,26 @@ export class SocialScene extends Phaser.Scene {
       this.addDeadlineEffect(rect);
       return;
     }
+    if (hotspot.animationKind === "goldLine") {
+      this.addGoldLineEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "scratch" || hotspot.animationKind === "ticket") {
+      this.addScratchTicketEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "sign") {
+      this.addSignPlateEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "photo") {
+      this.addPhotoFrameEffect(rect);
+      return;
+    }
+    if (hotspot.animationKind === "bottle") {
+      this.addBottleCapEffect(rect);
+      return;
+    }
     if (hotspot.animationKind === "alert") {
       this.addLegacyTokenEffect(rect);
       return;
@@ -402,6 +525,91 @@ export class SocialScene extends Phaser.Scene {
       return;
     }
     this.addGenericHitEffect(rect);
+  }
+
+  private addGoldLineEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const chart = this.add.graphics().setDepth(52);
+    chart.lineStyle(2.5, 0xf3c45b, 0.82);
+    chart.strokeRoundedRect(rect.x - rect.width * 0.38, rect.y - rect.height * 0.28, rect.width * 0.76, rect.height * 0.56, 5);
+    chart.lineStyle(3.5, 0xd35a36, 0.78);
+    chart.beginPath();
+    chart.moveTo(rect.x - rect.width * 0.28, rect.y + rect.height * 0.1);
+    chart.lineTo(rect.x - rect.width * 0.12, rect.y - rect.height * 0.03);
+    chart.lineTo(rect.x + rect.width * 0.02, rect.y + rect.height * 0.04);
+    chart.lineTo(rect.x + rect.width * 0.24, rect.y - rect.height * 0.18);
+    chart.strokePath();
+
+    const cap = this.add.graphics().setDepth(53);
+    cap.fillStyle(0xfff0b8, 0.78);
+    cap.fillCircle(rect.x + rect.width * 0.24, rect.y - rect.height * 0.18, Math.max(3, Math.min(rect.width, rect.height) * 0.08));
+
+    this.tweens.add({ targets: chart, alpha: 0.18, x: 4, duration: 120, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [chart, cap], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addScratchTicketEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const ticket = this.add.graphics().setDepth(52);
+    ticket.lineStyle(2.5, 0xf3c45b, 0.78);
+    ticket.strokeRoundedRect(rect.x - rect.width * 0.38, rect.y - rect.height * 0.32, rect.width * 0.76, rect.height * 0.64, 5);
+
+    const scratch = this.add.graphics().setDepth(53);
+    scratch.lineStyle(4, 0xfff0b8, 0.72);
+    scratch.beginPath();
+    scratch.moveTo(rect.x - rect.width * 0.24, rect.y + rect.height * 0.12);
+    scratch.lineTo(rect.x + rect.width * 0.2, rect.y - rect.height * 0.16);
+    scratch.moveTo(rect.x - rect.width * 0.12, rect.y + rect.height * 0.18);
+    scratch.lineTo(rect.x + rect.width * 0.3, rect.y - rect.height * 0.04);
+    scratch.strokePath();
+
+    this.tweens.add({ targets: scratch, alpha: 0.14, x: 5, duration: 110, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [ticket, scratch], alpha: 0, duration: 250, delay: 610, ease: "Cubic.out" });
+  }
+
+  private addSignPlateEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const plate = this.add.graphics().setDepth(52);
+    plate.lineStyle(2.5, 0xf3c45b, 0.8);
+    plate.strokeRoundedRect(rect.x - rect.width * 0.34, rect.y - rect.height * 0.34, rect.width * 0.68, rect.height * 0.68, 4);
+    plate.lineStyle(3, 0xfff0b8, 0.78);
+    plate.beginPath();
+    plate.moveTo(rect.x, rect.y - rect.height * 0.18);
+    plate.lineTo(rect.x - rect.width * 0.16, rect.y + rect.height * 0.12);
+    plate.lineTo(rect.x + rect.width * 0.16, rect.y + rect.height * 0.12);
+    plate.closePath();
+    plate.strokePath();
+
+    this.tweens.add({ targets: plate, alpha: 0.18, scaleX: 1.05, scaleY: 1.05, duration: 150, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: plate, alpha: 0, duration: 250, delay: 600, ease: "Cubic.out" });
+  }
+
+  private addPhotoFrameEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const frame = this.add.graphics().setDepth(52);
+    frame.lineStyle(2.5, 0xf3c45b, 0.78);
+    frame.strokeRoundedRect(rect.x - rect.width * 0.4, rect.y - rect.height * 0.3, rect.width * 0.8, rect.height * 0.6, 5);
+
+    const crop = this.add.graphics().setDepth(53);
+    crop.lineStyle(2.5, 0xfff0b8, 0.74);
+    crop.beginPath();
+    crop.moveTo(rect.x - rect.width * 0.32, rect.y - rect.height * 0.18);
+    crop.lineTo(rect.x - rect.width * 0.2, rect.y - rect.height * 0.18);
+    crop.moveTo(rect.x + rect.width * 0.2, rect.y + rect.height * 0.18);
+    crop.lineTo(rect.x + rect.width * 0.32, rect.y + rect.height * 0.18);
+    crop.strokePath();
+
+    this.tweens.add({ targets: crop, alpha: 0.16, x: 4, y: -3, duration: 130, yoyo: true, repeat: 3, ease: "Sine.inOut" });
+    this.tweens.add({ targets: [frame, crop], alpha: 0, duration: 260, delay: 620, ease: "Cubic.out" });
+  }
+
+  private addBottleCapEffect(rect: { x: number; y: number; width: number; height: number }): void {
+    const cap = this.add.graphics().setDepth(52);
+    cap.lineStyle(3, 0x87c779, 0.78);
+    cap.strokeEllipse(rect.x, rect.y, rect.width * 0.52, rect.height * 0.34);
+    cap.lineStyle(2.5, 0xfff0b8, 0.72);
+    cap.beginPath();
+    cap.moveTo(rect.x - rect.width * 0.18, rect.y);
+    cap.lineTo(rect.x + rect.width * 0.18, rect.y);
+    cap.strokePath();
+    this.tweens.add({ targets: cap, angle: 5, alpha: 0.16, duration: 120, yoyo: true, repeat: 4, ease: "Sine.inOut" });
+    this.tweens.add({ targets: cap, alpha: 0, duration: 250, delay: 620, ease: "Cubic.out" });
   }
 
   private addDemoRowsEffect(rect: { x: number; y: number; width: number; height: number }): void {
@@ -604,6 +812,16 @@ export class SocialScene extends Phaser.Scene {
     return `progress-${Math.min(progress.foundCount, characterStates.length - 1)}` as CharacterState;
   }
 
+  private rememberRenderedState(): void {
+    const progress = getOfficeProgress(this.socialData.scene, this.socialData.foundHotspotIds);
+    renderedSceneStates.set(this.socialData.scene.id, {
+      backgroundKey: this.getBackgroundTextureKey(),
+      expressionKey: this.socialData.scene.id === "social" ? `social-expression-${this.getCharacterState()}` : undefined,
+      foundCount: progress.foundCount,
+      challengeActive: this.socialData.challengeActive
+    });
+  }
+
   private getTexturePrefix(): "social" | "ai-launch" | "meeting" | "nest" | "stock" {
     if (this.socialData.scene.id === "ai_launch") return "ai-launch";
     if (this.socialData.scene.id === "meeting") return "meeting";
@@ -657,6 +875,17 @@ export class SocialScene extends Phaser.Scene {
       ...point,
       width: ((hotspot.hitWidth ?? Math.max(7, hotspot.radius * 2)) / 100) * worldWidth,
       height: ((hotspot.hitHeight ?? Math.max(7, hotspot.radius * 2)) / 100) * worldHeight
+    };
+  }
+
+  private getFeedbackRect(rect: { x: number; y: number; width: number; height: number }): { x: number; y: number; width: number; height: number } {
+    const width = Phaser.Math.Clamp(rect.width * 0.68, 42, 132);
+    const height = Phaser.Math.Clamp(rect.height * 0.68, 34, 112);
+    return {
+      x: rect.x,
+      y: rect.y,
+      width,
+      height
     };
   }
 

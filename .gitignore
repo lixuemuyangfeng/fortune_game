@@ -6,6 +6,7 @@ test-results/
 
 .DS_Store
 *.log
+project.private.config.json
 
 .env
 .env.*

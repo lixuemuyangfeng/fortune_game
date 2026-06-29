@@ -218,7 +218,7 @@ test("all playable levels meet narrative and interaction content requirements", 
       const animationKinds = hotspots.map((hotspot) => hotspot.match(/animationKind: "([^"]+)"/)?.[1]);
       assert.deepEqual(
         animationKinds,
-        ["kline", "photo", "note", "note", "alert", "sign", "phone", "kline", "chat", "news", "contract", "paper", "phone"],
+        ["kline", "kline", "note", "note", "alert", "receipt", "phone", "kline", "chat", "news", "contract", "paper", "phone"],
         "stock hotspots have explicit click feedback animations"
       );
     }
@@ -266,6 +266,23 @@ test("game scene design iron rules are documented and obvious failed placeholder
   assert.match(backendSource, /scopeId\?: string/, "hint ad placement can be scoped per scene");
   assert.match(mainSource, /getAdPlacement\("hint", state, scene\.id\)/, "hint availability is checked per current scene");
   assert.match(mainSource, /recordAdView\(state, `hint:\$\{scene\.id\}`\)/, "hint views are recorded per current scene");
+  assert.match(backendSource, /"hint" \| "magnifier" \| "revive" \| "extra_attempt" \| "double_reward" \| "interstitial_clear"/, "backend exposes WeChat mini-game ad placement inventory");
+  assert.match(backendSource, /getLeaderboard\(state: PlayerState\)/, "backend exposes local leaderboard snapshots");
+  assert.match(backendSource, /getDailyChallenge\(state: PlayerState\)/, "backend exposes daily challenge snapshots");
+  assert.match(mainSource, /data-action="share-reward"/, "runtime offers share-for-reward loop");
+  assert.match(mainSource, /data-action="share-clear"/, "runtime offers completion report sharing");
+  assert.match(mainSource, /data-action="double-clear-ad"/, "runtime offers rewarded completion multiplier");
+  assert.match(mainSource, /data-action="revive-ad"/, "runtime offers rewarded revive after failed challenge");
+  assert.match(mainSource, /data-action="revive-card"/, "runtime offers revive-card or share revive path");
+  assert.match(mainSource, /data-action="extra-attempt-ad"/, "runtime offers rewarded extra daily attempt");
+  assert.match(mainSource, /recordSceneMiss\(state, scene\.id, mistakeLimit\)/, "runtime turns wrong clicks into limited mistakes");
+  assert.match(mainSource, /recordDailyAttempt\(state\)/, "runtime consumes a daily attempt when a challenge starts");
+  assert.match(mainSource, /applyShareAssist\(state\)/, "runtime applies share assist rewards on launch");
+  assert.match(mainSource, /claimShareAssist\(currentState, assistKey\)/, "share assist rewards are de-duplicated by assist key");
+  assert.match(mainSource, /createShareQuery\(scene\.id, "revive"\)/, "revive share creates an attributable reward query");
+  assert.match(mainSource, /dailyChallenge\.clearGoal/, "runtime displays daily clear goal progress");
+  assert.match(mainSource, /data-action="open-friend-rank"/, "runtime offers friend leaderboard entry");
+  assert.match(mainSource, /data-action="open-province-rank"/, "runtime offers province leaderboard entry");
   assert.ok(existsSync(join(root, "scripts/create-image-review.mjs")), "image review generator script exists");
   for (const state of ["progress-0", "progress-1", "progress-2", "progress-3", "progress-4", "progress-5"]) {
     assert.ok(

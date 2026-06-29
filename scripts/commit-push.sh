@@ -45,6 +45,8 @@ if [[ "${SKIP_VERIFY:-0}" == "1" ]]; then
 else
   echo "Running verification..."
   npm test
+  npm run art:gate
+  npm run visual:gate:all
   npm run build
   npm run test:e2e
 fi

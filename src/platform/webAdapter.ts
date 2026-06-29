@@ -22,6 +22,23 @@ export class WebAdapter implements PlatformAdapter {
     return { shared: true };
   }
 
+  getSocialContext() {
+    const query = Object.fromEntries(new URLSearchParams(window.location.search));
+    return {
+      fromShare: Boolean(query.inviter || query.shareTicket || query.groupId),
+      shareTicket: query.shareTicket,
+      inviterId: query.inviter,
+      groupId: query.groupId,
+      sceneId: query.scene,
+      reward: isShareReward(query.reward) ? query.reward : undefined,
+      assistKey: query.assist ?? `${query.inviter ?? "web"}:${query.scene ?? "unknown"}:${query.reward ?? "none"}`
+    };
+  }
+
+  async openLeaderboard(scope: "friend" | "province"): Promise<void> {
+    console.info("[leaderboard]", scope);
+  }
+
   getLaunchOptions() {
     return { query: Object.fromEntries(new URLSearchParams(window.location.search)) };
   }
@@ -29,4 +46,8 @@ export class WebAdapter implements PlatformAdapter {
   reportEvent(name: string, params: Record<string, unknown>): void {
     console.info("[event]", name, params);
   }
+}
+
+function isShareReward(value: string | undefined): value is "hint" | "revive" | "clear" {
+  return value === "hint" || value === "revive" || value === "clear";
 }

@@ -1,13 +1,24 @@
 import type Phaser from "phaser";
 import "./styles.css";
 import { LocalGameBackend } from "./core/backend";
+import type { DailyChallengeSnapshot, LeaderboardSnapshot } from "./core/backend";
 import { gameConfig } from "./core/config";
 import {
   addSceneHotspot,
+  claimShareAssist,
   createInitialState,
+  grantBooster,
+  grantDailyAttempt,
   recordAdView,
+  recordDailyAttempt,
+  recordDailyClear,
+  recordInviteLaunch,
+  recordSceneMiss,
+  recordSocialShare,
+  reviveScene,
   setCurrentScene,
-  setSceneChallengeActive
+  setSceneChallengeActive,
+  spendBooster
 } from "./core/state";
 import type { InvestigationScene, PlayerState, SceneInvestigationState } from "./core/types";
 import { createInvestigationGame } from "./game";
@@ -24,11 +35,18 @@ const aiLaunchSceneId = "ai_launch";
 const meetingSceneId = "meeting";
 const nestSceneId = "nest";
 const stockSceneId = "stock";
+const mistakeLimit = 3;
 const platform = new WebAdapter();
 const platformBridge = new PhaserPlatformBridge(platform);
 const backend = new LocalGameBackend(gameConfig);
+let launchToast = "";
 let state = loadState();
-let toast = "抓住偷走注意力的噪声。";
+const socialContext = platform.getSocialContext?.();
+if (socialContext?.fromShare) {
+  state = applyShareAssist(state);
+  saveState();
+}
+let toast = launchToast || "抓住偷走注意力的噪声。";
 let hintedHotspotId = "";
 let justFoundHotspotId = "";
 let nextScenePlaceholderActive = false;
@@ -68,7 +86,9 @@ function normalizeState(nextState: PlayerState): PlayerState {
     const stored = storedSceneProgress[scene.id];
     sceneProgress[scene.id] = {
       challengeActive: stored?.challengeActive ?? false,
-      foundHotspotIds: stored?.foundHotspotIds ?? []
+      foundHotspotIds: stored?.foundHotspotIds ?? [],
+      missCount: stored?.missCount ?? 0,
+      failed: stored?.failed ?? false
     };
   }
 
@@ -76,8 +96,47 @@ function normalizeState(nextState: PlayerState): PlayerState {
     ...initialState,
     ...nextState,
     currentSceneId: gameConfig.scenes.some((scene) => scene.id === nextState.currentSceneId) ? nextState.currentSceneId : officeSceneId,
-    sceneProgress
+    sceneProgress,
+    economy: {
+      ...initialState.economy,
+      ...nextState.economy
+    },
+    socialStats: {
+      ...initialState.socialStats,
+      ...nextState.socialStats,
+      claimedAssistKeys: nextState.socialStats?.claimedAssistKeys ?? []
+    },
+    dailyChallenge: {
+      ...initialState.dailyChallenge,
+      ...nextState.dailyChallenge,
+      extraAttemptsToday: nextState.dailyChallenge?.extraAttemptsToday ?? 0,
+      completedSceneIds: nextState.dailyChallenge?.completedSceneIds ?? []
+    }
   };
+}
+
+function applyShareAssist(currentState: PlayerState): PlayerState {
+  if (!socialContext?.fromShare) return currentState;
+
+  const assistKey = socialContext.assistKey ?? `${socialContext.inviterId ?? "unknown"}:${socialContext.sceneId ?? "unknown"}:${socialContext.reward ?? "none"}`;
+  if (currentState.socialStats.claimedAssistKeys.includes(assistKey)) {
+    launchToast = "这个助力已经记过了，继续挑战。";
+    return currentState;
+  }
+
+  let nextState = claimShareAssist(currentState, assistKey);
+  if (socialContext.reward === "revive") {
+    nextState = grantBooster(nextState, "reviveCard", 1);
+    launchToast = "好友助力已到账，复活卡 +1。";
+  } else if (socialContext.reward === "hint") {
+    nextState = grantBooster(nextState, "hintTicket", 1);
+    launchToast = "好友助力已到账，提示券 +1。";
+  } else {
+    nextState = grantBooster(nextState, "hintTicket", 1);
+    launchToast = "好友战报已接收，提示券 +1。";
+  }
+  platform.reportEvent("share_assist_claimed", { reward: socialContext.reward ?? "hint", sceneId: socialContext.sceneId ?? "" });
+  return nextState;
 }
 
 function saveState(): void {
@@ -93,7 +152,7 @@ function getActiveScene(): InvestigationScene {
 }
 
 function getSceneState(sceneId: string): SceneInvestigationState {
-  return state.sceneProgress[sceneId] ?? { challengeActive: false, foundHotspotIds: [] };
+  return state.sceneProgress[sceneId] ?? { challengeActive: false, foundHotspotIds: [], missCount: 0, failed: false };
 }
 
 function setState(nextState: PlayerState): void {
@@ -120,10 +179,12 @@ function render(): void {
     .filter(Boolean);
   const nextButtonText = progress.complete ? "下一关入口" : "";
   const sceneMeta = getSceneMeta(scene.id);
+  const dailyChallenge = backend.getDailyChallenge(state);
+  const leaderboard = backend.getLeaderboard(state);
 
   app.innerHTML = `
     <main class="game-shell phaser-shell">
-      <section class="game-phone phaser-phone ${sceneState.challengeActive ? "is-started" : "is-idle"} ${progress.complete ? "is-complete" : ""}">
+      <section class="game-phone phaser-phone ${sceneState.challengeActive ? "is-started" : "is-idle"} ${sceneState.failed ? "is-failed" : ""} ${progress.complete ? "is-complete" : ""}">
         <header class="game-top">
           <div>
             <h1>暴富幻想所</h1>
@@ -145,6 +206,7 @@ function render(): void {
               <p>${escapeHtml(getNarrative(scene, sceneState.challengeActive, progress.foundCount, progress.totalCount, progress.complete))}</p>
             </div>
 
+            ${renderStatusToast()}
             <div class="case-progress">
               <div class="case-progress-head">
                 <div>
@@ -153,13 +215,14 @@ function render(): void {
                 </div>
                 <b>${progress.foundCount}/${progress.totalCount}</b>
               </div>
-              <p>${escapeHtml(progress.complete ? scene.completeText ?? "现场噪声已处理。" : sceneMeta.goalDetail)}</p>
+              <p>${escapeHtml(getProgressDetail(scene, sceneState, progress.complete, sceneMeta.goalDetail))}</p>
               <div class="progress-rail" aria-hidden="true"><i style="width:${Math.round((progress.foundCount / progress.totalCount) * 100)}%"></i></div>
               <div class="progress-dots" aria-hidden="true">
                 ${Array.from({ length: progress.totalCount }, (_, index) => `<span class="${index < progress.foundCount ? "done" : ""}"><i></i></span>`).join("")}
               </div>
             </div>
 
+            ${renderWechatGrowthPanel(dailyChallenge, leaderboard)}
             ${renderEvidenceBoard(foundTitles)}
           </aside>
 
@@ -170,15 +233,23 @@ function render(): void {
 
           <div class="stage-actions phaser-actions">
             ${
-              progress.complete
+              sceneState.failed && !progress.complete
+                ? `
+                  <button class="primary" data-action="revive-ad">看广告复活</button>
+                  <button class="secondary" data-action="revive-card">${state.economy.reviveCard > 0 ? `用复活卡 ${state.economy.reviveCard}` : "分享拿复活卡"}</button>
+                `
+                : dailyChallenge.attemptsRemaining <= 0 && !sceneState.challengeActive && !progress.complete
+                  ? `<button class="primary" data-action="extra-attempt-ad">看广告加体力</button>`
+                  : progress.complete
                 ? `<button class="primary" data-action="next-scene">${nextButtonText}</button>`
                 : `<button class="primary" data-action="start-challenge">${escapeHtml(sceneState.challengeActive ? sceneMeta.continueAction : sceneMeta.startAction)}</button>`
             }
             ${
-              sceneState.challengeActive && !progress.complete
-                ? `<button data-action="hint-ad">给个提示</button>`
+              sceneState.challengeActive && !sceneState.failed && !progress.complete
+                ? `<button data-action="hint-ad">${state.economy.hintTicket > 0 ? `用提示券 ${state.economy.hintTicket}` : "看广告拿提示"}</button>`
                 : ""
             }
+            <button class="secondary" data-action="share-reward">分享领提示</button>
           </div>
         </section>
 
@@ -191,10 +262,20 @@ function render(): void {
                 </span>
                 <div>
                   <span>证据袋已封口</span>
-                  <strong>${foundTitles.length} 份证据已装袋</strong>
+                  <strong>${foundTitles.length} 份证据已装袋，${escapeHtml(leaderboard.provinceName)} +${scene.hotspots.length * 3}</strong>
+                  <small>${escapeHtml(dailyChallenge.goalComplete ? "今日目标已达成，可以继续冲群榜。" : `今日目标 ${dailyChallenge.clearsToday}/${dailyChallenge.clearGoal}`)}</small>
                 </div>
+                <button class="primary compact" data-action="share-clear">晒到群里</button>
+                <button class="secondary compact" data-action="double-clear-ad">广告翻倍</button>
               </section>
             `
+            : sceneState.failed
+              ? `
+                <section class="failure-dock">
+                  <span>本局失误已满</span>
+                  <strong>复活后保留已找证据，继续这局。</strong>
+                </section>
+              `
             : ""
         }
       </section>
@@ -213,7 +294,7 @@ function mountOfficeGame(scene: InvestigationScene, sceneState: SceneInvestigati
   phaserGame = createInvestigationGame(parent, {
     scene,
     evidences: gameConfig.evidences,
-    challengeActive: sceneState.challengeActive,
+    challengeActive: sceneState.challengeActive && !sceneState.failed,
     hintedHotspotId,
     justFoundHotspotId,
     foundHotspotIds: sceneState.foundHotspotIds,
@@ -242,8 +323,70 @@ function renderEvidenceBoard(foundTitles: string[]): string {
   `;
 }
 
+function renderStatusToast(): string {
+  if (!toast || toast === "抓住偷走注意力的噪声。") return "";
+
+  return `
+    <div class="status-toast" aria-live="polite">
+      ${escapeHtml(toast)}
+    </div>
+  `;
+}
+
+function getProgressDetail(scene: InvestigationScene, sceneState: SceneInvestigationState, complete: boolean, goalDetail: string): string {
+  if (complete) return scene.completeText ?? "现场噪声已处理。";
+  if (sceneState.failed) return `错点 ${mistakeLimit}/${mistakeLimit}，本局已失败。复活后保留已找到的证据。`;
+  if (sceneState.challengeActive && sceneState.missCount > 0) return `${goalDetail} 失误 ${sceneState.missCount}/${mistakeLimit}。`;
+  return goalDetail;
+}
+
+function renderWechatGrowthPanel(dailyChallenge: DailyChallengeSnapshot, leaderboard: LeaderboardSnapshot): string {
+  const topFriend = leaderboard.friendRows[0];
+  const selfFriend = leaderboard.friendRows.find((row) => row.relation === "self") ?? leaderboard.friendRows[1];
+
+  return `
+    <section class="wechat-growth-panel" aria-label="微信小游戏挑战">
+      <div class="daily-strip">
+        <div>
+          <span>今日局</span>
+          <strong>${dailyChallenge.clearsToday}/${dailyChallenge.clearGoal} 通关</strong>
+        </div>
+        <div>
+          <span>连续</span>
+          <strong>${dailyChallenge.streak} 天</strong>
+        </div>
+        <div>
+          <span>体力</span>
+          <strong>${dailyChallenge.attemptsRemaining}/${dailyChallenge.attemptsLimit}</strong>
+        </div>
+      </div>
+
+      <div class="province-race">
+        <div>
+          <span>${escapeHtml(leaderboard.provinceName)}第 ${leaderboard.provinceRank}</span>
+          <strong>${leaderboard.provinceScore.toLocaleString("zh-CN")}</strong>
+        </div>
+        <button class="compact light" data-action="open-province-rank">省队榜</button>
+      </div>
+
+      <div class="friend-race">
+        <span>群榜</span>
+        <p>你第 ${selfFriend.rank}，距 ${escapeHtml(topFriend.name)} 还差 ${Math.max(0, topFriend.score - selfFriend.score)} 分</p>
+        <button class="compact secondary" data-action="open-friend-rank">好友榜</button>
+      </div>
+
+      <div class="booster-row" aria-label="道具库存">
+        <span>提示券 ${state.economy.hintTicket}</span>
+        <span>放大镜 ${state.economy.magnifier}</span>
+        <span>复活卡 ${state.economy.reviveCard}</span>
+      </div>
+      <p class="daily-goal-note">${escapeHtml(dailyChallenge.goalComplete ? "今日目标已达成，继续冲群榜。" : `今日目标还差 ${dailyChallenge.clearGoal - dailyChallenge.clearsToday} 关。`)}</p>
+    </section>
+  `;
+}
+
 function renderAccessibilityHotspots(scene: InvestigationScene, sceneState: SceneInvestigationState, complete: boolean): string {
-  if (!sceneState.challengeActive || complete) return "";
+  if (!sceneState.challengeActive || sceneState.failed || complete) return "";
 
   return `
     <div class="game-accessibility" aria-label="可点击线索">
@@ -285,9 +428,16 @@ function bindEvents(): void {
       if (action === "hotspot") handleHotspot(element.dataset.id ?? "");
       if (action === "decoy") {
         handleMiss();
-        render();
       }
       if (action === "hint-ad") await rewardHint();
+      if (action === "share-reward") await shareForReward();
+      if (action === "share-clear") await shareClearReport();
+      if (action === "double-clear-ad") await doubleClearReward();
+      if (action === "revive-ad") await reviveWithAd();
+      if (action === "revive-card") await reviveWithCardOrShare();
+      if (action === "extra-attempt-ad") await gainExtraAttempt();
+      if (action === "open-friend-rank") await openLeaderboard("friend");
+      if (action === "open-province-rank") await openLeaderboard("province");
       if (action === "reset") resetDemo();
       if (action === "start-challenge") startChallenge();
       if (action === "next-scene") showNextScenePlaceholder();
@@ -303,7 +453,7 @@ function bindEvents(): void {
 function handleHotspot(hotspotId: string): void {
   const scene = getActiveScene();
   const sceneState = getSceneState(scene.id);
-  if (!sceneState.challengeActive) return;
+  if (!sceneState.challengeActive || sceneState.failed) return;
 
   const hotspot = scene.hotspots.find((item) => item.id === hotspotId);
   if (!hotspot || sceneState.foundHotspotIds.includes(hotspot.id)) return;
@@ -323,18 +473,44 @@ function handleHotspot(hotspotId: string): void {
 
   const evidence = gameConfig.evidences[hotspot.evidenceId];
   toast = willComplete ? scene.completeText ?? "工位已回魂。" : evidence.counterText ?? "继续扫，场景里还有噪声。";
-  setState(addSceneHotspot(state, scene.id, hotspot.id, hotspot.evidenceId));
+  const nextState = addSceneHotspot(state, scene.id, hotspot.id, hotspot.evidenceId);
+  setState(willComplete ? recordDailyClear(nextState, scene.id, scene.hotspots.length * 3) : nextState);
 }
 
 function handleMiss(): void {
-  toast = "这里暂时只有空响，别急着自证。";
+  const scene = getActiveScene();
+  const sceneState = getSceneState(scene.id);
+  if (!sceneState.challengeActive || sceneState.failed) return;
+
+  const nextState = recordSceneMiss(state, scene.id, mistakeLimit);
+  const nextSceneState = nextState.sceneProgress[scene.id];
+  toast = nextSceneState.failed
+    ? "错点已满，本局失败。复活能保留已找到的证据。"
+    : `这里暂时只有空响，剩余失误 ${mistakeLimit - nextSceneState.missCount} 次。`;
+  platformBridge.vibrate(nextSceneState.failed ? 36 : 12);
+  platform.reportEvent("scene_miss", { sceneId: scene.id, missCount: nextSceneState.missCount, failed: nextSceneState.failed });
+  setState(nextState);
 }
 
 function startChallenge(): void {
   const scene = getActiveScene();
+  const sceneState = getSceneState(scene.id);
+  if (sceneState.challengeActive && !sceneState.failed) {
+    toast = getSceneMeta(scene.id).startToast;
+    render();
+    return;
+  }
+
+  const dailyChallenge = backend.getDailyChallenge(state);
+  if (dailyChallenge.attemptsRemaining <= 0) {
+    toast = "今日体力用完了，可以看广告加一次挑战机会。";
+    render();
+    return;
+  }
+
   toast = getSceneMeta(scene.id).startToast;
   nextScenePlaceholderActive = false;
-  setState(setSceneChallengeActive(state, scene.id, true));
+  setState(setSceneChallengeActive(recordDailyAttempt(state), scene.id, true));
 }
 
 async function rewardHint(): Promise<void> {
@@ -342,6 +518,18 @@ async function rewardHint(): Promise<void> {
   const sceneState = getSceneState(scene.id);
   if (!sceneState.challengeActive) {
     startChallenge();
+    return;
+  }
+  if (sceneState.failed) {
+    toast = "本局已经失败，先复活再继续找。";
+    render();
+    return;
+  }
+
+  if (state.economy.hintTicket > 0) {
+    state = spendBooster(state, "hintTicket", 1);
+    saveState();
+    revealNextHint("提示券已用，先看一个最靠近的破绽。");
     return;
   }
 
@@ -357,10 +545,168 @@ async function rewardHint(): Promise<void> {
 
   state = recordAdView(state, `hint:${scene.id}`);
   saveState();
-  toast = "红圈借你一秒，噪声自己露头。";
+  revealNextHint("红圈借你一秒，噪声自己露头。");
+}
+
+function revealNextHint(message: string): void {
+  const scene = getActiveScene();
+  const sceneState = getSceneState(scene.id);
+  toast = message;
   const next = scene.hotspots.find((hotspot) => !sceneState.foundHotspotIds.includes(hotspot.id));
   hintedHotspotId = next?.id ?? "";
   render();
+}
+
+async function shareForReward(): Promise<void> {
+  const scene = getActiveScene();
+  const today = new Date().toISOString().slice(0, 10);
+  const rewardsToday = state.socialStats.shareRewardsDate === today ? state.socialStats.shareRewardsToday : 0;
+  const rewardLimit = rewardsToday >= 3;
+  const result = await platform.share({
+    title: `我在暴富幻想所卡在「${scene.name}」，来帮我找一个破绽`,
+    query: createShareQuery(scene.id, "hint")
+  });
+  if (!result.shared) return;
+
+  let nextState = recordSocialShare(state, "friend", !rewardLimit);
+  if (!rewardLimit) {
+    nextState = grantBooster(nextState, "hintTicket", 1);
+    toast = "分享已发出，提示券 +1。";
+  } else {
+    toast = "分享已发出，今天的分享奖励先到这里。";
+  }
+  platform.reportEvent("share_reward", { sceneId: scene.id, rewardGranted: !rewardLimit });
+  setState(nextState);
+}
+
+async function shareClearReport(): Promise<void> {
+  const scene = getActiveScene();
+  const progress = getOfficeProgress(scene, getSceneState(scene.id).foundHotspotIds);
+  const result = await platform.share({
+    title: `我拆掉了「${scene.name}」${progress.foundCount}/${progress.totalCount} 个破绽，给${backend.getLeaderboard(state).provinceName}加分了`,
+    query: createShareQuery(scene.id, "clear")
+  });
+  if (!result.shared) return;
+
+  toast = "战报已发到群里，好友榜会刷新你的通关记录。";
+  platform.reportEvent("share_clear_report", { sceneId: scene.id, foundCount: progress.foundCount });
+  setState(recordSocialShare(state, "group", false));
+}
+
+async function doubleClearReward(): Promise<void> {
+  const scene = getActiveScene();
+  const placement = backend.getAdPlacement("double_reward", state);
+  if (!placement.available) {
+    toast = placement.reason ?? "今天的翻倍广告先到这里。";
+    render();
+    return;
+  }
+
+  const ad = await platform.showRewardedAd("double_reward");
+  if (!ad.completed) return;
+
+  let nextState = recordAdView(state, "double_reward");
+  nextState = grantBooster(nextState, "hintTicket", 2);
+  toast = "翻倍奖励到账，提示券 +2。";
+  platform.reportEvent("double_reward_ad", { sceneId: scene.id });
+  setState(nextState);
+}
+
+async function reviveWithAd(): Promise<void> {
+  const scene = getActiveScene();
+  const sceneState = getSceneState(scene.id);
+  if (!sceneState.failed) {
+    toast = "这一局还没失败，不需要复活。";
+    render();
+    return;
+  }
+
+  const placement = backend.getAdPlacement("revive", state, scene.id);
+  if (!placement.available) {
+    toast = placement.reason ?? "今天的复活广告先到这里。";
+    render();
+    return;
+  }
+
+  const ad = await platform.showRewardedAd("revive");
+  if (!ad.completed) return;
+
+  let nextState = recordAdView(state, `revive:${scene.id}`);
+  nextState = reviveScene(nextState, scene.id);
+  toast = "复活成功，已找到的证据保留。";
+  platform.reportEvent("revive_ad", { sceneId: scene.id });
+  setState(nextState);
+}
+
+async function reviveWithCardOrShare(): Promise<void> {
+  const scene = getActiveScene();
+  const sceneState = getSceneState(scene.id);
+  if (!sceneState.failed) {
+    toast = "这一局还没失败，不需要复活。";
+    render();
+    return;
+  }
+
+  if (state.economy.reviveCard > 0) {
+    let nextState = spendBooster(state, "reviveCard", 1);
+    nextState = reviveScene(nextState, scene.id);
+    toast = "复活卡已使用，继续这局。";
+    platform.reportEvent("revive_card", { sceneId: scene.id });
+    setState(nextState);
+    return;
+  }
+
+  const result = await platform.share({
+    title: `我在「${scene.name}」失误满了，拉我一把复活继续找`,
+    query: createShareQuery(scene.id, "revive")
+  });
+  if (!result.shared) return;
+
+  let nextState = recordSocialShare(state, "group", true);
+  nextState = grantBooster(nextState, "reviveCard", 1);
+  nextState = spendBooster(nextState, "reviveCard", 1);
+  nextState = reviveScene(nextState, scene.id);
+  toast = "群助力已发出，本次复活生效。";
+  platform.reportEvent("revive_share", { sceneId: scene.id });
+  setState(nextState);
+}
+
+async function gainExtraAttempt(): Promise<void> {
+  const placement = backend.getAdPlacement("extra_attempt", state);
+  if (!placement.available) {
+    toast = placement.reason ?? "今天的加体力广告先到这里。";
+    render();
+    return;
+  }
+
+  const ad = await platform.showRewardedAd("extra_attempt");
+  if (!ad.completed) return;
+
+  let nextState = recordAdView(state, "extra_attempt");
+  nextState = grantDailyAttempt(nextState, 1);
+  toast = "体力 +1，今天还能再开一局。";
+  platform.reportEvent("extra_attempt_ad", { attemptsRemaining: backend.getDailyChallenge(nextState).attemptsRemaining });
+  setState(nextState);
+}
+
+async function openLeaderboard(scope: "friend" | "province"): Promise<void> {
+  await platform.openLeaderboard?.(scope);
+  const leaderboard = backend.getLeaderboard(state);
+  toast =
+    scope === "province"
+      ? `${leaderboard.provinceName}现在第 ${leaderboard.provinceRank}，继续通关给省队加分。`
+      : `群榜已打开，你现在排第 ${leaderboard.friendRows.find((row) => row.relation === "self")?.rank ?? 2}。`;
+  platform.reportEvent("open_leaderboard", { scope });
+  render();
+}
+
+function createShareQuery(sceneId: string, reward: "hint" | "revive" | "clear"): Record<string, string> {
+  return {
+    scene: sceneId,
+    inviter: "local-player",
+    reward,
+    assist: `${sceneId}:${reward}:${Date.now()}`
+  };
 }
 
 function showNextScenePlaceholder(): void {

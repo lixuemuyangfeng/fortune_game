@@ -39,7 +39,7 @@ Midground: Zhou Qiming at the table, name cards, laptop, whiteboard, rejected he
 Background: boss leaving through glass door, office floor, projector slide, whiteboard.
 People and actions: Zhou is tired and writing notes; the boss has already left after pointing at the opportunity slide.
 Required clue objects: empty resource slide boxes, Zhou owner nameplate, crossed risk memo, action tracker, target/budget chart, rejected headcount form, Friday calendar/cold coffee, laser pointer, locked budget folder, whiteboard risk notes.
-Character/proxy state: playable WIP uses same-camera state rasters; final pass needs true posture/expression redraws.
+Character/proxy state: generated character-state overlays provide same-camera posture/expression progression across `meeting-progress-1..10`.
 Lighting/color: deep green/warm gold office palette with cool projector light.
 Mobile readability: clue objects must be visible as object clusters, not only as small text.
 Forbidden: click-all-text solution, giant labels, red boxes, baked markers, pasted characters, all clues as paper slips.
@@ -171,5 +171,5 @@ Record source-pixel centers before converting to config percentages.
 - The first meeting image was rejected by self-review because the fastest path was close to "click all text/table blocks".
 - The replacement image improves scene logic and clue form: boss leaving, Zhou at the table, empty support boxes, name-card cluster, red-X paper, action tracker, rejected form on empty chair, Friday calendar/cold coffee, pointer, chart/calculator, and locked budget folder.
 - Desktop screenshot QA found the original whiteboard target too close to Zhou's face; h10 was moved right and narrowed, then the meeting Playwright flow was rerun successfully.
-- Remaining risk: progress states are mechanically derived same-scene rasters rather than true posture/expression variants. Do not call these final production character states.
+- Progress states `meeting-progress-1..10` were replaced with generated character-state overlays composited onto the accepted base scene. `artifacts/meeting-state-contact-sheet.jpg` shows visible body-language and expression progression while keeping the clue field stable.
 - Remaining risk: several clues still include Chinese text because the meeting-room premise naturally uses forms/slides. Runtime review must confirm the answer is not obvious by text alone.

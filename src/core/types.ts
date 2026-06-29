@@ -79,15 +79,51 @@ export interface GameConfig {
   scenes: InvestigationScene[];
 }
 
+export type BoosterId = "hintTicket" | "magnifier" | "reviveCard";
+
+export type ShareChannel = "friend" | "group" | "timeline";
+
+export interface PlayerEconomy {
+  hintTicket: number;
+  magnifier: number;
+  reviveCard: number;
+}
+
+export interface PlayerSocialStats {
+  shareCount: number;
+  groupShareCount: number;
+  inviteCount: number;
+  helpedFriends: number;
+  provinceContribution: number;
+  shareRewardsDate: string;
+  shareRewardsToday: number;
+  claimedAssistKeys: string[];
+}
+
+export interface DailyChallengeState {
+  date: string;
+  attemptsUsed: number;
+  extraAttemptsToday: number;
+  clearsToday: number;
+  streak: number;
+  regionScore: number;
+  completedSceneIds: string[];
+}
+
 export interface PlayerState {
   currentSceneId: string;
   foundEvidenceIds: string[];
   sceneProgress: Record<string, SceneInvestigationState>;
   adViews: Record<string, number>;
+  economy: PlayerEconomy;
+  socialStats: PlayerSocialStats;
+  dailyChallenge: DailyChallengeState;
   lastSavedAt: number;
 }
 
 export interface SceneInvestigationState {
   challengeActive: boolean;
   foundHotspotIds: string[];
+  missCount: number;
+  failed: boolean;
 }

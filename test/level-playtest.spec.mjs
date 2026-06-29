@@ -51,19 +51,19 @@ const nestHotspots = [
   "流程封签"
 ];
 const stockHotspots = [
-  "榜首荧光行",
-  "700%截图卡",
-  "三倍截图便签",
-  "五倍便签",
-  "涨停通知卡",
-  "20cm涨停贴",
-  "融资买入手机",
-  "模拟盘满仓图",
-  "荐股群邀请卡",
-  "龙虎榜剪报",
-  "卖房加仓草算",
+  "走势诱饵光斑",
+  "桌边涨幅截图",
+  "红箭头笔记本",
+  "压账单黄便签",
+  "风险消息红点",
+  "计算器旁小票",
+  "攥紧的下单入口",
+  "模拟曲线盒",
+  "荐股群入口卡",
+  "财经快讯报纸",
+  "房照钥匙账本",
   "风险揭示折角",
-  "热榜推送手机"
+  "热榜催促红点"
 ];
 
 const lateLevelDecoyChecks = [
@@ -412,7 +412,7 @@ test.describe("phaser level flow", () => {
     await page.getByRole("button", { name: "开始降温" }).click();
     await expect(page.getByText("0/13").first()).toBeVisible();
 
-    for (const decoy of ["水电费便签", "旧书脊", "普通走势线"]) {
+    for (const decoy of ["窗边便签", "普通账单堆", "凌晨电子钟"]) {
       await page.getByRole("button", { name: decoy }).click();
       await expect(page.getByText("0/13").first()).toBeVisible();
     }
@@ -497,5 +497,12 @@ test.describe("phaser level flow", () => {
     await expect(page.getByRole("button", { name: "开始粉碎" })).toBeVisible();
     await page.waitForTimeout(700);
     await page.screenshot({ path: "artifacts/playtest-nest-mobile-intro.png", fullPage: true });
+
+    await page.getByLabel("本机临时选关").selectOption("stock");
+    await expect(page.getByRole("heading", { name: "暴涨榜深夜场" })).toBeVisible();
+    await expect(page.locator("#phaser-game canvas")).toBeVisible();
+    await expect(page.getByRole("button", { name: "开始降温" })).toBeVisible();
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: "artifacts/playtest-stock-mobile-intro.png", fullPage: true });
   });
 });
